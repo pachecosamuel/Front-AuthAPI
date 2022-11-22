@@ -10,24 +10,56 @@
 }
 
 .div {
-
     margin: 0;
     padding: 0;
     height: 100%;
     background-color: #f3ecec;
+    flex-shrink: 0;
 }
 
 .div_esquerda {
+    display: block;
     background-color: #F2F2F2;
     background-image: url("../../assets/Group.svg");
     background-repeat: no-repeat;
     background-position: 50%;
-    background-repeat: no-repeat;
     background-size: 70%;
+    height: 100vh;
+    width: 100%;
+}
+
+.div_direita {
+    height: 100vh;
+    width: 100%;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.div_logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 35%;
 }
 
 @media (max-width: 767px) {
     .div_esquerda {
         background-image: none;
+        height: 0;
     }
+
+    .div_direita {
+        height: 100vh;
+    }
+}
+
+#sigla {
+    margin-top: 2rem;
+    color: var(--verde-primario);
+    font-size: 2rem;
 }
