@@ -3,6 +3,7 @@ import image from "../../assets/logo.png"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import FormLogin from "../../components/formLogin";
 import './style.css';
 export const Login = () => {
     return (
@@ -41,7 +42,7 @@ export const Login = () => {
                         {/* container formulario */}
                         <Row className="div_button">
 
-                            <Col sm={12}></Col>
+                            <Col sm={12}><FormLogin /></Col>
 
                         </Row>
                     </Col>
