@@ -31,15 +31,7 @@ export const Login = () => {
                             </Col>
 
                         </Row>
-
-                        {/* container texto 
-                        <Row className="div_text">
-
-                            <Col sm={12}></Col>
-
-                        </Row> */}
-
-                        {/* container formulario */}
+                        
                         <Row className="div_button">
 
                             <Col sm={12}><FormLogin /></Col>
