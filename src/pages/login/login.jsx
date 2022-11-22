@@ -6,17 +6,16 @@ import Col from 'react-bootstrap/Col';
 import './style.css';
 export const Login = () => {
     return (
-
         <div className="body">
 
             {/* //body */}
-            <Container fluid className="div">
+            <Container fluid className="fluid">
 
                 {/* body interior  */}
-                <Row className="div1">
+                <Row className="div">
 
                     {/* container esquerdo (vai ter apenas a foto)  */}
-                    <Col sm={7}>po</Col>
+                    <Col sm={7} className="div_esquerda"></Col>
 
                     {/* container direito (elementos do login) */}
                     <Col sm={5}>

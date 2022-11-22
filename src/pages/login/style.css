@@ -3,22 +3,31 @@
     padding: 0;
     height: 100vh;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #e23232;
+}
 
+.fluid {
+    height: 100%;
 }
 
 .div {
 
     margin: 0;
     padding: 0;
-    margin: auto;
     height: 100%;
-    margin-left: auto;
-    margin-right: auto;
     background-color: #f3ecec;
 }
-.div1{
-    background-color: #c71515;
+
+.div_esquerda {
+    background-color: #F2F2F2;
+    background-image: url("../../assets/Group.svg");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 70%;
+}
+
+@media (max-width: 767px) {
+    .div_esquerda {
+        background-image: none;
+    }
 }
