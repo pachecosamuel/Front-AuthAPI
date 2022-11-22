@@ -51,7 +51,7 @@ function PaginationComponent({
                                     return;
                                 }
                                 : 
-                                currentPage === 0 
+                                Math.round(registrosJson.length / selectValue) === 0 
                                 ? function () {
                                     return;
                                 }
