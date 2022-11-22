@@ -1,24 +1,34 @@
-.body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+.div_esquerda {
+    background-color: #F2F2F2;
+    background-image: url("../../assets/Group.svg");
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: 70%;
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #e23232;
+    width: 100vh;
 
 }
 
-.div {
-
-    margin: 0;
-    padding: 0;
-    margin: auto;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #f3ecec;
+.div_direita {
+    height: 100vh;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-.div1{
-    background-color: #c71515;
+
+.div_logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 35%;
+}
+
+#sigla {
+    margin-top: 2rem;
+    color: var(--verde-primario);
+    font-size: 2rem;
 }
