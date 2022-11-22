@@ -1,15 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import { Root } from './routes/root'
+import "./css/global.css";
+import "./css/css-config/reset.css";
 
 function App() {
-
-
-  return (
-
-    <Root />
-
-  )
+    return (
+        <Root />
+    )
 }
 
 export default App

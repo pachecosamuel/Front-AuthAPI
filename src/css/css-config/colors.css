@@ -1,0 +1,13 @@
+:root {
+    --branco: #FFF;
+    --branco-primario: #F3F5F6;
+    --branco-secundario: #D9D9D9;
+    --verde-primario: #01A998;
+    --verde-secundario: #03A688;
+    --cinza-primario: #585859;
+    --cinza-secundario: #3D3D3D;
+    --preto-primario: #0D0D0D;
+
+    --cor-fonte: var(--cinza-secundario);
+    --cor-fundo: var(--branco-primario);
+}
