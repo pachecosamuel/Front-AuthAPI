@@ -1,27 +1,25 @@
 import styled from "styled-components";
 
-export const ContainerStyled = styled.div`
-    /* background-color: var(--branco); */
-    box-shadow: 1px 1px 5px  var(--preto-primario);
-    border: 1px solid;
-    min-height: calc(100vh - 2rem);
-    padding-inline: 0.75rem;
-    margin-block: 1rem;
-    border-radius: 1rem;
-    color: var(--cor-fonte);
-    font-family: 'Source Sans Pro';
-`
+export const ContainerTablePageStyle = styled.div`
+  .accordion-button {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0px !important;
+  }
 
-export const HeaderStyled = styled.header`
-    background-color: var(--verde-primario);
-    border-top-left-radius: 1rem;
-    border-top-right-radius: 1rem;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 0.5rem;
-    color: var(--branco);
-    font-size: 2rem;
-    text-align: center;
-`
+  .accordion-button:not(.collapsed) {
+    background-color: var(--verde-primario) !important;
+    background-image: none !important;
+    color: var(--branco) !important;
+
+    ::after {
+      filter: invert(100%) !important;
+    }
+  }
+
+  .code-container {
+    background-color: #111;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+  }
+`;
