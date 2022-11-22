@@ -1,0 +1,24 @@
+.body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e23232;
+
+}
+
+.div {
+
+    margin: 0;
+    padding: 0;
+    margin: auto;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f3ecec;
+}
+.div1{
+    background-color: #c71515;
+}
