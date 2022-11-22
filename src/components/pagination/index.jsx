@@ -50,7 +50,13 @@ function PaginationComponent({
                                 ? function () {
                                     return;
                                 }
-                                : setCurrentPage(currentPage - 1)
+                                : 
+                                currentPage === 0 
+                                ? function () {
+                                    return;
+                                }
+                                : 
+                                setCurrentPage(currentPage - 1) 
                         }
                     />
                 </div>
@@ -65,7 +71,13 @@ function PaginationComponent({
                                 ? function () {
                                     return;
                                 }
-                                : setCurrentPage(currentPage + 1)
+                                : 
+                                Math.round(registrosJson.length / selectValue) > 1  ?
+                                setCurrentPage(currentPage + 1)
+                                :
+                                function () {
+                                    return;
+                                }
                         }
                     />
                 </div>
@@ -76,7 +88,11 @@ function PaginationComponent({
                                 ? function () {
                                     return;
                                 }
-                                : setCurrentPage(Math.round(registrosJson.length / selectValue))
+                                : 
+                                Math.round(registrosJson.length / selectValue) === 0 ?
+                                setCurrentPage(1)
+                                :
+                                setCurrentPage(Math.round(registrosJson.length / selectValue))
                         }
                     />
                 </div>
