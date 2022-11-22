@@ -1,0 +1,7 @@
+@import url('./css-config/colors.css');
+
+body {
+    background-color: var(--cor-fundo) !important;
+    color: var(--cor-fonte) !important;
+    font-family: 'Source Sans Pro', sans-serif !important;
+}
