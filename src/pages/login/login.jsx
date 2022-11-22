@@ -7,13 +7,13 @@ import FormLogin from "../../components/formLogin";
 import './style.css';
 export const Login = () => {
     return (
-        <div className="body">
+        <>
 
             {/* //body */}
             <Container fluid className="fluid">
 
                 {/* body interior  */}
-                <Row className="div">
+                <Row>
 
                     {/* container esquerdo (vai ter apenas a foto)  */}
                     <Col sm={7} className="div_esquerda"></Col>
@@ -24,15 +24,15 @@ export const Login = () => {
                         {/* container logo  */}
                         <Row>
 
-                            <Col sm={12} className="div_logo">
+                            <Col className="div_logo">
                                 <img src={image} className="image" />
                                 <span id="sigla">Life Design</span>
                                 <span>Sistema de padronização de layouts T2M</span>
                             </Col>
 
                         </Row>
-                        
-                        <Row className="div_button">
+
+                        <Row className="mt-2" >
 
                             <Col sm={12}><FormLogin /></Col>
 
@@ -41,6 +41,6 @@ export const Login = () => {
                 </Row>
 
             </Container>
-        </div>
+        </>
     );
 }
