@@ -13,10 +13,13 @@ function TableComponent({ registros }) {
                 <Table hover>
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>CPF</th>
                             <th>Nome</th>
-                            <th>Sobrenome</th>
-                            <th>Email</th>
+                            <th>Email Empresarial</th>
+                            <th>Email Pessoal</th>
+                            <th>Telefone</th>
+                            <th>Data de Nascimento</th>
+                            <th>Data de Admissão</th>
                             <th colSpan="2">Ações</th>
                         </tr>
                     </thead>
@@ -25,10 +28,13 @@ function TableComponent({ registros }) {
                             registros.map((r, i) => {
                                 return (
                                     <tr key={i}>
-                                        <td>{r.id}</td>
+                                        <td>{r.cpf}</td>
                                         <td>{r.nome}</td>
-                                        <td>{r.sobrenome}</td>
-                                        <td>{r.email}</td>
+                                        <td>{r.email1}</td>
+                                        <td>{r.email2}</td>
+                                        <td>{r.phone}</td>
+                                        <td>{r.birthDate}</td>
+                                        <td>{r.admissionDate}</td>
                                         <td className="coluna-acao">
                                             <CiEdit />
                                         </td>

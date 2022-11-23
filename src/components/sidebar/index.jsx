@@ -3,12 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import LogoT2m from "../../assets/logo.png";
 
-import { AiOutlineTable, AiOutlineIdcard } from "react-icons/ai";
-import { TbIcons } from "react-icons/tb";
-import { HiOutlineColorSwatch } from "react-icons/hi";
-import { FaWpforms } from "react-icons/fa";
+import { AiOutlineTable } from "react-icons/ai";
 import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
-import { CgHome } from "react-icons/cg";
 import { MdOutlineExitToApp } from "react-icons/md";
 import { BiUserCircle } from "react-icons/bi";
 
@@ -49,11 +45,11 @@ function SidebarComponent({ logOut }) {
             <div className="mt-2 sidebar-nav-item">
               <div onClick={() => navigateTo("/home")}>
                 <div className="area-icons-label">
-                  <CgHome />
+                  <AiOutlineTable />
                   {sideBarCollapse ? (
                     ""
                   ) : (
-                    <span className="label-sidebar">Início</span>
+                    <span className="label-sidebar">Controle de Acesso</span>
                   )}
                 </div>
               </div>
