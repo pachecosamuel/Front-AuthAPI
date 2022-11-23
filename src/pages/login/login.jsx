@@ -25,8 +25,8 @@ export const Login = ({ setLogged }) => {
 
                             <Col className="div_logo">
                                 <img src={image} className="image" />
-                                <span id="sigla">Life Design</span>
-                                <span>Sistema de padronização de layouts T2M</span>
+                                <span id="sigla">Controle de Acesso</span>
+                                <span>Sistema de controle de acesso de usuários T2M</span>
                             </Col>
 
                         </Row>
