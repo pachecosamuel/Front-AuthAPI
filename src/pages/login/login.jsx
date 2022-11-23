@@ -8,7 +8,6 @@ import './style.css';
 export const Login = () => {
     return (
         <>
-
             {/* //body */}
             <Container fluid className="fluid">
 
