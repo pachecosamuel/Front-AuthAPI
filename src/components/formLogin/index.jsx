@@ -39,7 +39,7 @@ const FormLogin = ({ setLogged }) => {
         } else {
 
             alert("Login realizado com sucesso")
-            
+
             setLogged(true)
             navigate('/home');
 
@@ -51,7 +51,7 @@ const FormLogin = ({ setLogged }) => {
 
     const handleLogin1 = async (e) => {
         e.preventDefault();
-        
+
         alert("Logou");
 
         setLogged(true)
@@ -98,7 +98,7 @@ const FormLogin = ({ setLogged }) => {
                                 backgroundColor: "#03A688",
                                 border: "none"
                             }}
-                            onClick={(e) => handleLogin1(e)}
+                            onClick={(e) => handleLogin(e)}
                         >Entrar </Button>
                     </Col>
                 </Row>
