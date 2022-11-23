@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
     @import url("../../css-config/colors.css");
 
-    width: 100%;    
+    width: 100%;
+    min-height: calc(100vh - 2rem);
     background-color: var(--branco);    
     border-radius: 1rem;
     margin-top: 1rem;

@@ -12,7 +12,7 @@ import SidebarComponent from "../components/sidebar";
 import SideBarMenuBs from "../components/sidebar-bs";
 
 export function Root() {
-    const [logged, setLogged] = useState(true);
+    const [logged, setLogged] = useState(false);
     const [windowSize, setWindowSize] = useState(getWindowSize());
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export function Root() {
                 </>
             ) : (
                 <Routes>
-                    <Route path="/" element={<Login />} />
+                    <Route path="/" element={<Login setLogged={setLogged} />} />
                 </Routes>
             )}
         </BrowserRouter>
