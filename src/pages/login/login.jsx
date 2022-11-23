@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormLogin from "../../components/formLogin";
 import './style.css';
-export const Login = () => {
+export const Login = ({ setLogged }) => {
     return (
         <>
             {/* //body */}
@@ -33,7 +33,7 @@ export const Login = () => {
 
                         <Row className="mt-2" >
 
-                            <Col sm={12}><FormLogin /></Col>
+                            <Col sm={12}><FormLogin setLogged={setLogged} /></Col>
 
                         </Row>
                     </Col>

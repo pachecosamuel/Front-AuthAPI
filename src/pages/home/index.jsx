@@ -53,48 +53,46 @@ export const Home = () => {
                 r.sobrenome.toLowerCase().includes(value.toLowerCase()) ||
                 r.email.toLowerCase().includes(value.toLowerCase())
         );
+        setCurrentPage(prevstate => 1);
         setRegistros(registrosFiltrados);
     }
 
+    const [logged, setLogged] = useState(false);
+    function logOut() {
+        setLogged(false);
+    }
+
     return (
-        <Container fluid>
-            <Row>
-                <Col sm={1}>Sidebar</Col>
+        <PageContainer>
+            <HeaderPageComponent title='Início' icon={<CgHome />} />
 
-                <Col sm={11}>
-                    <PageContainer>
-                        <HeaderPageComponent title='Início' icon={<CgHome />} />
+            <ContentPageContainer>
+                <ContainerTablePageStyle>
+                    <Row>
+                        <Col>
+                            <SearchComponent filterBySearch={filterBySearch} />
+                        </Col>
+                    </Row>
 
-                        <ContentPageContainer>
-                            <ContainerTablePageStyle>
-                                <Row>
-                                    <Col>
-                                        <SearchComponent filterBySearch={filterBySearch} />
-                                    </Col>
-                                </Row>
+                    <Row>
+                        <Col>
+                            <TableComponent registros={registrosFiltrados} />
+                        </Col>
+                    </Row>
 
-                                <Row>
-                                    <Col>
-                                        <TableComponent registros={registrosFiltrados} />
-                                    </Col>
-                                </Row>
-
-                                <Row>
-                                    <Col>
-                                        <PaginationComponent
-                                            selectValue={selectValue}
-                                            setSelectValueChange={setSelectValueChange}
-                                            registrosJson={registros}
-                                            currentPage={currentPage}
-                                            setCurrentPage={setCurrentPage}
-                                        />
-                                    </Col>
-                                </Row>
-                            </ContainerTablePageStyle>
-                        </ContentPageContainer>
-                    </PageContainer>
-                </Col>
-            </Row>
-        </Container>
+                    <Row>
+                        <Col>
+                            <PaginationComponent
+                                selectValue={selectValue}
+                                setSelectValueChange={setSelectValueChange}
+                                registrosJson={registros}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </Col>
+                    </Row>
+                </ContainerTablePageStyle>
+            </ContentPageContainer>
+        </PageContainer>
     )
 }
