@@ -5,26 +5,25 @@ export const AuthenticationContext = createContext({});
 
 export const AuthenticationProvider = ({ children }) => {
     const [user, setUser] = useState({
-        id: '',
-        name: '',
-        email: '',
-        roles: [],
+        Id: '',
+        Email: '',
+        Role: '',
         token: ''
     });
-
-
     const login = async (email, password) => {
 
         const respostaServiceLogin = await LoginService(email, password);
         if (!respostaServiceLogin) {
             return false;
         } else {
+            console.log('====================================');
+            console.log(respostaServiceLogin);
+            console.log('====================================');
             setUser({
-                id: respostaServiceLogin?.id,
-                name: respostaServiceLogin?.name,
-                email: respostaServiceLogin?.email,
-                roles: respostaServiceLogin?.roles,
-                token: respostaServiceLogin?.token,
+                Id: respostaServiceLogin?.Id,
+                Email: respostaServiceLogin?.Email,
+                Role: respostaServiceLogin?.Role,
+                token: respostaServiceLogin?.token
 
             });
             return true;
