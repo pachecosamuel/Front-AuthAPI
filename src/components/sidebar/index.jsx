@@ -84,7 +84,7 @@ function SidebarComponent({ logOut }) {
           </div>
           <div className="sidebar-nav">
             <div className="sidebar-nav-item">
-              <div onClick={() => logOut()}>
+              <div onClick={() => [logOut(), navigateTo("/")]}>
                 <div className="area-icons-label">
                   <MdOutlineExitToApp />
                   {sideBarCollapse ? (

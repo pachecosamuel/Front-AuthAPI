@@ -14,7 +14,7 @@ import { Alert } from "bootstrap";
 
 
 
-const FormLogin = () => {
+const FormLogin = ({ setLogged }) => {
     const { login, user } = useContext(AuthenticationContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -38,8 +38,11 @@ const FormLogin = () => {
             );
         } else {
 
-            navigate('/home');
             alert("Login realizado com sucesso")
+            
+            setLogged(true)
+            navigate('/home');
+
             console.log("Login realizado com sucesso");
             console.log(user);
 
@@ -48,7 +51,12 @@ const FormLogin = () => {
 
     const handleLogin1 = async (e) => {
         e.preventDefault();
+        
         alert("Logou");
+
+        setLogged(true)
+        navigate('/home');
+
     }
 
 
@@ -90,7 +98,7 @@ const FormLogin = () => {
                                 backgroundColor: "#03A688",
                                 border: "none"
                             }}
-                            onClick={(e) => handleLogin(e)}
+                            onClick={(e) => handleLogin1(e)}
                         >Entrar </Button>
                     </Col>
                 </Row>
