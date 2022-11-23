@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { Container } from "react-bootstrap"
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { CgHome } from 'react-icons/cg';
+import { AiOutlineTable } from "react-icons/ai";
 import { usuariosMock } from "../../assets/usuariosMock";
 
 import { PageContainer } from "../../components/page-container/style";
@@ -17,7 +16,7 @@ import PaginationComponent from "../../components/pagination";
 import { ContainerTablePageStyle } from "./style"
 
 export const Home = () => {
-    const [selectValue, setSelectValue] = useState(10);
+    const [selectValue, setSelectValue] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectValuesIsModify, setselectValuesIsModify] = useState(false);
     const [registrosFiltrados, setRegistrosFiltrados] = useState([]);
@@ -48,10 +47,16 @@ export const Home = () => {
     function filterBySearch(value) {
         let registrosFiltrados = registrosJson.filter(
             (r) =>
-                r.id === +value ||
+                // r.id === +value ||
+                r.cpf.includes(value) ||
                 r.nome.toLowerCase().includes(value.toLowerCase()) ||
-                r.sobrenome.toLowerCase().includes(value.toLowerCase()) ||
-                r.email.toLowerCase().includes(value.toLowerCase())
+                // r.sobrenome.toLowerCase().includes(value.toLowerCase()) ||
+                r.email1.toLowerCase().includes(value.toLowerCase()) ||
+                r.email2.toLowerCase().includes(value.toLowerCase()) ||
+                r.phone.toLowerCase().includes(value.toLowerCase()) ||
+                // r.roles.toLowerCase().includes(value.toLowerCase()) ||
+                r.birthDate.toLowerCase().includes(value.toLowerCase()) ||
+                r.admissionDate.toLowerCase().includes(value.toLowerCase())
         );
         setCurrentPage(prevstate => 1);
         setRegistros(registrosFiltrados);
@@ -64,7 +69,7 @@ export const Home = () => {
 
     return (
         <PageContainer>
-            <HeaderPageComponent title='Início' icon={<CgHome />} />
+            <HeaderPageComponent title='Controle de Acesso' icon={<AiOutlineTable />} />
 
             <ContentPageContainer>
                 <ContainerTablePageStyle>
