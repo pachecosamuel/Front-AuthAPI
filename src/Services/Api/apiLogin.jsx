@@ -5,7 +5,7 @@ import jwt_decode from 'jwt-decode';
 const LoginService = async (email, password) => {
     var tokenDecodificado = null;
     try {
-        const resposta = await api.post("autenticacao", {
+        const resposta = await api.post("login", {
             email,
             password
         });

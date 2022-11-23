@@ -38,10 +38,10 @@ const FormLogin = () => {
             );
         } else {
 
-            navigate('/teste');
+            navigate('/home');
             alert("Login realizado com sucesso")
             console.log("Login realizado com sucesso");
-            console.log(usuario);
+            console.log(user);
 
         }
     }
