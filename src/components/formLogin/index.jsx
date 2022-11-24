@@ -10,7 +10,7 @@ import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { ContainerFormLoginStyle, BotaoStyle } from "./style";
 import { useNavigate, } from "react-router-dom";
 import { AuthenticationContext } from "../../Services/Context/contextToken";
-import { Alert } from "bootstrap";
+
 
 
 
@@ -22,9 +22,6 @@ const FormLogin = ({ setLogged }) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
-        console.log("Email : ", email.concat('@t2mlab.com'), "Senha :", password);
-
         const respostaLogin = await login(email.concat('@t2mlab.com'), password);
         if (!respostaLogin) {
             alert(
@@ -39,13 +36,8 @@ const FormLogin = ({ setLogged }) => {
         } else {
 
             alert("Login realizado com sucesso")
-
             setLogged(true)
             navigate('/home');
-
-            console.log("Login realizado com sucesso");
-            console.log(user);
-
         }
     }
 
@@ -56,7 +48,6 @@ const FormLogin = ({ setLogged }) => {
 
         setLogged(true)
         navigate('/home');
-
     }
 
 
@@ -98,7 +89,7 @@ const FormLogin = ({ setLogged }) => {
                                 backgroundColor: "#03A688",
                                 border: "none"
                             }}
-                            onClick={(e) => handleLogin(e)}
+                            onClick={(e) => handleLogin1(e)}
                         >Entrar </Button>
                     </Col>
                 </Row>
