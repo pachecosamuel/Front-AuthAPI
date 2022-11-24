@@ -14,7 +14,7 @@ import { AuthenticationContext } from "../../Services/Context/contextToken";
 
 
 
-const FormLogin = ({ setLogged }) => {
+const FormLogin = () => {
     const { login, user } = useContext(AuthenticationContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -36,7 +36,6 @@ const FormLogin = ({ setLogged }) => {
         } else {
 
             alert("Login realizado com sucesso")
-            setLogged(true)
             navigate('/home');
         }
     }
@@ -46,7 +45,6 @@ const FormLogin = ({ setLogged }) => {
 
         alert("Logou");
 
-        setLogged(true)
         navigate('/home');
     }
 
@@ -89,7 +87,7 @@ const FormLogin = ({ setLogged }) => {
                                 backgroundColor: "#03A688",
                                 border: "none"
                             }}
-                            onClick={(e) => handleLogin1(e)}
+                            onClick={(e) => handleLogin(e)}
                         >Entrar </Button>
                     </Col>
                 </Row>

@@ -25,12 +25,6 @@ export const Home = () => {
     const { user } = useContext(AuthenticationContext);
 
 
-    useEffect(() => {
-        console.log('====================================');
-        console.log("dentro da home");
-        console.log(user);
-        console.log('====================================');
-    }, [])
 
     useEffect(() => {
         let page = currentPage;

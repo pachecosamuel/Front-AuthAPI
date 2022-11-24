@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LogoT2m from "../../assets/logo.png";
@@ -12,8 +12,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { ContainerNavStyle } from "./style.js";
+import { AuthenticationContext } from "../../Services/Context/contextToken";
 
-function SidebarComponent({ logOut }) {
+function SidebarComponent() {
+
+  const { logOut } = useContext(AuthenticationContext);
+
   const [sideBarCollapse, setSideBarCollapse] = useState(true);
   const navigate = useNavigate();
 
