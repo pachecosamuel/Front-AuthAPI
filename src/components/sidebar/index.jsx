@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import LogoT2m from "../../assets/logo.png";
 
-import { AiOutlineTable } from "react-icons/ai";
+import { AiOutlineTable, AiOutlineUserAdd } from "react-icons/ai";
 import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
 import { MdOutlineExitToApp } from "react-icons/md";
 import { BiUserCircle } from "react-icons/bi";
@@ -50,6 +50,18 @@ function SidebarComponent({ logOut }) {
                     ""
                   ) : (
                     <span className="label-sidebar">Controle de Acesso</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 sidebar-nav-item">
+              <div onClick={() => navigateTo("/cadastro")}>
+                <div className="area-icons-label">
+                  <AiOutlineUserAdd />
+                  {sideBarCollapse ? (
+                    ""
+                  ) : (
+                    <span className="label-sidebar">Cadastro</span>
                   )}
                 </div>
               </div>

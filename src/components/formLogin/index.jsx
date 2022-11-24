@@ -98,7 +98,7 @@ const FormLogin = ({ setLogged }) => {
                                 backgroundColor: "#03A688",
                                 border: "none"
                             }}
-                            onClick={(e) => handleLogin(e)}
+                            onClick={(e) => handleLogin1(e)}
                         >Entrar </Button>
                     </Col>
                 </Row>
