@@ -19,7 +19,6 @@ const LoginService = async (email, password) => {
     }
     catch (error) {
         console.log('Erro ao realizar login' + JSON.stringify(error));
-
     }
 
 }

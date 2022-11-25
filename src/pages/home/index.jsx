@@ -12,7 +12,9 @@ import ContentPageContainer from "../../components/content-page-container";
 import SearchComponent from "../../components/search";
 import TableComponent from "../../components/table";
 import PaginationComponent from "../../components/pagination";
+
 import { AuthenticationContext } from "../../Services/Context/contextToken";
+
 import { ContainerTablePageStyle } from "./style"
 
 export const Home = () => {
@@ -22,15 +24,6 @@ export const Home = () => {
     const [registrosFiltrados, setRegistrosFiltrados] = useState([]);
     const [registros, setRegistros] = useState(usuariosMock);
     const registrosJson = usuariosMock;
-    const { user } = useContext(AuthenticationContext);
-
-
-    useEffect(() => {
-        console.log('====================================');
-        console.log("dentro da home");
-        console.log(user);
-        console.log('====================================');
-    }, [])
 
     useEffect(() => {
         let page = currentPage;
@@ -67,13 +60,8 @@ export const Home = () => {
                 r.birthDate.toLowerCase().includes(value.toLowerCase()) ||
                 r.admissionDate.toLowerCase().includes(value.toLowerCase())
         );
-        setCurrentPage(prevstate => 1);
+        setCurrentPage(1);
         setRegistros(registrosFiltrados);
-    }
-
-    const [logged, setLogged] = useState(false);
-    function logOut() {
-        setLogged(false);
     }
 
     return (
