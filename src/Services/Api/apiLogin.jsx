@@ -1,6 +1,7 @@
 import React from "react";
 import { api } from "./apiConnection";
 import jwt_decode from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 const LoginService = async (email, password) => {
     var tokenDecodificado = null;
@@ -18,8 +19,7 @@ const LoginService = async (email, password) => {
         }
     }
     catch (error) {
-        console.log('Erro ao realizar login' + JSON.stringify(error));
-
+        toast.error('Erro ao realizar o login - ' + JSON.stringify(error.message));
     }
 
 }

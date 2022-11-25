@@ -3,26 +3,17 @@ import image from "../../assets/logo.png"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FormLogin from "../../components/formLogin";
+import FormRecupera from "../../components/formRecupera";
 import './style.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from "react-toastify";
-
-
-export const Login = () => {
-
+export const Recuperar = () => {
     return (
-        <>
-            <ToastContainer
-                position='top-right'
-                hideProgressBar
-                theme='colored'
-            />
+        <div className="body">
+
             {/* //body */}
             <Container fluid className="fluid">
 
                 {/* body interior  */}
-                <Row>
+                <Row className="div">
 
                     {/* container esquerdo (vai ter apenas a foto)  */}
                     <Col sm={7} className="div_esquerda"></Col>
@@ -33,22 +24,23 @@ export const Login = () => {
                         {/* container logo  */}
                         <Row>
 
-                            <Col className="div_logo">
+                            <Col sm={12} className="div_logo">
                                 <img src={image} className="image" />
-                                <span id="sigla">Controle de Acesso</span>
-                                <span>Sistema de controle de acesso de usuários T2M</span>
+                                <span id="sigla">Recuperação de senha</span>
+                                <span>Coloque e-mail e nova senha</span>
                             </Col>
 
                         </Row>
+                        
+                        <Row className="div_button">
 
-                        <Row className="mt-2" >
-
-                            <Col sm={12}><FormLogin /></Col>
+                            <Col sm={12}><FormRecupera /></Col>
 
                         </Row>
                     </Col>
                 </Row>
+
             </Container>
-        </>
+        </div>
     );
 }
