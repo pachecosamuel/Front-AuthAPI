@@ -12,7 +12,7 @@ import {
 function PaginationComponent({
     selectValue,
     setSelectValueChange,
-    registrosJson,
+    registros,
     currentPage,
     setCurrentPage
 }) {
@@ -30,7 +30,7 @@ function PaginationComponent({
                 <option value={100}>100</option>
             </Form.Select>
             <div>
-                <span>Total de registros: {registrosJson.length}</span>
+                <span>Total de registros: {registros.length}</span>
             </div>
             <div className="area-paginacao">
                 <div>
@@ -52,7 +52,7 @@ function PaginationComponent({
                                     return;
                                 }
                                 : 
-                                Math.round(registrosJson.length / selectValue) === 0 
+                                Math.round(registros.length / selectValue) === 0 
                                 ? function () {
                                     return;
                                 }
@@ -62,18 +62,18 @@ function PaginationComponent({
                     />
                 </div>
                 <div>
-                    <span>{`${currentPage} de ${Math.round(registrosJson.length / selectValue) === 0 ? "1" : Math.round(registrosJson.length / selectValue)
+                    <span>{`${currentPage} de ${Math.round(registros.length / selectValue) === 0 ? "1" : (registros.length / selectValue).isInteger ? (registros.length / selectValue) : Math.round(registros.length / selectValue)
                         }`}</span>
                 </div>
                 <div>
                     <MdNavigateNext
                         onClick={(event) =>
-                            currentPage === Math.round(registrosJson.length / selectValue)
+                            currentPage === Math.round(registros.length / selectValue)
                                 ? function () {
                                     return;
                                 }
                                 : 
-                                Math.round(registrosJson.length / selectValue) > 1  ?
+                                Math.round(registros.length / selectValue) > 1  ?
                                 setCurrentPage(currentPage + 1)
                                 :
                                 function () {
@@ -85,15 +85,15 @@ function PaginationComponent({
                 <div>
                     <MdLastPage
                         onClick={(event) =>
-                            currentPage === Math.round(registrosJson.length / selectValue)
+                            currentPage === Math.round(registros.length / selectValue)
                                 ? function () {
                                     return;
                                 }
                                 : 
-                                Math.round(registrosJson.length / selectValue) === 0 ?
+                                Math.round(registros.length / selectValue) === 0 ?
                                 setCurrentPage(1)
                                 :
-                                setCurrentPage(Math.round(registrosJson.length / selectValue))
+                                setCurrentPage(Math.round(registros.length / selectValue))
                         }
                     />
                 </div>

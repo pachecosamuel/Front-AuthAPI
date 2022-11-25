@@ -29,9 +29,9 @@ function TableComponent({ registros }) {
                                 return (
                                     <tr key={i}>
                                         <td>{r.cpf}</td>
-                                        <td>{r.nome}</td>
-                                        <td>{r.email1}</td>
-                                        <td>{r.email2}</td>
+                                        <td>{r.fullName}</td>
+                                        <td>{r.corporativeEmail}</td>
+                                        <td>{r.personalEmail}</td>
                                         <td>{r.phone}</td>
                                         <td>{r.birthDate}</td>
                                         <td>{r.admissionDate}</td>

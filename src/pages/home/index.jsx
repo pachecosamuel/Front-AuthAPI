@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { AiOutlineTable } from "react-icons/ai";
-import { usuariosMock } from "../../assets/usuariosMock";
 
 import { PageContainer } from "../../components/page-container/style";
 import HeaderPageComponent from "../../components/header-page";
@@ -14,16 +13,29 @@ import TableComponent from "../../components/table";
 import PaginationComponent from "../../components/pagination";
 
 import { ContainerTablePageStyle } from "./style"
+import { api } from "../../Services/Api/apiConnection";
+import { Spinner } from "react-bootstrap";
 
 export const Home = () => {
+    
+    const [loading, setLoading] = useState(false);
     const [selectValue, setSelectValue] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectValuesIsModify, setselectValuesIsModify] = useState(false);
     const [registrosFiltrados, setRegistrosFiltrados] = useState([]);
-    const [registros, setRegistros] = useState(usuariosMock);
-    const registrosJson = usuariosMock;
+    const [registros, setRegistros] = useState([]);
 
     useEffect(() => {
+
+        const handleGetUsers = async () => {
+            setLoading(true)
+            const res = await api.get('/User');
+            setRegistros(res.data.data)
+            setLoading(false)
+        }
+        handleGetUsers();
+
+
         let page = currentPage;
         if (selectValuesIsModify) {
             page = 1;
@@ -37,7 +49,7 @@ export const Home = () => {
         );
         setRegistrosFiltrados(filtrados);
         setSelectValue(+selectValue);
-    }, [selectValue, registros, currentPage, selectValuesIsModify]);
+    }, [selectValue, currentPage, selectValuesIsModify]);
 
     function setSelectValueChange(event) {
         setSelectValue(event);
@@ -45,14 +57,14 @@ export const Home = () => {
     }
 
     function filterBySearch(value) {
-        let registrosFiltrados = registrosJson.filter(
+        let registrosFiltrados = registros.filter(
             (r) =>
                 // r.id === +value ||
                 r.cpf.includes(value) ||
-                r.nome.toLowerCase().includes(value.toLowerCase()) ||
+                r.fullName.toLowerCase().includes(value.toLowerCase()) ||
                 // r.sobrenome.toLowerCase().includes(value.toLowerCase()) ||
-                r.email1.toLowerCase().includes(value.toLowerCase()) ||
-                r.email2.toLowerCase().includes(value.toLowerCase()) ||
+                r.corporativeEmail.toLowerCase().includes(value.toLowerCase()) ||
+                r.personalEmail.toLowerCase().includes(value.toLowerCase()) ||
                 r.phone.toLowerCase().includes(value.toLowerCase()) ||
                 // r.roles.toLowerCase().includes(value.toLowerCase()) ||
                 r.birthDate.toLowerCase().includes(value.toLowerCase()) ||
@@ -76,7 +88,17 @@ export const Home = () => {
 
                     <Row>
                         <Col>
-                            <TableComponent registros={registrosFiltrados} />
+                        {
+                            loading ? <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true" />  
+                            : 
+                            <TableComponent registros={registros} />
+                        }
+                            
                         </Col>
                     </Row>
 
@@ -85,7 +107,7 @@ export const Home = () => {
                             <PaginationComponent
                                 selectValue={selectValue}
                                 setSelectValueChange={setSelectValueChange}
-                                registrosJson={registros}
+                                registros={registros}
                                 currentPage={currentPage}
                                 setCurrentPage={setCurrentPage}
                             />
