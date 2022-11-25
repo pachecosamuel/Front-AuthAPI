@@ -37,7 +37,7 @@ export function Root() {
 
     return (
         <BrowserRouter>
-            {auth ? (
+            {true ? (
                 <>
                     <Container fluid>
                         {windowSize < 801 ? (
