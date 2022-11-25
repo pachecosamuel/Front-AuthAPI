@@ -5,6 +5,7 @@ import { Login } from "../pages/login/login";
 import { Home } from "../pages/Home";
 import { Recuperar } from "../pages/recuperar_senha/recuperar_senha";
 import { Cadastro } from "../pages/Cadastro";
+import { Profile } from "../pages/profile";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -60,6 +61,7 @@ export function Root() {
                                 <Routes>
                                     <Route path="*" element={<Home />} />
                                     <Route path="/cadastro" element={<Cadastro />} />
+                                    <Route path="/profile" element={<Profile />} />
                                 </Routes>
                             </Col>
                         </Row>
