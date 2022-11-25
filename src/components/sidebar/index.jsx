@@ -47,7 +47,7 @@ function SidebarComponent() {
           </div>
           <div className="sidebar-nav">
             <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/home")}>
+              <div onClick={() => navigateTo("/")}>
                 <div className="area-icons-label">
                   <AiOutlineTable />
                   {sideBarCollapse ? (

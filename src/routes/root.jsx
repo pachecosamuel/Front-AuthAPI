@@ -13,13 +13,13 @@ import Col from "react-bootstrap/Col";
 import SidebarComponent from "../components/sidebar";
 import SideBarMenuBs from "../components/sidebar-bs";
 import { AuthenticationContext } from "../Services/Context/contextToken";
+import { LoadingComponent } from "../components/loading";
 
 export function Root() {
 
     const [windowSize, setWindowSize] = useState(getWindowSize());
     const { token, auth, isAuthenticated } = useContext(AuthenticationContext);
-
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         function handleWindowResize() {
@@ -29,15 +29,18 @@ export function Root() {
         window.addEventListener("resize", handleWindowResize);
 
         isAuthenticated();
+        setLoading(false)
     }, [token]);
 
     function getWindowSize() {
         return window.screen.width;
     }
 
+    if (loading) return <LoadingComponent />
+
     return (
         <BrowserRouter>
-            {true ? (
+            {auth ? (
                 <>
                     <Container fluid>
                         {windowSize < 801 ? (
@@ -55,7 +58,7 @@ export function Root() {
                             ) : null}
                             <Col className={windowSize > 800 ? "col-11" : "col-12"}>
                                 <Routes>
-                                    <Route path="/home" element={<Home />} />
+                                    <Route path="*" element={<Home />} />
                                     <Route path="/cadastro" element={<Cadastro />} />
                                 </Routes>
                             </Col>

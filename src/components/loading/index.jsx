@@ -1,8 +1,8 @@
 
 export const LoadingComponent = () => {
-    return(
-        <div>
-            
-        </div>
+    return (
+        <h1>
+            LOADING...
+        </h1>
     )
 }
