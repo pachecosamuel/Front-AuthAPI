@@ -7,16 +7,17 @@ export const AuthenticationContext = createContext({});
 export const AuthenticationProvider = ({ children }) => {
 
     const [user, setUser] = useState({
+        id: "",
         fullName: "",
         personalEmail: "",
-        corporativeEmail:"",
+        corporativeEmail: "",
         phone: "",
         cpf: "",
         role: 0,
         birthDate: "",
         admissionDate: "",
         token: ""
-        });
+    });
     const [token, setToken] = useState('');
     const [auth, setAuth] = useState(false);
 
@@ -24,24 +25,25 @@ export const AuthenticationProvider = ({ children }) => {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             setToken(localStorage.getItem('token'));
-            handleSetUser(localStorage.getItem('token')); 
+            handleSetUser(localStorage.getItem('token'));
         }
-        
+
     }, [])
 
     const handleSetUser = (tokenLocal) => {
         var tokenDecoded = jwtDecode(tokenLocal);
         setUser({
             ...user,
+            id: tokenDecoded?.Id,
             fullName: tokenDecoded?.FullName,
             personalEmail: tokenDecoded?.PersonalEmail,
-            corporativeEmail:tokenDecoded?.CorporativeEmail,
+            corporativeEmail: tokenDecoded?.CorporativeEmail,
             phone: tokenDecoded?.Phone,
             cpf: tokenDecoded?.Cpf,
             role: tokenDecoded?.Role,
             birthDate: tokenDecoded?.BirthDate,
             admissionDate: tokenDecoded?.AdmissionDate,
-            });
+        });
     }
 
 
@@ -51,21 +53,25 @@ export const AuthenticationProvider = ({ children }) => {
         if (!respostaServiceLogin) return false;
 
         setUser({
+            id: respostaServiceLogin?.Id,
             fullName: respostaServiceLogin?.fullName,
             personalEmail: respostaServiceLogin?.personalEmail,
-            corporativeEmail:respostaServiceLogin?.CorporativeEmail,
+            corporativeEmail: respostaServiceLogin?.CorporativeEmail,
             phone: respostaServiceLogin?.phone,
             cpf: respostaServiceLogin?.cpf,
             role: respostaServiceLogin?.role,
             birthDate: respostaServiceLogin?.birthDate,
             admissionDate: respostaServiceLogin?.admissionDate,
             token: respostaServiceLogin?.token
-            });
+        });
         setToken(respostaServiceLogin?.token)
         localStorage.setItem('token', respostaServiceLogin?.token);
 
         return true;
     };
+
+
+
 
     const logOut = () => {
         setToken('');

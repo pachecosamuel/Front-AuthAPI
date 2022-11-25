@@ -1,31 +1,33 @@
 
 import Card from 'react-bootstrap/Card';
-function InformationCard() {
+
+
+function InformationCard({ user }) {
     return (
         <Card>
             <Card.Body>
-                Nome :
+                <strong>   Nome : </strong> {user.fullName}
             </Card.Body>
             <Card.Body>
-                CPF :
+                <strong>   CPF : </strong>{user.cpf}
             </Card.Body>
             <Card.Body>
-                Email Pessoal :
+                <strong>   Email Pessoal : </strong>  {user.corporativeEmail}
             </Card.Body>
             <Card.Body>
-                Email Corporativo :
+                <strong>  Email Corporativo :</strong> {user.personalEmail}
             </Card.Body>
             <Card.Body>
-                Telefone :
+                <strong>  Telefone : </strong>{user.phone}
             </Card.Body>
             <Card.Body>
-                Role :
+                <strong>  Role :  </strong>{user.role}
             </Card.Body>
             <Card.Body>
-                Data nascimento :
+                <strong>  Data nascimento : </strong>{user.birthDate}
             </Card.Body>
             <Card.Body>
-                Data Admissão :
+                <strong>  Data Admissão: </strong>{user.admissionDate}
             </Card.Body>
         </Card>
     );
