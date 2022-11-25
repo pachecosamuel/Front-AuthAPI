@@ -47,7 +47,7 @@ export function Root() {
                         {windowSize < 801 ? (
                             <Row>
                                 <Col className="px-0 col">
-                                    <SideBarMenuBs logOut={logOut} />
+                                    <SideBarMenuBs />
                                 </Col>
                             </Row>
                         ) : null}
