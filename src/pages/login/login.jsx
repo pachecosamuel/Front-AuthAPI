@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormLogin from "../../components/formLogin";
 import './style.css';
-import { LoadingComponent } from "../../components/loading";
+
 
 export const Login = () => {
 
