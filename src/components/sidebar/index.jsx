@@ -66,8 +66,8 @@ function SidebarComponent({ logOut }) {
                 </div>
               </div>
             </div>
-           </div>
-          <div className="container-usuario">
+          </div>
+          <div className="container-usuario" onClick={() => navigateTo("/profile")}>
             <BiUserCircle />
             <div className="usuario-info">
               {sideBarCollapse ? (
