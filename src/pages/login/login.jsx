@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import image from "../../assets/logo.png"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormLogin from "../../components/formLogin";
 import './style.css';
-export const Login = ({ setLogged }) => {
+import { LoadingComponent } from "../../components/loading";
+
+export const Login = () => {
+
     return (
         <>
             {/* //body */}
@@ -33,7 +36,7 @@ export const Login = ({ setLogged }) => {
 
                         <Row className="mt-2" >
 
-                            <Col sm={12}><FormLogin setLogged={setLogged} /></Col>
+                            <Col sm={12}><FormLogin /></Col>
 
                         </Row>
                     </Col>

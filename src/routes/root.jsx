@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Login } from "../pages/login/login";
@@ -13,10 +13,14 @@ import Col from "react-bootstrap/Col";
 
 import SidebarComponent from "../components/sidebar";
 import SideBarMenuBs from "../components/sidebar-bs";
+import { AuthenticationContext } from "../Services/Context/contextToken";
+import { LoadingComponent } from "../components/loading";
 
 export function Root() {
-    const [logged, setLogged] = useState(false);
+
     const [windowSize, setWindowSize] = useState(getWindowSize());
+    const { token, auth, isAuthenticated } = useContext(AuthenticationContext);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         function handleWindowResize() {
@@ -24,19 +28,20 @@ export function Root() {
         }
 
         window.addEventListener("resize", handleWindowResize);
-    }, []);
+
+        isAuthenticated();
+        setLoading(false)
+    }, [token]);
 
     function getWindowSize() {
         return window.screen.width;
     }
 
-    function logOut() {
-        setLogged(false)
-    }
+    if (loading) return <LoadingComponent />
 
     return (
         <BrowserRouter>
-            {logged ? (
+            {auth ? (
                 <>
                     <Container fluid>
                         {windowSize < 801 ? (
@@ -49,12 +54,12 @@ export function Root() {
                         <Row>
                             {windowSize > 800 ? (
                                 <Col className={windowSize > 800 ? "px-0 col-1" : "px-0 col-0"}>
-                                    <SidebarComponent logOut={logOut} />
+                                    <SidebarComponent />
                                 </Col>
                             ) : null}
                             <Col className={windowSize > 800 ? "col-11" : "col-12"}>
                                 <Routes>
-                                    <Route path="/home" element={<Home />} />
+                                    <Route path="*" element={<Home />} />
                                     <Route path="/cadastro" element={<Cadastro />} />
                                     <Route path="/profile" element={<Profile />} />
                                 </Routes>
@@ -64,7 +69,7 @@ export function Root() {
                 </>
             ) : (
                 <Routes>
-                    <Route path="/" element={<Login setLogged={setLogged} />} />
+                    <Route path="*" element={<Login />} />
                     <Route path="/recuperar" element={<Recuperar />} />
                 </Routes>
             )}

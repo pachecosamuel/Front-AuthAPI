@@ -6,12 +6,7 @@ import Row from "react-bootstrap/Row";
 import Offcanvas from "react-bootstrap/Offcanvas";
  import LogoT2m from "../../assets/logo.png";
 
-import { AiOutlineTable, AiOutlineIdcard } from "react-icons/ai";
 import { CgHome } from "react-icons/cg";
-import { TbIcons } from "react-icons/tb";
-import { HiOutlineColorSwatch } from "react-icons/hi";
-import { FaWpforms } from "react-icons/fa";
-import { SlDocs } from "react-icons/sl";
 import { BsArrowBarLeft } from "react-icons/bs";
 import { CgMenuRound } from "react-icons/cg";
 import { BiUserCircle } from "react-icons/bi";
@@ -67,7 +62,7 @@ function SideBarMenuBs({ logOut }) {
               <ContainerNavBsStyle>
                 <div className="flex-column sidebar-bs-nav">
                   <div className="sidebar-nav-item">
-                    <div onClick={() => navigateTo("/home")}>
+                    <div onClick={() => navigateTo("/")}>
                       <div className="area-icons-label">
                         <CgHome />
                         <span>Início</span>
