@@ -18,6 +18,7 @@ const FormLogin = () => {
     const [password, setPassword] = useState("");
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
     const [loadingButton, setLoadingButton] = useState(false)
+    const [validated, setValidated] = useState(false)
 
     let navigate = useNavigate();
 
@@ -27,27 +28,12 @@ const FormLogin = () => {
         const respostaLogin = await login(email.concat('@t2mlab.com'), password);
         if (!respostaLogin) {
             setLoadingButton(false)
-            alert(
-                "Erro",
-                "",
-                [
-                    { text: "Ok" },
-                    { text: "Não foi possivel fazer o login" }
-                ]
-            );
+            setValidated(true)
         } else {
             setLoadingButton(false)
             navigate('/');
         }
     }
-
-    // const handleLogin1 = async (e) => {
-    //     e.preventDefault();
-
-    //     alert("Logou");
-
-    //     navigate('/');
-    // }
 
     function handlePasswordIsVisible() {
         setPasswordIsVisible(!passwordIsVisible)
@@ -55,20 +41,32 @@ const FormLogin = () => {
 
     return (
         <ContainerFormLoginStyle>
-            <Form>
+            <Form noValidate validated={validated}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <InputGroup className="mb-3" onChange={(e) => setEmail(e.target.value)}>
+                    <InputGroup
+                        className="mb-3"
+                        onChange={(e) => setEmail(e.target.value)}
+                        hasValidation
+                    >
                         <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                         <Form.Control
                             placeholder="Digite seu e-mail"
                             aria-label="Recipient's username"
                             aria-describedby="basic-addon2"
+                            required
                         />
                         <InputGroup.Text id="basic-addon2">@t2mlab.com</InputGroup.Text>
+                        <Form.Control.Feedback type="invalid">
+                            O email deve ser preenchido.
+                        </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <InputGroup className="mb-3" onChange={(e) => setPassword(e.target.value)}>
+                    <InputGroup
+                        className="mb-3"
+                        onChange={(e) => setPassword(e.target.value)}
+                        hasValidation
+                    >
                         <InputGroup.Text id="basic-addon1">
                             <HiOutlineLockClosed />
                         </InputGroup.Text>
@@ -77,6 +75,7 @@ const FormLogin = () => {
                             placeholder="Digite sua senha"
                             aria-label="Recipient's username"
                             aria-describedby="basic-addon2"
+                            required
                         />
                         <InputGroup.Text id="basic-addon2">
                             {!passwordIsVisible ? (
@@ -89,6 +88,9 @@ const FormLogin = () => {
                                 </Button>
                             )}
                         </InputGroup.Text>
+                        <Form.Control.Feedback type="invalid">
+                            A senha deve ser preenchida.
+                        </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
                 <Row>
@@ -121,14 +123,13 @@ const FormLogin = () => {
                                     />
                                 </Button>
                             )}
-
                     </Col>
                 </Row>
                 <p className="mt-3">
                     Esqueci minha senha. <a href="#">Recuperar senha</a>
                 </p>
             </Form>
-        </ContainerFormLoginStyle >
+        </ContainerFormLoginStyle>
     );
 }
 

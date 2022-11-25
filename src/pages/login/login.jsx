@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import image from "../../assets/logo.png"
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import FormLogin from "../../components/formLogin";
 import './style.css';
-import { LoadingComponent } from "../../components/loading";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 export const Login = () => {
 
     return (
         <>
+            <ToastContainer
+                position='top-right'
+                hideProgressBar
+                theme='colored'
+            />
             {/* //body */}
             <Container fluid className="fluid">
 
@@ -41,7 +47,6 @@ export const Login = () => {
                         </Row>
                     </Col>
                 </Row>
-
             </Container>
         </>
     );
