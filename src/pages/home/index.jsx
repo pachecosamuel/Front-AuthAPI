@@ -99,7 +99,15 @@ export const Home = () => {
                             role="status"
                             aria-hidden="true" />  
                             : 
-                            <TableComponent registros={isSearching ? registros : users} />
+                            <TableComponent registros={
+                                isSearching ? registrosFiltrados 
+                                : 
+                                users.slice(
+                                    (currentPage - 1) * selectValue,
+                                    +selectValue * currentPage
+                                )
+                            
+                            } />
                         }
                             
                         </Col>
