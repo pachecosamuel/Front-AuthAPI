@@ -92,12 +92,24 @@ export const Home = () => {
                     <Row>
                         <Col>
                         {
-                            loading ? <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true" />  
+                            loading ? 
+                            
+                            <div style={{
+                                height: '10vh',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <span>
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    /> Carregando...
+                                </span>
+                            </div>
                             : 
                             <TableComponent registros={
                                 isSearching ? registrosFiltrados 
