@@ -9,7 +9,7 @@ import { BiUserCircle } from "react-icons/bi";
 import InformationCard from "../../components/profileCard/informationCard/index";
 import React, { useContext, useEffect, useState } from 'react';
 import { FindById } from "../../Services/Api/apiFindById";
-import { Await } from "react-router-dom";
+import PasswordCard from "../../components/profileCard/resetPasswordCard";
 export function Profile() {
 
     const { user } = useContext(AuthenticationContext);
@@ -32,6 +32,8 @@ export function Profile() {
                         <InformationCard user={newUser} />
                         <hr />
                         <AddressCard user={newUser} />
+                        <hr />
+                        <PasswordCard />
                     </Col>
                 </Row>
             </ContentPageContainer>

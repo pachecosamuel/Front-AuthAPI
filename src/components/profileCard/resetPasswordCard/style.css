@@ -1,0 +1,22 @@
+.accordion-button {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--verde-primario) !important;
+    background-image: none !important;
+    color: var(--branco) !important;
+}
+
+::after {
+    filter: invert(100%) !important;
+}
+
+.accordion-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 2rem;
+}
