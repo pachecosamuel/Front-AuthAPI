@@ -24,13 +24,15 @@ export const Home = () => {
     const [selectValuesIsModify, setselectValuesIsModify] = useState(false);
     const [registrosFiltrados, setRegistrosFiltrados] = useState([]);
     const [registros, setRegistros] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
 
     useEffect(() => {
 
         const handleGetUsers = async () => {
             setLoading(true)
             const res = await api.get('/User');
-            setRegistros(res.data.data)
+            setUsers(res.data.data)
             setLoading(false)
         }
         handleGetUsers();
@@ -49,7 +51,7 @@ export const Home = () => {
         );
         setRegistrosFiltrados(filtrados);
         setSelectValue(+selectValue);
-    }, [selectValue, currentPage, selectValuesIsModify]);
+    }, [selectValue, currentPage, selectValuesIsModify, registros]);
 
     function setSelectValueChange(event) {
         setSelectValue(event);
@@ -57,7 +59,7 @@ export const Home = () => {
     }
 
     function filterBySearch(value) {
-        let registrosFiltrados = registros.filter(
+        let registrosFiltrados = users.filter(
             (r) =>
                 // r.id === +value ||
                 r.cpf.includes(value) ||
@@ -72,6 +74,7 @@ export const Home = () => {
         );
         setCurrentPage(1);
         setRegistros(registrosFiltrados);
+        setIsSearching(true);
     }
 
     return (
@@ -96,7 +99,7 @@ export const Home = () => {
                             role="status"
                             aria-hidden="true" />  
                             : 
-                            <TableComponent registros={registros} />
+                            <TableComponent registros={isSearching ? registros : users} />
                         }
                             
                         </Col>
@@ -107,7 +110,7 @@ export const Home = () => {
                             <PaginationComponent
                                 selectValue={selectValue}
                                 setSelectValueChange={setSelectValueChange}
-                                registros={registros}
+                                registros={isSearching ? registros : users}
                                 currentPage={currentPage}
                                 setCurrentPage={setCurrentPage}
                             />
