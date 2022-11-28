@@ -26,12 +26,13 @@ export const Home = () => {
     const [registros, setRegistros] = useState([]);
     const [users, setUsers] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [tableIsModify, setTableIsModify] = useState(false);
 
     useEffect(() => {
 
         const handleGetUsers = async () => {
             setLoading(true)
-            const res = await api.get('/User');
+            const res = await api.get('/User/active');
             setUsers(res.data.data)
             setLoading(false)
         }
@@ -54,7 +55,7 @@ export const Home = () => {
         );
         setRegistrosFiltrados(filtrados);
         setSelectValue(+selectValue);
-    }, [selectValue, currentPage, selectValuesIsModify, registros]);
+    }, [selectValue, currentPage, selectValuesIsModify, registros, tableIsModify]);
 
     function setSelectValueChange(event) {
         setSelectValue(event);
@@ -120,9 +121,11 @@ export const Home = () => {
                                 users.slice(
                                     (currentPage - 1) * selectValue,
                                     +selectValue * currentPage
-                                )
-                            
-                            } />
+                                )} 
+                                setUpdateTable={setTableIsModify}
+                                updateTable={tableIsModify}
+                                setCurrentPage={setCurrentPage}
+                                />
                         }
                             
                         </Col>
