@@ -35,7 +35,10 @@ export const Home = () => {
             setUsers(res.data.data)
             setLoading(false)
         }
-        handleGetUsers();
+        if(!isSearching){
+          handleGetUsers();  
+        }
+        
 
 
         let page = currentPage;

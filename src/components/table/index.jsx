@@ -15,7 +15,7 @@ function TableComponent({ registros }) {
                         <tr>
                             <th>CPF</th>
                             <th>Nome</th>
-                            <th>Email Empresarial</th>
+                            <th>Email Corporativo</th>
                             <th>Email Pessoal</th>
                             <th>Telefone</th>
                             <th>Data de Nascimento</th>
