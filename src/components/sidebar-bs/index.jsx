@@ -24,7 +24,7 @@ import { AuthenticationContext } from "../../Services/Context/contextToken"
 function SideBarMenuBs() {
     const [show, setShow] = useState(false);
 
-    const { logOut } = useContext(AuthenticationContext)
+    const { logOut, user } = useContext(AuthenticationContext)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -36,6 +36,85 @@ function SideBarMenuBs() {
         window.scrollTo(0, 0);
         navigate(route);
     }
+
+    const renderSwitch = () => {
+        switch (user.role) {
+            case 'COLLABORATOR':
+                return (
+                    <div className="flex-column sidebar-bs-nav">
+                    </div>
+                )
+                break;
+            case 'ADMINISTRATIVE_DEPARTMENT':
+                return (
+                    <div className="flex-column sidebar-bs-nav">
+                        <div className="sidebar-nav-item">
+                            <div onClick={() => navigateTo("/")}>
+                                <div className="area-icons-label">
+                                    <AiOutlineTable />
+                                    <span>Controle de Acesso</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sidebar-nav-item">
+                            <div onClick={() => navigateTo("/cadastro")}>
+                                <div className="area-icons-label">
+                                    <AiOutlineUserAdd />
+                                    <span>Cadastro</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+                break;
+            case 'SYSTEM_ADMINISTRATOR':
+                return (
+                    <div className="flex-column sidebar-bs-nav">
+                        <div className="sidebar-nav-item">
+                            <div onClick={() => navigateTo("/")}>
+                                <div className="area-icons-label">
+                                    <AiOutlineTable />
+                                    <span>Controle de Acesso</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sidebar-nav-item">
+                            <div onClick={() => navigateTo("/cadastro")}>
+                                <div className="area-icons-label">
+                                    <AiOutlineUserAdd />
+                                    <span>Cadastro</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+                break;
+            case 'MANAGER':
+                return (
+                    <div className="flex-column sidebar-bs-nav">
+                        <div className="sidebar-nav-item">
+                            <div onClick={() => navigateTo("/")}>
+                                <div className="area-icons-label">
+                                    <AiOutlineTable />
+                                    <span>Controle de Acesso</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="sidebar-nav-item">
+                            <div onClick={() => navigateTo("/cadastro")}>
+                                <div className="area-icons-label">
+                                    <AiOutlineUserAdd />
+                                    <span>Cadastro</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )
+                break;
+        }
+    }
+
+
 
     return (
         <ContainerSideBar>
@@ -65,36 +144,21 @@ function SideBarMenuBs() {
                         </Offcanvas.Header>
                         <Offcanvas.Body>
                             <ContainerNavBsStyle>
-                                <div className="flex-column sidebar-bs-nav">
-                                    <div className="sidebar-nav-item">
-                                        <div onClick={() => navigateTo("/")}>
-                                            <div className="area-icons-label">
-                                                <AiOutlineTable />
-                                                <span>Controle de Acesso</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="sidebar-nav-item">
-                                        <div onClick={() => navigateTo("/cadastro")}>
-                                            <div className="area-icons-label">
-                                                <AiOutlineUserAdd />
-                                                <span>Cadastro</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+                                {renderSwitch()}
+
                                 <div onClick={() => navigateTo("/profile")} className="container-usuario mt-3">
                                     <BiUserCircle />
                                     <div className="usuario-info">
                                         <span title="Larissa Santos" className="label-sidebar">
-                                            Usuario X
+                                            {user.fullName}
                                         </span>
                                         <span
                                             id="usuario-departamento"
                                             className="label-sidebar"
                                             title="Departamento Pessoal"
                                         >
-                                            Departamento de teste
+                                            {user.corporativeEmail}
                                         </span>
                                     </div>
                                 </div>

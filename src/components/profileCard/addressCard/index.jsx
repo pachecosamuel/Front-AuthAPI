@@ -10,13 +10,13 @@ function AddressCard({ user }) {
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Endereço</Accordion.Header>
                     <Accordion.Body style={{ display: "flex" }} >
-                        <div style={{ width: "60%" }}><text> <strong>Cep :</strong> {user.cep}</text> </div>   <text> <strong> UF :</strong> {user.uf}</text>
+                        <div style={{ width: "60%" }}><p> <strong>Cep :</strong> {user.cep}</p> </div>   <p> <strong> UF :</strong> {user.uf}</p>
                     </Accordion.Body>
                     <Accordion.Body style={{ display: "flex" }} >
-                        <div style={{ width: "60%" }}><text> <strong>Cidade</strong>  : {user.cidade}</text> </div>   <text> <strong> Bairro :</strong> {user.bairro}</text>
+                        <div style={{ width: "60%" }}><p> <strong>Cidade</strong>  : {user.cidade}</p> </div>   <p> <strong> Bairro :</strong> {user.bairro}</p>
                     </Accordion.Body>
                     <Accordion.Body style={{ display: "flex" }} >
-                        <div style={{ width: "60%" }}><text>  <strong>Logradouro : </strong> {user.logradouro}:</text> </div>   <text>  <strong>Complemento :</strong> {user.complemento}</text>
+                        <div style={{ width: "60%" }}><p>  <strong>Logradouro : </strong> {user.logradouro}:</p> </div>   <p>  <strong>Complemento :</strong> {user.complemento}</p>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
