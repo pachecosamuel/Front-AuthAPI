@@ -11,6 +11,8 @@ import { Modal } from "react-bootstrap";
 import ButtonComponent from "../button";
 import { DesactivateUserModalComponent } from "../desactivateUserModal";
 import { toast } from "react-toastify";
+import { BsEye } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage }) {
 
@@ -18,10 +20,9 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
-    const [showAction, setShowAction] = useState(false);
+    let navigate = useNavigate();
 
     const desactivateUser = async (user) => {
-
         try {
             setLoading(true)
             var res = await api.put(`User/deactivate/${user.id}`)
@@ -38,7 +39,6 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             setLoading(false)
             setShowModal(false)
         }
-
     }
 
     const renderActionsByRole = (userTable) => {
@@ -46,6 +46,11 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             case 'MANAGER':
                 return (
                     <>
+                        <td className="coluna-acao">
+                            <BsEye
+                                onClick={() => navigate(`user/view/${userTable.id}`)}
+                            />
+                        </td>
                     </>
                 )
                 break;
@@ -53,7 +58,13 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                 return (
                     <>
                         <td className="coluna-acao">
+                            <BsEye
+                                onClick={() => navigate(`user/view/${userTable.id}`)}
+                            />
+                        </td>
+                        <td className="coluna-acao">
                             <CiEdit
+                                onClick={() => navigate(`user/edit/${userTable.id}`)}
                             />
                         </td>
 
@@ -77,7 +88,13 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                 return (
                     <>
                         <td className="coluna-acao">
+                            <BsEye
+                                onClick={() => navigate(`user/view/${userTable.id}`)}
+                            />
+                        </td>
+                        <td className="coluna-acao">
                             <CiEdit
+                                onClick={() => navigate(`user/edit/${userTable.id}`)}
                             />
                         </td>
 
@@ -105,6 +122,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             case 'MANAGER':
                 return (
                     <>
+                        <th colSpan="2">Ações</th>
                     </>
                 )
                 break;
@@ -153,7 +171,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                                         <td>{r.phone}</td>
                                         <td>{r.birthDate}</td>
                                         <td>{r.admissionDate}</td>
-                                        
+
 
                                         {renderActionsByRole(r)}
 
