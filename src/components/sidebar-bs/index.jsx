@@ -100,14 +100,6 @@ function SideBarMenuBs() {
                                 </div>
                             </div>
                         </div>
-                        <div className="sidebar-nav-item">
-                            <div onClick={() => navigateTo("/cadastro")}>
-                                <div className="area-icons-label">
-                                    <AiOutlineUserAdd />
-                                    <span>Cadastro</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 )
                 break;

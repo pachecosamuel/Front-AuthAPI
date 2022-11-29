@@ -38,6 +38,8 @@ export function Root() {
     }
 
     function getRoutesByRole() {
+        // Caso altere alguma rota para alguma, 
+        // também deve ser alterada no switch do componente sidebar e sidebar-bs
         var tokenDecoded = jwtDecode(token);
         switch (tokenDecoded.Role) {
             case 'COLLABORATOR':
@@ -69,7 +71,6 @@ export function Root() {
                 return (
                     <Routes>
                         <Route path="*" element={<Home />} />
-                        <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/profile" element={<Profile />} />
                     </Routes>
                 )
