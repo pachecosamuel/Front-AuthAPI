@@ -36,7 +36,7 @@ export const ContainerTable = styled.div`
     }
   }
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1280px) {
     .table-area {
       overflow-y: scroll !important;
     }

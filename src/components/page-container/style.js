@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const PageContainer = styled.div`
-    @import url("../../css-config/colors.css");
+    //@import url("../../css-config/colors.css");
 
     width: 100%;
     min-height: calc(100vh - 2rem);

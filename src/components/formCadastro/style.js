@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerForm = styled.div`
-  @import url("../../css-config/colors.css");
+  //@import url("../../css-config/colors.css");
 
   .form-cadastro {
     width: 100%;

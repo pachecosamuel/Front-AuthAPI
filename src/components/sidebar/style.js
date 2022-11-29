@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerNavStyle = styled.div`
-  @import url("../../css-config/colors.css");
+  //@import url("../../css-config/colors.css");
  
   font-size: 110%;
   margin: 0 !important;
