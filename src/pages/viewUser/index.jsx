@@ -11,7 +11,23 @@ import { ContainerTablePageStyle } from "../cadastro/style";
 import { ContainerForm } from "./style";
 
 export const ViewUser = () => {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({
+        fullName: "",
+        corporativeEmail: "",
+        personalEmail: "",
+        phone: "",
+        cpf: "",
+        role: 0,
+        logradouro: "",
+        bairro: "",
+        numero: "",
+        complemento: "",
+        cidade: "",
+        uf: "",
+        cep: "",
+        birthDate: "",
+        admissionDate: ""
+    })
     const [loading, setLoading] = useState(true)
     const params = useParams();
     const userId = params.userId;

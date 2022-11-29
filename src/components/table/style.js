@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerTable = styled.div`
-  @import url("../../css/css-config/colors.css");
+  //@import url("../../css/css-config/colors.css");
 
   .table-area {
     width: 100%;
