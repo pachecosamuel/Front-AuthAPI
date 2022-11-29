@@ -13,22 +13,3 @@
 ::after {
     filter: invert(100%) !important;
 }
-
-.accordion-body {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-    gap: 2rem;
-}
-
-.form {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-@media (max-width: 768px) {
-    .form {
-        display: block;
-    }
-}
