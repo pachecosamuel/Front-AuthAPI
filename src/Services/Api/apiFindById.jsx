@@ -1,10 +1,10 @@
 import { api } from "./apiConnection";
 
 
-const FindById = async (id, token) => {
+const FindById = async (data) => {
 
     try {
-        const user = await api.get(`User/${id}`,
+        const user = await api.get(`User/${data}`,
             // {
             //     headers: {
             //         Authorization: `Bearer ${token}`,
