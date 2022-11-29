@@ -16,7 +16,7 @@ import { AuthenticationContext } from "../../Services/Context/contextToken";
 
 function SidebarComponent() {
 
-  const { logOut } = useContext(AuthenticationContext);
+  const { logOut, user } = useContext(AuthenticationContext);
 
   const [sideBarCollapse, setSideBarCollapse] = useState(true);
   const navigate = useNavigate();
@@ -27,24 +27,17 @@ function SidebarComponent() {
     navigate(route);
   }
 
-  return (
-    <ContainerNavStyle collapse={sideBarCollapse}>
-      <Row>
-        <Col className="column-container">
-          <div className="logo-area">
-            <img src={LogoT2m} alt="Logo T2M" />
+  const renderSwitch = () => {
+    switch (user.role) {
+      case 'COLLABORATOR':
+        return (
+          <div className="sidebar-nav">
           </div>
-          <div className="collapse-sidebar-action">
-            {sideBarCollapse ? (
-              <BsArrowBarRight
-                onClick={() => setSideBarCollapse(!sideBarCollapse)}
-              />
-            ) : (
-              <BsArrowBarLeft
-                onClick={() => setSideBarCollapse(!sideBarCollapse)}
-              />
-            )}
-          </div>
+        )
+        break;
+
+      case 'ADMINISTRATIVE_DEPARTMENT':
+        return (
           <div className="sidebar-nav">
             <div className="mt-2 sidebar-nav-item">
               <div onClick={() => navigateTo("/")}>
@@ -71,14 +64,103 @@ function SidebarComponent() {
               </div>
             </div>
           </div>
+        )
+        break;
+
+      case 'SYSTEM_ADMINISTRATOR':
+        return (
+          <div className="sidebar-nav">
+            <div className="mt-2 sidebar-nav-item">
+              <div onClick={() => navigateTo("/")}>
+                <div className="area-icons-label">
+                  <AiOutlineTable />
+                  {sideBarCollapse ? (
+                    ""
+                  ) : (
+                    <span className="label-sidebar">Controle de Acesso</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 sidebar-nav-item">
+              <div onClick={() => navigateTo("/cadastro")}>
+                <div className="area-icons-label">
+                  <AiOutlineUserAdd />
+                  {sideBarCollapse ? (
+                    ""
+                  ) : (
+                    <span className="label-sidebar">Cadastro</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+        break;
+
+      case 'MANAGER':
+        return (
+          <div className="sidebar-nav">
+            <div className="mt-2 sidebar-nav-item">
+              <div onClick={() => navigateTo("/")}>
+                <div className="area-icons-label">
+                  <AiOutlineTable />
+                  {sideBarCollapse ? (
+                    ""
+                  ) : (
+                    <span className="label-sidebar">Controle de Acesso</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 sidebar-nav-item">
+              <div onClick={() => navigateTo("/cadastro")}>
+                <div className="area-icons-label">
+                  <AiOutlineUserAdd />
+                  {sideBarCollapse ? (
+                    ""
+                  ) : (
+                    <span className="label-sidebar">Cadastro</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+        break;
+    }
+  }
+
+  return (
+
+    <ContainerNavStyle collapse={sideBarCollapse}>
+      <Row>
+        <Col className="column-container">
+          <div className="logo-area">
+            <img src={LogoT2m} alt="Logo T2M" />
+          </div>
+          <div className="collapse-sidebar-action">
+            {sideBarCollapse ? (
+              <BsArrowBarRight
+                onClick={() => setSideBarCollapse(!sideBarCollapse)}
+              />
+            ) : (
+              <BsArrowBarLeft
+                onClick={() => setSideBarCollapse(!sideBarCollapse)}
+              />
+            )}
+          </div>
+
+          {renderSwitch()}
+
           <div className="container-usuario" onClick={() => navigateTo("/profile")}>
             <BiUserCircle />
             <div className="usuario-info">
               {sideBarCollapse ? (
                 ""
               ) : (
-                <span title="Larissa Santos" className="label-sidebar">
-                  Usuario X
+                <span className="label-sidebar">
+                  {user.fullName}
                 </span>
               )}
               {sideBarCollapse ? (
@@ -87,9 +169,8 @@ function SidebarComponent() {
                 <span
                   id="usuario-departamento"
                   className="label-sidebar"
-                  title="Departamento Pessoal"
                 >
-                  Departamento de teste
+                  {user.corporativeEmail}
                 </span>
               )}
             </div>
