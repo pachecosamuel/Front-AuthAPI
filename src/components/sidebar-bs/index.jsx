@@ -120,7 +120,9 @@ function SideBarMenuBs() {
                             <img src={LogoT2m} alt="Logo T2M" />
                         </div>
                         <div className="area-direita">
-                            <BiUserCircle />
+                            <BiUserCircle 
+                            onClick={() => navigateTo("/profile")}
+                            />
                         </div>
                     </div>
                     <Offcanvas show={show} onHide={handleClose}>
