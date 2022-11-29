@@ -16,6 +16,15 @@ function PaginationComponent({
     currentPage,
     setCurrentPage
 }) {
+
+    const getLastPage = () => {
+        return (registros.length / selectValue) > Math.round(registros.length / selectValue)
+        ?
+        Math.round(registros.length / selectValue) + 1
+        :
+        Math.round(registros.length / selectValue)
+    }
+    
     return (
         <ContainerPagination>
             <Form.Select
@@ -52,7 +61,7 @@ function PaginationComponent({
                                     return;
                                 }
                                 : 
-                                Math.round(registros.length / selectValue) === 0 
+                                getLastPage() === 0 
                                 ? function () {
                                     return;
                                 }
@@ -62,18 +71,18 @@ function PaginationComponent({
                     />
                 </div>
                 <div>
-                    <span>{`${currentPage} de ${Math.round(registros.length / selectValue) === 0 ? "1" : (registros.length / selectValue).isInteger ? (registros.length / selectValue) : Math.round(registros.length / selectValue)
+                    <span>{`${currentPage} de ${getLastPage() === 0 ? "1" : getLastPage()
                         }`}</span>
                 </div>
                 <div>
                     <MdNavigateNext
                         onClick={(event) =>
-                            currentPage === Math.round(registros.length / selectValue)
+                            currentPage === getLastPage()
                                 ? function () {
                                     return;
                                 }
                                 : 
-                                Math.round(registros.length / selectValue) > 1  ?
+                                getLastPage() > 1  ?
                                 setCurrentPage(currentPage + 1)
                                 :
                                 function () {
@@ -85,15 +94,15 @@ function PaginationComponent({
                 <div>
                     <MdLastPage
                         onClick={(event) =>
-                            currentPage === Math.round(registros.length / selectValue)
+                            currentPage === getLastPage()
                                 ? function () {
                                     return;
                                 }
                                 : 
-                                Math.round(registros.length / selectValue) === 0 ?
+                                getLastPage() === 0 ?
                                 setCurrentPage(1)
                                 :
-                                setCurrentPage(Math.round(registros.length / selectValue))
+                                setCurrentPage(getLastPage())
                         }
                     />
                 </div>

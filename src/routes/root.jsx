@@ -15,11 +15,12 @@ import SidebarComponent from "../components/sidebar";
 import SideBarMenuBs from "../components/sidebar-bs";
 import { AuthenticationContext } from "../Services/Context/contextToken";
 import { LoadingComponent } from "../components/loading";
+import jwtDecode from "jwt-decode";
 
 export function Root() {
 
     const [windowSize, setWindowSize] = useState(getWindowSize());
-    const { token, auth, isAuthenticated } = useContext(AuthenticationContext);
+    const { token, auth, isAuthenticated, user } = useContext(AuthenticationContext);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -28,13 +29,52 @@ export function Root() {
         }
 
         window.addEventListener("resize", handleWindowResize);
-
         isAuthenticated();
         setLoading(false)
-    }, [token]);
+    }, [token, user]);
 
     function getWindowSize() {
         return window.screen.width;
+    }
+
+    function getRoutesByRole() {
+        var tokenDecoded = jwtDecode(token);
+        switch (tokenDecoded.Role) {
+            case 'COLLABORATOR':
+                return (
+                    <Routes>
+                        <Route path="*" element={<Profile />} />
+                    </Routes>
+                )
+                break;
+            case 'ADMINISTRATIVE_DEPARTMENT':
+                return (
+                    <Routes>
+                        <Route path="*" element={<Home />} />
+                        <Route path="/cadastro" element={<Cadastro />} />
+                        <Route path="/profile" element={<Profile />} />
+                    </Routes>
+                )
+                break;
+            case 'SYSTEM_ADMINISTRATOR':
+                return (
+                    <Routes>
+                        <Route path="*" element={<Home />} />
+                        <Route path="/cadastro" element={<Cadastro />} />
+                        <Route path="/profile" element={<Profile />} />
+                    </Routes>
+                )
+                break;
+            case 'MANAGER':
+                return (
+                    <Routes>
+                        <Route path="*" element={<Home />} />
+                        <Route path="/cadastro" element={<Cadastro />} />
+                        <Route path="/profile" element={<Profile />} />
+                    </Routes>
+                )
+                break;
+        }
     }
 
     if (loading) return <LoadingComponent />
@@ -58,11 +98,7 @@ export function Root() {
                                 </Col>
                             ) : null}
                             <Col className={windowSize > 800 ? "col-11" : "col-12"}>
-                                <Routes>
-                                    <Route path="*" element={<Home />} />
-                                    <Route path="/cadastro" element={<Cadastro />} />
-                                    <Route path="/profile" element={<Profile />} />
-                                </Routes>
+                                {getRoutesByRole()}
                             </Col>
                         </Row>
                     </Container>

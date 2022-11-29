@@ -24,16 +24,22 @@ export const Home = () => {
     const [selectValuesIsModify, setselectValuesIsModify] = useState(false);
     const [registrosFiltrados, setRegistrosFiltrados] = useState([]);
     const [registros, setRegistros] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+    const [tableIsModify, setTableIsModify] = useState(false);
 
     useEffect(() => {
 
         const handleGetUsers = async () => {
             setLoading(true)
-            const res = await api.get('/User');
-            setRegistros(res.data.data)
+            const res = await api.get('/User/active');
+            setUsers(res.data.data)
             setLoading(false)
         }
-        handleGetUsers();
+        if(!isSearching){
+          handleGetUsers();  
+        }
+        
 
 
         let page = currentPage;
@@ -49,7 +55,7 @@ export const Home = () => {
         );
         setRegistrosFiltrados(filtrados);
         setSelectValue(+selectValue);
-    }, [selectValue, currentPage, selectValuesIsModify]);
+    }, [selectValue, currentPage, selectValuesIsModify, registros, tableIsModify]);
 
     function setSelectValueChange(event) {
         setSelectValue(event);
@@ -57,7 +63,7 @@ export const Home = () => {
     }
 
     function filterBySearch(value) {
-        let registrosFiltrados = registros.filter(
+        let registrosFiltrados = users.filter(
             (r) =>
                 // r.id === +value ||
                 r.cpf.includes(value) ||
@@ -72,6 +78,7 @@ export const Home = () => {
         );
         setCurrentPage(1);
         setRegistros(registrosFiltrados);
+        setIsSearching(true);
     }
 
     return (
@@ -89,14 +96,36 @@ export const Home = () => {
                     <Row>
                         <Col>
                         {
-                            loading ? <Spinner
-                            as="span"
-                            animation="border"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true" />  
+                            loading ? 
+                            
+                            <div style={{
+                                height: '10vh',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <span>
+                                    <Spinner
+                                        as="span"
+                                        animation="border"
+                                        size="sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    /> Carregando...
+                                </span>
+                            </div>
                             : 
-                            <TableComponent registros={registros} />
+                            <TableComponent registros={
+                                isSearching ? registrosFiltrados 
+                                : 
+                                users.slice(
+                                    (currentPage - 1) * selectValue,
+                                    +selectValue * currentPage
+                                )} 
+                                setUpdateTable={setTableIsModify}
+                                updateTable={tableIsModify}
+                                setCurrentPage={setCurrentPage}
+                                />
                         }
                             
                         </Col>
@@ -107,7 +136,7 @@ export const Home = () => {
                             <PaginationComponent
                                 selectValue={selectValue}
                                 setSelectValueChange={setSelectValueChange}
-                                registros={registros}
+                                registros={isSearching ? registros : users}
                                 currentPage={currentPage}
                                 setCurrentPage={setCurrentPage}
                             />
