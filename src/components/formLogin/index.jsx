@@ -7,10 +7,11 @@ import Col from "react-bootstrap/Col";
 import Button from 'react-bootstrap/Button';
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { ContainerFormLoginStyle, BotaoStyle } from "./style";
+import { ContainerFormLoginStyle } from "./style";
 import { useNavigate, } from "react-router-dom";
 import { AuthenticationContext } from "../../Services/Context/contextToken";
 import { Spinner } from "react-bootstrap";
+import BotaoComponent from "../button";
 
 const FormLogin = () => {
     const { login } = useContext(AuthenticationContext);
@@ -57,7 +58,7 @@ const FormLogin = () => {
                         />
                         <InputGroup.Text id="basic-addon2">@t2mlab.com</InputGroup.Text>
                         <Form.Control.Feedback type="invalid">
-                            O email deve ser preenchido.
+                            O email deve ser preenchido
                         </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
@@ -78,51 +79,36 @@ const FormLogin = () => {
                             required
                         />
                         <InputGroup.Text id="basic-addon2">
-                            {!passwordIsVisible ? (
-                                <Button style={{ all: 'unset', cursor: 'pointer' }} onClick={handlePasswordIsVisible}>
-                                    <BsEyeSlash />
-                                </Button>
-                            ) : (
-                                <Button style={{ all: 'unset', cursor: 'pointer' }} onClick={handlePasswordIsVisible}>
-                                    <BsEye />
-                                </Button>
-                            )}
+                            <Button style={{ all: 'unset', cursor: 'pointer' }} onClick={handlePasswordIsVisible}>
+                                {passwordIsVisible ? <BsEye /> : <BsEyeSlash />}
+                            </Button>
                         </InputGroup.Text>
                         <Form.Control.Feedback type="invalid">
-                            A senha deve ser preenchida.
+                            A senha deve ser preenchida
                         </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
                 <Row>
                     <Col className="d-flex justify-content-center mt-3">
-                        {!loadingButton ?
-                            (
-                                <Button
-                                    style={{
-                                        BotaoStyle, width: "18rem",
-                                        backgroundColor: "#03A688",
-                                        border: "none"
-                                    }}
-                                    onClick={(e) => handleLogin(e)}
-                                >Entrar </Button>
+                        <BotaoComponent
+                            acao={(e) => handleLogin(e)}
+                            disabled={loadingButton}
+                            tamanho="18rem"
+                            bgColor="#03A688"
+                            textColor="#FFF"
+                        >
+                            {loadingButton ? (
+                                <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
                             ) : (
-                                <Button
-                                    style={{
-                                        BotaoStyle, width: "18rem",
-                                        backgroundColor: "#03A688",
-                                        border: "none"
-                                    }}
-                                    disabled
-                                >
-                                    <Spinner
-                                        as="span"
-                                        animation="border"
-                                        size="sm"
-                                        role="status"
-                                        aria-hidden="true"
-                                    />
-                                </Button>
+                                <span>Entrar</span>
                             )}
+                        </BotaoComponent>
                     </Col>
                 </Row>
                 <p className="mt-3">
