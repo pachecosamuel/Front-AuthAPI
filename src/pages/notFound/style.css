@@ -1,0 +1,16 @@
+.div_1 {
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/not.gif");
+    background-position: 50%;
+    background-size: 70%;
+    width: 100%;
+    width: 100vh;
+    height: 100vh;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+
+}

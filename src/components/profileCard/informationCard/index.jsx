@@ -1,10 +1,9 @@
 
-import Card from 'react-bootstrap/Card';
 import './style.css';
 import { ContainerCardSimplesStyle } from './style';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { useEffect, useState } from 'react';
+
 
 function InformationCard({ user }) {
 
