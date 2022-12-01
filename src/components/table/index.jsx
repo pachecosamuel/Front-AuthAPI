@@ -121,23 +121,34 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     <>
                         <td className="coluna-acao">
                             <BsEye
+                            title="Visualizar Usuário"
+                            size={24}
                                 onClick={() => navigate(`user/view/${userTable.id}`)}
                             />
                         </td>
                         <td className="coluna-acao">
                             <CiEdit
+                            title="Editar Usuário"
+                            size={24}
                                 onClick={() => navigate(`user/edit/${userTable.id}`)}
                             />
                         </td>
 
                         <td className="coluna-acao">
-                            <RiDeleteBin6Line
-                                id="icone-delete"
-                                onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
-                            />
-
+                            {
+                                userTable.active === true ?
+                                    <AiOutlineCloseCircle
+                                    title="Desativar Usuário"
+                                    size={24}
+                                        onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
+                                    />
+                                    :
+                                    <AiOutlineCheckCircle title="Ativar Usuário" 
+                                    size={24} 
+                                    onClick={() => [setShowModalActive(true), setCurrentUser(userTable)]}
+                                    />
+                            }
                         </td>
-
                     </>
                 )
                 break;
@@ -204,10 +215,11 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             {renderHeaderByRole()}
                         </tr>
                     </thead>
-                    <tbody>
+                    
                         {registros.length > 0 ? (
                             registros.map((r, i) => {
                                 return (
+                                <tbody>
                                     <tr key={i}>
                                         <td>{r.active === true ? <AiOutlineCheck color="green" size={24}/> : <AiOutlineClose color="red" size={24}/>}</td>
                                         <td>{r.cpf}</td>
@@ -222,12 +234,22 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                                         {renderActionsByRole(r)}
 
                                     </tr>
+                                </tbody>
                                 );
                             })
                         ) : (
-                            <tr></tr>
+                            <div style={{
+                                height: '10vh',
+                                display: 'flex',
+                                alignItems: 'center',
+                                paddingInline: '0.5rem'
+                            }}>
+                                <span>
+                                    Nenhum usuário encontrado
+                                </span>
+                            </div>
                         )}
-                    </tbody>
+                    
                 </Table>
             </div>
 
