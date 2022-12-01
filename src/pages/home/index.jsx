@@ -38,8 +38,14 @@ export const Home = () => {
         const handleGetUsers = async () => {
             setLoading(true)
             const res = await api.get('/User');
-            setUsers(res.data.data)
-            setButtonUsers(res.data.data)
+            let listaOrdenada = res.data.data;
+            listaOrdenada.sort((x, y)=>{
+                let a = x.fullName.toUpperCase()
+                let b = y.fullName.toUpperCase()
+                return a==b ? 0 : a > b ? 1 : -1;
+            })
+            setUsers(listaOrdenada)
+            setButtonUsers(listaOrdenada)
             setLoading(false)
         }
         if (!isSearching) {

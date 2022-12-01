@@ -192,7 +192,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                 loading={loading}
             />
             <ModalComponent
-                title={"Você tem certeza que deseja desativar esse usuário?"}
+                title={"Você tem certeza que deseja reativar esse usuário?"}
                 showModal={showModalActive}
                 setShowModal={setShowModalActive}
                 funcao={activateUser}
