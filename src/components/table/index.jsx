@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage }) {
+function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage, setIsSearching }) {
 
     const { user } = useContext(AuthenticationContext);
     const [showModal, setShowModal] = useState(false);
@@ -30,6 +30,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                 setUpdateTable(!updateTable);
                 setCurrentPage(1);
                 toast.success('Usuário Desativado com sucesso!');
+                setIsSearching(false)
             }
             setLoading(false)
             setShowModal(false)

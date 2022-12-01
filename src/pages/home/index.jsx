@@ -175,6 +175,7 @@ export const Home = () => {
                                         setUpdateTable={setTableIsModify}
                                         updateTable={tableIsModify}
                                         setCurrentPage={setCurrentPage}
+                                        setIsSearching={setIsSearching}
                                     />
                             }
 
