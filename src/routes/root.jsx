@@ -61,6 +61,7 @@ export function Root() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/user/edit/:userId" element={<EditUser />} />
                         <Route path="/user/view/:userId" element={<ViewUser />} />
+                        <Route path="/notfound" element={<NotFound />} />
                     </Routes>
                 )
                 break;
@@ -72,6 +73,7 @@ export function Root() {
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/user/edit/:userId" element={<EditUser />} />
                         <Route path="/user/view/:userId" element={<ViewUser />} />
+                        <Route path="/notfound" element={<NotFound />} />
                     </Routes>
                 )
                 break;
@@ -81,6 +83,7 @@ export function Root() {
                         <Route path="*" element={<Home />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/user/view/:userId" element={<ViewUser />} />
+                        <Route path="/notfound" element={<NotFound />} />
                     </Routes>
                 )
                 break;
