@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { AiOutlineTable } from "react-icons/ai";
+import { HiOutlineClipboardList } from "react-icons/hi";
 import { FiFilter, FiUser } from "react-icons/fi";
 
 import { PageContainer } from "../../components/page-container/style";
@@ -17,6 +17,7 @@ import { ContainerTablePageStyle } from "./style"
 import { api } from "../../Services/Api/apiConnection";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import ButtonComponent from "../../components/button";
+import { parseRoleToString } from "../../utils/utils";
 
 export const Home = () => {
 
@@ -85,7 +86,7 @@ export const Home = () => {
                 r.corporativeEmail.toLowerCase().includes(value.toLowerCase()) ||
                 r.personalEmail.toLowerCase().includes(value.toLowerCase()) ||
                 r.phone.toLowerCase().includes(value.toLowerCase()) ||
-                // r.roles.toLowerCase().includes(value.toLowerCase()) ||
+                parseRoleToString(r.role).toLowerCase().includes(value.toLowerCase()) ||
                 r.birthDate.toLowerCase().includes(value.toLowerCase()) ||
                 r.admissionDate.toLowerCase().includes(value.toLowerCase())
         );
@@ -119,7 +120,7 @@ export const Home = () => {
 
     return (
         <PageContainer>
-            <HeaderPageComponent title='Controle de Acesso' icon={<AiOutlineTable />} />
+            <HeaderPageComponent title='Controle de Acesso' icon={<HiOutlineClipboardList />} />
 
             <ContentPageContainer>
                 <ContainerTablePageStyle>

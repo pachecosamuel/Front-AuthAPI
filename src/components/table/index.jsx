@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheck, AiOutlineCheckCircle, AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
+import { parseRoleToString } from "../../utils/utils";
 
 function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage, setIsSearching, setButtonAll }) {
 
@@ -208,6 +209,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             <th>Nome</th>
                             <th>Email Corporativo</th>
                             <th>Email Pessoal</th>
+                            <th>Nível de Acesso</th>
                             <th>Telefone</th>
                             <th>Data de Nascimento</th>
                             <th>Data de Admissão</th>
@@ -215,17 +217,18 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             {renderHeaderByRole()}
                         </tr>
                     </thead>
-                    
+                    <tbody>
                         {registros.length > 0 ? (
                             registros.map((r, i) => {
                                 return (
-                                <tbody>
+                                
                                     <tr key={i}>
                                         <td>{r.active === true ? <AiOutlineCheck color="green" size={24}/> : <AiOutlineClose color="red" size={24}/>}</td>
                                         <td>{r.cpf}</td>
                                         <td>{r.fullName}</td>
                                         <td>{r.corporativeEmail}</td>
                                         <td>{r.personalEmail}</td>
+                                        <td>{parseRoleToString(r.role)}</td>
                                         <td>{r.phone}</td>
                                         <td>{r.birthDate}</td>
                                         <td>{r.admissionDate}</td>
@@ -234,22 +237,22 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                                         {renderActionsByRole(r)}
 
                                     </tr>
-                                </tbody>
+                                
                                 );
                             })
                         ) : (
-                            <div style={{
+                            <tr style={{
                                 height: '10vh',
                                 display: 'flex',
                                 alignItems: 'center',
                                 paddingInline: '0.5rem'
                             }}>
-                                <span>
+                                <td>
                                     Nenhum usuário encontrado
-                                </span>
-                            </div>
+                                </td>
+                            </tr>
                         )}
-                    
+                    </tbody>
                 </Table>
             </div>
 

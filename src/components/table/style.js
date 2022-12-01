@@ -36,9 +36,10 @@ export const ContainerTable = styled.div`
     }
   }
 
-  @media screen and (max-width: 1280px) {
+  @media screen and (max-width: 1500px) {
     .table-area {
-      overflow-y: scroll !important;
+      overflow-y: hidden !important;
+      overflow-x: scroll !important;
     }
   }
 `;

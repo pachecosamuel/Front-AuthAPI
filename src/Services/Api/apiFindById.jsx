@@ -16,7 +16,7 @@ const FindById = async (id) => {
         return false;
 
     } catch (error) {
-        alert(error.response.headers.error);
+        console.log();(error.response.headers.error);
     }
 
 }

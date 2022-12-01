@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { AiOutlineUser } from "react-icons/ai";
+
 import { useParams } from "react-router-dom";
+
+import { FindById } from "../../Services/Api/apiFindById";
+
+import { parseRoleToString } from "../../utils/utils";
+
+import { ContainerTablePageStyle } from "../cadastro/style";
+import { ContainerForm } from "./style";
+
+import { AiOutlineUser } from "react-icons/ai";
+
 import ContentPageContainer from "../../components/content-page-container";
 import HeaderPageComponent from "../../components/header-page";
 import { LoadingComponent } from "../../components/loading";
 import { PageContainer } from "../../components/page-container/style";
-import { FindById } from "../../Services/Api/apiFindById";
-import { ContainerTablePageStyle } from "../cadastro/style";
-import { ContainerForm } from "./style";
 
 export const ViewUser = () => {
     const [user, setUser] = useState({
@@ -42,19 +49,6 @@ export const ViewUser = () => {
 
 
     }, [])
-
-    const parseRoleToString = (int) => {
-        switch (int) {
-            case 0:
-                return 'Colaborador'
-            case 1:
-                return 'Departamento Administrativo'
-            case 2:
-                return 'Administrador do Sistema'
-            case 3:
-                return 'Gestor'
-        }
-    }
 
 
     return (
@@ -149,10 +143,10 @@ export const ViewUser = () => {
                                                     />
                                                 </Form.Group>
 
-                                                
+
                                             </Row>
                                             <Row>
-                                            <Form.Group as={Col} controlId="formGridRole">
+                                                <Form.Group as={Col} controlId="formGridRole">
                                                     <Form.Label>Nivel de acesso:</Form.Label>
 
                                                     <Form.Control

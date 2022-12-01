@@ -1,18 +1,20 @@
 import { React, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import LogoT2m from "../../assets/logo.png";
-
-import { AiOutlineTable, AiOutlineUserAdd } from "react-icons/ai";
-import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
-import { MdOutlineExitToApp } from "react-icons/md";
-import { BiUserCircle } from "react-icons/bi";
+import { AuthenticationContext } from "../../Services/Context/contextToken";
 
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { ContainerNavStyle } from "./style.js";
-import { AuthenticationContext } from "../../Services/Context/contextToken";
+
+import LogoT2m from "../../assets/logo.png";
+
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { HiOutlineClipboardList } from "react-icons/hi";
+import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
+import { ImExit } from "react-icons/im";
+import { BiUserCircle } from "react-icons/bi";
 
 function SidebarComponent() {
 
@@ -27,6 +29,39 @@ function SidebarComponent() {
     navigate(route);
   }
 
+  const renderAccessControl = () => {
+    return (
+      <div className="mt-2 sidebar-nav-item">
+        <div onClick={() => navigateTo("/")}>
+          <div className="area-icons-label">
+            <HiOutlineClipboardList title="Controle de Acesso" />
+            {sideBarCollapse ? (
+              ""
+            ) : (
+              <span className="label-sidebar">Controle de Acesso</span>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+  const renderRegister = () => {
+    return (
+      <div className="mt-2 sidebar-nav-item">
+        <div onClick={() => navigateTo("/cadastro")}>
+          <div className="area-icons-label">
+            <AiOutlineUserAdd title="Cadastro" />
+            {sideBarCollapse ? (
+              ""
+            ) : (
+              <span className="label-sidebar">Cadastro</span>
+            )}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   const renderSwitch = () => {
     switch (user.role) {
       case 'COLLABORATOR':
@@ -39,30 +74,8 @@ function SidebarComponent() {
       case 'ADMINISTRATIVE_DEPARTMENT':
         return (
           <div className="sidebar-nav">
-            <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/")}>
-                <div className="area-icons-label">
-                  <AiOutlineTable />
-                  {sideBarCollapse ? (
-                    ""
-                  ) : (
-                    <span className="label-sidebar">Controle de Acesso</span>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/cadastro")}>
-                <div className="area-icons-label">
-                  <AiOutlineUserAdd />
-                  {sideBarCollapse ? (
-                    ""
-                  ) : (
-                    <span className="label-sidebar">Cadastro</span>
-                  )}
-                </div>
-              </div>
-            </div>
+            {renderAccessControl()}
+            {renderRegister()}
           </div>
         )
         break;
@@ -70,30 +83,8 @@ function SidebarComponent() {
       case 'SYSTEM_ADMINISTRATOR':
         return (
           <div className="sidebar-nav">
-            <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/")}>
-                <div className="area-icons-label">
-                  <AiOutlineTable />
-                  {sideBarCollapse ? (
-                    ""
-                  ) : (
-                    <span className="label-sidebar">Controle de Acesso</span>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/cadastro")}>
-                <div className="area-icons-label">
-                  <AiOutlineUserAdd />
-                  {sideBarCollapse ? (
-                    ""
-                  ) : (
-                    <span className="label-sidebar">Cadastro</span>
-                  )}
-                </div>
-              </div>
-            </div>
+            {renderAccessControl()}
+            {renderRegister()}
           </div>
         )
         break;
@@ -101,18 +92,7 @@ function SidebarComponent() {
       case 'MANAGER':
         return (
           <div className="sidebar-nav">
-            <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/")}>
-                <div className="area-icons-label">
-                  <AiOutlineTable />
-                  {sideBarCollapse ? (
-                    ""
-                  ) : (
-                    <span className="label-sidebar">Controle de Acesso</span>
-                  )}
-                </div>
-              </div>
-            </div>
+            {renderAccessControl()}
           </div>
         )
         break;
@@ -142,7 +122,7 @@ function SidebarComponent() {
           {renderSwitch()}
 
           <div className="container-usuario" onClick={() => navigateTo("/profile")}>
-            <BiUserCircle />
+            <BiUserCircle title="Perfil" />
             <div className="usuario-info">
               {sideBarCollapse ? (
                 ""
@@ -167,7 +147,7 @@ function SidebarComponent() {
             <div className="sidebar-nav-item">
               <div onClick={() => [logOut(), navigateTo("/")]}>
                 <div className="area-icons-label">
-                  <MdOutlineExitToApp />
+                  <ImExit size={28} />
                   {sideBarCollapse ? (
                     ""
                   ) : (
