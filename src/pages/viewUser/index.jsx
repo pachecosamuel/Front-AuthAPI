@@ -149,7 +149,10 @@ export const ViewUser = () => {
                                                     />
                                                 </Form.Group>
 
-                                                <Form.Group as={Col} controlId="formGridRole">
+                                                
+                                            </Row>
+                                            <Row>
+                                            <Form.Group as={Col} controlId="formGridRole">
                                                     <Form.Label>Nivel de acesso:</Form.Label>
 
                                                     <Form.Control
@@ -158,6 +161,16 @@ export const ViewUser = () => {
                                                         disabled
                                                     />
 
+                                                </Form.Group>
+
+                                                <Form.Group as={Col}>
+                                                    <Form.Label>Ativo:</Form.Label>
+
+                                                    <Form.Control
+                                                        value={user.active === true ? 'Sim' : 'Não'}
+                                                        type="text"
+                                                        disabled
+                                                    />
                                                 </Form.Group>
                                             </Row>
 
