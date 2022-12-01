@@ -1,6 +1,5 @@
 import { api } from "./apiConnection";
 
-
 const FindById = async (id) => {
 
     try {

@@ -6,6 +6,7 @@ import { Home } from "../pages/Home";
 import { Recuperar } from "../pages/recuperar_senha/recuperar_senha";
 import { Cadastro } from "../pages/Cadastro";
 import { Profile } from "../pages/profile";
+import { NotFound } from "../pages/notFound";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -47,6 +48,7 @@ export function Root() {
             case 'COLLABORATOR':
                 return (
                     <Routes>
+                        <Route path="/notfound" element={<NotFound />} />
                         <Route path="*" element={<Profile />} />
                     </Routes>
                 )
