@@ -11,7 +11,6 @@ export const NotFound = () => {
 
                 <Row>
                     <Col className="div_1"></Col>
-
                 </Row>
             </Container>
 
