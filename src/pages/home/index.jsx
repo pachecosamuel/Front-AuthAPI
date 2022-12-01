@@ -30,7 +30,7 @@ export const Home = () => {
     const [isSearching, setIsSearching] = useState(false);
     const [tableIsModify, setTableIsModify] = useState(false);
 
-    const [buttonAll, setButtonAll] = useState(undefined);
+    const [buttonAll, setButtonAll] = useState('todos');
     const [buttonUsers, setButtonUsers] = useState([]);
 
     useEffect(() => {
@@ -133,7 +133,7 @@ export const Home = () => {
                                     onChange={(e) => filterButton(e.target.value)}
                                 >
 
-                                    <option value='undefined'>Todos os Usuários</option>
+                                    <option value='todos'>Todos os Usuários</option>
                                     <option value='true'>Usuários Ativos</option>
                                     <option value='false'>Usuários Inativos</option>
                                 </Form.Select>
@@ -175,6 +175,7 @@ export const Home = () => {
                                         setUpdateTable={setTableIsModify}
                                         updateTable={tableIsModify}
                                         setCurrentPage={setCurrentPage}
+                                        setButtonAll={setButtonAll}
                                         setIsSearching={setIsSearching}
                                     />
                             }

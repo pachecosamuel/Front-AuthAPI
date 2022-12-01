@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage, setIsSearching }) {
+function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage, setIsSearching, setButtonAll }) {
 
     const { user } = useContext(AuthenticationContext);
     const [showModal, setShowModal] = useState(false);
@@ -27,6 +27,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             setLoading(true)
             var res = await api.put(`User/deactivate/${user.id}`)
             if (res.data.isSuccess) {
+                setButtonAll('todos')
                 setUpdateTable(!updateTable);
                 setCurrentPage(1);
                 toast.success('Usuário Desativado com sucesso!');
@@ -36,7 +37,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             setShowModal(false)
         } catch (error) {
             console.log(error);
-            toast.error('Erro ao realizar o login - ' + JSON.stringify(error.message));
+            toast.error('Erro ao desativar o usuário - ' + JSON.stringify(error.message));
             setLoading(false)
             setShowModal(false)
         }
