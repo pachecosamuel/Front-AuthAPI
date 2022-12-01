@@ -17,6 +17,8 @@ import SideBarMenuBs from "../components/sidebar-bs";
 import { AuthenticationContext } from "../Services/Context/contextToken";
 import { LoadingComponent } from "../components/loading";
 import jwtDecode from "jwt-decode";
+import { EditUser } from "../pages/editUser";
+import { ViewUser } from "../pages/viewUser";
 
 export function Root() {
 
@@ -39,6 +41,8 @@ export function Root() {
     }
 
     function getRoutesByRole() {
+        // Caso altere alguma rota para alguma, 
+        // também deve ser alterada no switch do componente sidebar e sidebar-bs
         var tokenDecoded = jwtDecode(token);
         switch (tokenDecoded.Role) {
             case 'COLLABORATOR':
@@ -52,18 +56,22 @@ export function Root() {
             case 'ADMINISTRATIVE_DEPARTMENT':
                 return (
                     <Routes>
-                        <Route path="*" element={<Home />} />
+                        <Route path="/" element={<Home />} />
                         <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/user/edit/:userId" element={<EditUser />} />
+                        <Route path="/user/view/:userId" element={<ViewUser />} />
                     </Routes>
                 )
                 break;
             case 'SYSTEM_ADMINISTRATOR':
                 return (
                     <Routes>
-                        <Route path="*" element={<Home />} />
+                        <Route path="/" element={<Home />} />
                         <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/user/edit/:userId" element={<EditUser />} />
+                        <Route path="/user/view/:userId" element={<ViewUser />} />
                     </Routes>
                 )
                 break;
@@ -71,8 +79,8 @@ export function Root() {
                 return (
                     <Routes>
                         <Route path="*" element={<Home />} />
-                        <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/user/view/:userId" element={<ViewUser />} />
                     </Routes>
                 )
                 break;

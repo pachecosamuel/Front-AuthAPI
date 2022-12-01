@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerFormLoginStyle = styled.div`
-  /* @import url("../../css-config/colors.css"); */
+  /* //@import url("../../css-config/colors.css"); */
   
   form {
     display: flex;

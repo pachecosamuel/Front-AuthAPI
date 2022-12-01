@@ -13,32 +13,31 @@ export const DesactivateUserModalComponent = ({ showModal, setShowModal, desacti
                 Você tem certeza que deseja desativar esse usuário?
             </Modal.Body>
             <Modal.Footer>
-
+                <ButtonComponent
+                    tamanho="7rem"
+                    bgColor="#585859"
+                    textColor="#FFF"
+                    acao={() => setShowModal(false)}
+                > Cancelar</ButtonComponent>
                 {
                     loading ?
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
-                            <span>
-                                <Spinner
-                                    as="span"
-                                    animation="border"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                />
-                            </span>
-                        </div>
+                        <ButtonComponent
+                            tamanho="10rem"
+                            bgColor="#01a998"
+                            textColor="#FFF"
+                            acao={() => desactivateUser(user)}
+                        >
+                            <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                            /></ButtonComponent>
+
                         :
                         <>
-                            <ButtonComponent
-                                tamanho="7rem"
-                                bgColor="#585859"
-                                textColor="#FFF"
-                                acao={() => setShowModal(false)}
-                            > Cancelar</ButtonComponent>
+
                             <ButtonComponent
                                 tamanho="10rem"
                                 bgColor="#01a998"

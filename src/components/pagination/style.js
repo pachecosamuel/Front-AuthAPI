@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerPagination = styled.div`
-  @import url("../../css-config/colors.css");
+  //@import url("../../css-config/colors.css");
 
   display: flex;
   justify-content: space-between;

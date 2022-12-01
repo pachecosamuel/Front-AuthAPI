@@ -1,47 +1,110 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect } from "react";
 
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col"
+import { Spinner } from "react-bootstrap";
 
-import BotaoComponent from "../button";
+import "./formCadastro.css";
+
+import { api, viaCep } from "../../Services/Api/apiConnection";
+
 import { ContainerForm } from "./style";
-import { viaCep } from "../../Services/Api/apiConnection";
-import { InputGroup } from "react-bootstrap";
+import BotaoComponent from "../button";
+
+import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { userFormSchema } from "../../utils/validation/schemaValidations";
 
 function FormularioCadastroComponent() {
 
-    const [user, setUser] = useState({
-        fullName: "",
-        personalEmail: "",
-        corporativeEmail: "",
-        cpf: "",
-        phone: "",
-        birthDate: "",
-        admissionDate: "",
-        role: "",
-        logradouro: "",
-        bairro: "",
-        numero: "",
-        complemento: "",
-        cidade: "",
-        uf: "",
-        cep: ""
+    window.onbeforeunload = function () {
+        localStorage.setItem('registerUserformData', JSON.stringify({ ...values, cpf: '' }))
+    }
+
+    const {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        setSubmitting,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        resetForm,
+        setValues
+    } = useFormik({
+        initialValues: {
+            fullName: "",
+            corporativeEmail: "",
+            personalEmail: "",
+            phone: "",
+            cpf: "",
+            role: "",
+            logradouro: "",
+            bairro: "",
+            numero: "",
+            complemento: "",
+            cidade: "",
+            uf: "",
+            cep: "",
+            birthDate: "",
+            admissionDate: ""
+        },
+        validationSchema: userFormSchema,
+        validateOnChange: false,
+        validateOnBlur: true,
+        onSubmit: (values) => {
+            console.log('DENTRO DO ONSUBMIT')
+            console.log(values)
+            setSubmitting(true)
+            handleForm(values)
+            resetForm()
+            setSubmitting(false)
+        }
     })
 
     useEffect(() => {
-        if (user.cep.length === 8) {
+        if (localStorage.getItem('registerUserformData')) {
+            setValues(JSON.parse(localStorage.getItem('registerUserformData')))
+        }
+    }, [])
+
+    useEffect(() => {
+        if (values.cep.length === 8) {
             handleViaCep()
         }
+    }, [values.cep])
 
-        console.log(user)
+    const handleForm = async (values) => {
+        console.log('REGISTRANDO USUARIO')
+        console.log(values)
 
-    }, [user])
+        console.log('ANTES DE CONVERTER DATA')
+        const userDateConverted = values
+
+        userDateConverted.birthDate = values.birthDate.split('-').reverse().join("/")
+        userDateConverted.admissionDate = values.admissionDate.split('-').reverse().join("/")
+
+        console.log('DEPOIS DE CONVERTER DATA')
+        console.log(userDateConverted)
+
+        try {
+            await api.post("/User", values)
+            toast.success('Usuário registrado com sucesso!')
+            console.log('REGISTROU COM SUCESSO')
+        } catch (error) {
+            console.log('DEU ERRO')
+            console.log(error)
+            // toast.error('Erro ao registrar usuário: ' + JSON.stringify(error.response.data.errors[0] ? error.response.data.errors[0].message : 'Erro no formato das datas'))
+            toast.error('Erro ao registrar usuário: ')
+        }
+    }
 
     const handleViaCep = async () => {
-        const res = await viaCep.get(`${user.cep}/json/`);
-        setUser({
-            ...user,
+        const res = await viaCep.get(`${values.cep}/json/`);
+        setValues({
+            ...values,
             logradouro: res.data.logradouro,
             bairro: res.data.bairro,
             cidade: res.data.localidade,
@@ -49,255 +112,327 @@ function FormularioCadastroComponent() {
         })
     }
 
-    // function clearForm() {
-    //     setUser({
-    //         fullName: "",
-    //         personalEmail: "",
-    //         corporativeEmail: "",
-    //         cpf: "",
-    //         phone: "",
-    //         birthDate: "",
-    //         admissionDate: "",
-    //         role: "",
-    //         logradouro: "",
-    //         bairro: "",
-    //         numero: "",
-    //         complemento: "",
-    //         cidade: "",
-    //         uf: "",
-    //         cep: ""
-    //     })
-    // }
+    function clearForm() {
+        resetForm()
+        if (localStorage.getItem('registerUserformData')) {
+            localStorage.removeItem('registerUserformData')
+        }
+    }
 
     return (
         <ContainerForm>
-            <Form className="form-cadastro border mb-3">
+            <Form onSubmit={handleSubmit} className="form-cadastro border mb-3">
                 <legend>Informações Pessoais</legend>
+
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridFullName">
                         <Form.Label>Nome completo:</Form.Label>
-                        <InputGroup
-                            value={user.fullName}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, fullName: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="text" placeholder="Digite o nome..." />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.fullName}
+                            type="text"
+                            placeholder="Digite o nome..."
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            name='fullName'
+                            className={touched.fullName && errors.fullName ? "error" : null}
+                        />
+                        {touched.fullName && errors.fullName ? (
+                            <div className="error-message">{errors.fullName}</div>
+                        ) : null}
                     </Form.Group>
-                </Row>
-                <Row className="mb-3">
+
                     <Form.Group as={Col} controlId="formGridPersonalEmail">
                         <Form.Label>E-mail pessoal:</Form.Label>
-                        <InputGroup
-                            value={user.personalEmail}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, personalEmail: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="email" placeholder="Melhor e-mail do usuário" />
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridCorporativeEmail">
-                        <Form.Label>E-mail da empresa:</Form.Label>
-                        <InputGroup
-                            value={user.corporativeEmail}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, corporativeEmail: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="email" placeholder="E-mail criado para o usuário" />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.personalEmail}
+                            type="email"
+                            placeholder="Melhor e-mail do usuário"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='personalEmail'
+                            className={touched.personalEmail && errors.personalEmail ? "error" : null}
+                        />
+                        {touched.personalEmail && errors.personalEmail ? (
+                            <div className="error-message">{errors.personalEmail}</div>
+                        ) : null}
                     </Form.Group>
                 </Row>
+
                 <Row className="mb-3">
+                    <Form.Group as={Col} controlId="formGridPhone">
+                        <Form.Label>Telefone:</Form.Label>
+
+                        <Form.Control
+                            value={values.phone}
+                            type="text"
+                            placeholder="(xx) xxxxx-xxxx"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='phone'
+                            className={touched.phone && errors.phone ? "error" : null}
+                        />
+                        {touched.phone && errors.phone ? (
+                            <div className="error-message">{errors.phone}</div>
+                        ) : null}
+                    </Form.Group>
+
                     <Form.Group as={Col} controlId="formGridCpf">
                         <Form.Label>CPF:</Form.Label>
-                        <InputGroup
-                            value={user.cpf}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, cpf: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="text" placeholder="Digite um CPF valido" />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.cpf}
+                            type="text"
+                            placeholder="Digite um CPF válido"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='cpf'
+                            className={touched.cpf && errors.cpf ? "error" : null}
+                        />
+                        {touched.cpf && errors.cpf ? (
+                            <div className="error-message">{errors.cpf}</div>
+                        ) : null}
                     </Form.Group>
-                    <Form.Group as={Col} controlId="formGridPhone">
-                        <Form.Label>Celular:</Form.Label>
-                        <InputGroup
-                            value={user.phone}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, phone: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="password" placeholder="(xx) xxxxx-xxxx" />
-                        </InputGroup>
-                    </Form.Group>
+
                     <Form.Group as={Col} controlId="formGridBirthDate">
                         <Form.Label>Data de nascimento:</Form.Label>
-                        <InputGroup
-                            value={user.birthDate}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, birthDate: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="date" />
-                        </InputGroup>
+                        <Form.Control
+                            value={values.birthDate}
+                            type="date"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='birthDate'
+                            className={touched.birthDate && errors.birthDate ? "error" : null}
+                        />
+                        {touched.birthDate && errors.birthDate ? (
+                            <div className="error-message">{errors.birthDate}</div>
+                        ) : null}
                     </Form.Group>
                 </Row>
 
                 <legend>Informações Contratuais</legend>
+
                 <Row className="mb-3">
+                    <Form.Group as={Col} controlId="formGridCorporativeEmail">
+                        <Form.Label>E-mail da empresa:</Form.Label>
+
+                        <Form.Control
+                            value={values.corporativeEmail}
+                            type="email"
+                            placeholder="E-mail criado para o usuário"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='corporativeEmail'
+                            className={touched.corporativeEmail && errors.corporativeEmail ? "error" : null}
+                        />
+                        {touched.corporativeEmail && errors.corporativeEmail ? (
+                            <div className="error-message">{errors.corporativeEmail}</div>
+                        ) : null}
+                    </Form.Group>
+
                     <Form.Group as={Col} controlId="formGridAdmissionDate">
                         <Form.Label>Data de admissão:</Form.Label>
-                        <InputGroup
-                            value={user.admissionDate}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, admissionDate: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control type="date" />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.admissionDate}
+                            type="date"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='admissionDate'
+                            className={touched.admissionDate && errors.admissionDate ? "error" : null}
+                        />
+                        {touched.admissionDate && errors.admissionDate ? (
+                            <div className="error-message">{errors.admissionDate}</div>
+                        ) : null}
                     </Form.Group>
+
                     <Form.Group as={Col} controlId="formGridRole">
-                        <Form.Label>Nivel de acesso:</Form.Label>
-                        <InputGroup
-                            value={user.role}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, role: e.target.value })}
-                            hasValidation
+                        <Form.Label>Nível de acesso:</Form.Label>
+
+                        <Form.Select
+                            value={values.role}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='role'
+                            className={touched.role && errors.role ? "error" : null}
                         >
-                            <Form.Select required defaultValue="Choose...">
-                                <option></option>
-                                <option>Colaborador</option>
-                                <option>Gestor</option>
-                            </Form.Select>
-                        </InputGroup>
+                            <option></option>
+                            <option value='0'>Colaborador</option>
+                            <option value='1'>Gestor</option>
+                        </Form.Select>
+                        {touched.role && errors.role ? (
+                            <div className="error-message">{errors.role}</div>
+                        ) : null}
                     </Form.Group>
                 </Row>
 
                 <legend>Informações de Endereço</legend>
+
+                <Row className="mb-3">
+                    <Form.Group as={Col} controlId="formGridCep">
+                        <Form.Label>CEP:</Form.Label>
+
+                        <Form.Control
+                            value={values.cep}
+                            placeholder="xxxxx-xxx"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='cep'
+                            className={touched.cep && errors.cep ? "error" : null}
+                        />
+                        {touched.cep && errors.cep ? (
+                            <div className="error-message">{errors.cep}</div>
+                        ) : null}
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridNumero">
+                        <Form.Label>Número:</Form.Label>
+
+                        <Form.Control
+                            value={values.numero}
+                            placeholder="123, 123A, ..."
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='numero'
+                            className={touched.numero && errors.numero ? "error" : null}
+                        />
+                        {touched.numero && errors.numero ? (
+                            <div className="error-message">{errors.numero}</div>
+                        ) : null}
+                    </Form.Group>
+
+                    <Form.Group as={Col} controlId="formGridComplemento">
+                        <Form.Label>Complemento:</Form.Label>
+
+                        <Form.Control
+                            value={values.complemento}
+                            placeholder="Apartamento, Bloco, ..."
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='complemento'
+                            className={touched.complemento && errors.complemento ? "error" : null}
+                        />
+                        {touched.complemento && errors.complemento ? (
+                            <div className="error-message">{errors.complemento}</div>
+                        ) : null}
+                    </Form.Group>
+                </Row>
+
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridRua">
                         <Form.Label>Rua:</Form.Label>
-                        <InputGroup
-                            value={user.logradouro}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, logradouro: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control placeholder="Rua Exemplo, 123" value={user.logradouro} onChange={(e) => setUser({ ...user, logradouro: e.target.value })} />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.logradouro}
+                            placeholder=""
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='logradouro'
+                            className={touched.logradouro && errors.logradouro ? "error" : null}
+                        />
+                        {touched.logradouro && errors.logradouro ? (
+                            <div className="error-message">{errors.logradouro}</div>
+                        ) : null}
                     </Form.Group>
-                    <Form.Group as={Col} controlId="formGridNumero">
-                        <Form.Label>Número:</Form.Label>
-                        <InputGroup
-                            value={user.numero}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, numero: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control placeholder="Rua Exemplo, 123" />
-                        </InputGroup>
-                    </Form.Group>
-                </Row>
-                <Row className="mb-3">
+
                     <Form.Group as={Col} controlId="formGridBairro">
                         <Form.Label>Bairro:</Form.Label>
-                        <InputGroup
-                            value={user.bairro}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, bairro: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control value={user.bairro} onChange={(e) => setUser({ ...user, bairro: e.target.value })} />
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridComplemento">
-                        <Form.Label>Complemento:</Form.Label>
-                        <InputGroup
-                            value={user.complemento}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, complemento: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control placeholder="Apartamento, Bloco, ..." />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.bairro}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='bairro'
+                            className={touched.bairro && errors.bairro ? "error" : null}
+                        />
+                        {touched.bairro && errors.bairro ? (
+                            <div className="error-message">{errors.bairro}</div>
+                        ) : null}
                     </Form.Group>
                 </Row>
 
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridCidade">
                         <Form.Label>Cidade:</Form.Label>
-                        <InputGroup
-                            value={user.cidade}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, cidade: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control value={user.cidade} onChange={(e) => setUser({ ...user, cidade: e.target.value })} />
-                        </InputGroup>
+
+                        <Form.Control
+                            value={values.cidade}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='cidade'
+                            className={touched.cidade && errors.cidade ? "error" : null}
+                        />
+                        {touched.cidade && errors.cidade ? (
+                            <div className="error-message">{errors.cidade}</div>
+                        ) : null}
                     </Form.Group>
+
                     <Form.Group as={Col} controlId="formGridEstado">
                         <Form.Label>Estado:</Form.Label>
-                        <InputGroup
-                            value={user.uf}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, uf: e.target.value })}
-                            hasValidation
+
+                        <Form.Select
+                            value={values.uf}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            name='uf'
+                            className={touched.uf && errors.uf ? "error" : null}
                         >
-                            <Form.Select required defaultValue="Choose..." value={user.uf} onChange={(e) => setUser({ ...user, uf: e.target.value })}>
-                                {/* <option>Escolher...</option> */}
-                                <option></option>
-                                <option>AC</option>
-                                <option>AL</option>
-                                <option>AP</option>
-                                <option>AM</option>
-                                <option>BA</option>
-                                <option>CE</option>
-                                <option>DF</option>
-                                <option>ES</option>
-                                <option>GO</option>
-                                <option>MA</option>
-                                <option>MT</option>
-                                <option>MS</option>
-                                <option>MG</option>
-                                <option>PA</option>
-                                <option>PB</option>
-                                <option>PR</option>
-                                <option>PE</option>
-                                <option>PI</option>
-                                <option>RJ</option>
-                                <option>RN</option>
-                                <option>RS</option>
-                                <option>RO</option>
-                                <option>RR</option>
-                                <option>SC</option>
-                                <option>SP</option>
-                                <option>SE</option>
-                                <option>TO</option>
-                            </Form.Select>
-                        </InputGroup>
-                    </Form.Group>
-                    <Form.Group as={Col} controlId="formGridCep">
-                        <Form.Label>CEP:</Form.Label>
-                        <InputGroup
-                            value={user.cep}
-                            className="mb-3"
-                            onChange={(e) => setUser({ ...user, cep: e.target.value })}
-                            hasValidation
-                        >
-                            <Form.Control placeholder="XXXXX-XXX" value={user.cep} onChange={(e) => setUser({ ...user, cep: e.target.value })} />
-                        </InputGroup>
+                            <option></option>
+                            <option>AC</option>
+                            <option>AL</option>
+                            <option>AP</option>
+                            <option>AM</option>
+                            <option>BA</option>
+                            <option>CE</option>
+                            <option>DF</option>
+                            <option>ES</option>
+                            <option>GO</option>
+                            <option>MA</option>
+                            <option>MT</option>
+                            <option>MS</option>
+                            <option>MG</option>
+                            <option>PA</option>
+                            <option>PB</option>
+                            <option>PR</option>
+                            <option>PE</option>
+                            <option>PI</option>
+                            <option>RJ</option>
+                            <option>RN</option>
+                            <option>RS</option>
+                            <option>RO</option>
+                            <option>RR</option>
+                            <option>SC</option>
+                            <option>SP</option>
+                            <option>SE</option>
+                            <option>TO</option>
+                        </Form.Select>
+                        {touched.uf && errors.uf ? (
+                            <div className="error-message">{errors.uf}</div>
+                        ) : null}
                     </Form.Group>
                 </Row>
+
                 <Row>
                     <Col className="d-flex justify-content-end gap-2">
-                        <BotaoComponent tamanho="10rem" bgColor="#585859" textColor="#FFF">
+                        <BotaoComponent acao={clearForm} tamanho="10rem" bgColor="#585859" textColor="#FFF">
                             Limpar
                         </BotaoComponent>
-                        <BotaoComponent tamanho="10rem" bgColor="#03A688" textColor="#FFF">
-                            Enviar
+
+                        <BotaoComponent disabled={isSubmitting} type='submit' tamanho="10rem" bgColor="#03A688" textColor="#FFF">
+                            {isSubmitting ? (
+                                <Spinner
+                                    as="span"
+                                    animation="border"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                />
+                            ) : (
+                                <span>
+                                    Registrar
+                                </span>
+                            )}
                         </BotaoComponent>
                     </Col>
                 </Row>
