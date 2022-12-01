@@ -1,16 +1,16 @@
 import { Modal, Spinner } from "react-bootstrap"
 import ButtonComponent from "../button"
 
-export const DesactivateUserModalComponent = ({ showModal, setShowModal, desactivateUser, user, loading }) => {
+export const ModalComponent = ({ showModal, setShowModal, funcao, user, loading, title }) => {
     return (
-        <Modal show={showModal}>
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton
                 onClick={() => setShowModal(false)}
             >
                 <Modal.Title>Atenção</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Você tem certeza que deseja desativar esse usuário?
+                {title}
             </Modal.Body>
             <Modal.Footer>
                 <ButtonComponent
@@ -25,7 +25,7 @@ export const DesactivateUserModalComponent = ({ showModal, setShowModal, desacti
                             tamanho="10rem"
                             bgColor="#01a998"
                             textColor="#FFF"
-                            acao={() => desactivateUser(user)}
+                            acao={() => funcao(user)}
                         >
                             <Spinner
                                 as="span"
@@ -42,7 +42,7 @@ export const DesactivateUserModalComponent = ({ showModal, setShowModal, desacti
                                 tamanho="10rem"
                                 bgColor="#01a998"
                                 textColor="#FFF"
-                                acao={() => desactivateUser(user)}
+                                acao={() => funcao(user)}
                             >Salvar Alteração</ButtonComponent>
                         </>
                 }

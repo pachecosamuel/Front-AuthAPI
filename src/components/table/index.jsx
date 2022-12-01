@@ -9,15 +9,17 @@ import { api } from "../../Services/Api/apiConnection";
 import { AuthenticationContext } from "../../Services/Context/contextToken";
 import { Modal } from "react-bootstrap";
 import ButtonComponent from "../button";
-import { DesactivateUserModalComponent } from "../desactivateUserModal";
+import { ModalComponent } from "../modal-component";
 import { toast } from "react-toastify";
 import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineCheck, AiOutlineCheckCircle, AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 
 function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage, setIsSearching, setButtonAll }) {
 
     const { user } = useContext(AuthenticationContext);
     const [showModal, setShowModal] = useState(false);
+    const [showModalActive, setShowModalActive] = useState(false);
     const [loading, setLoading] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
     let navigate = useNavigate();
@@ -43,6 +45,27 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
         }
     }
 
+    const activateUser = async (user) => {
+        try {
+            setLoading(true)
+            var res = await api.put(`User/reactivate/${user.id}`)
+            if (res.data.isSuccess) {
+                setButtonAll('todos')
+                setUpdateTable(!updateTable);
+                setCurrentPage(1);
+                toast.success('Usuário Reativado com sucesso!');
+                setIsSearching(false)
+            }
+            setLoading(false)
+            setShowModal(false)
+        } catch (error) {
+            console.log(error);
+            toast.error('Erro ao ativar o usuário - ' + JSON.stringify(error.message));
+            setLoading(false)
+            setShowModal(false)
+        }
+    }
+
     const renderActionsByRole = (userTable) => {
         switch (user.role) {
             case 'MANAGER':
@@ -50,6 +73,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     <>
                         <td className="coluna-acao">
                             <BsEye
+                            title="Visualizar Usuário"
                                 onClick={() => navigate(`user/view/${userTable.id}`)}
                             />
                         </td>
@@ -61,27 +85,33 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     <>
                         <td className="coluna-acao">
                             <BsEye
+                            title="Visualizar Usuário"
+                            size={24}
                                 onClick={() => navigate(`user/view/${userTable.id}`)}
                             />
                         </td>
                         <td className="coluna-acao">
                             <CiEdit
+                            title="Editar Usuário"
+                            size={24}
                                 onClick={() => navigate(`user/edit/${userTable.id}`)}
                             />
                         </td>
 
                         <td className="coluna-acao">
-                            <RiDeleteBin6Line
-                                id="icone-delete"
-                                onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
-                            />
-                            <DesactivateUserModalComponent
-                                showModal={showModal}
-                                setShowModal={setShowModal}
-                                desactivateUser={desactivateUser}
-                                user={currentUser}
-                                loading={loading}
-                            />
+                            {
+                                userTable.active === true ?
+                                    <AiOutlineCloseCircle
+                                    title="Desativar Usuário"
+                                    size={24}
+                                        onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
+                                    />
+                                    :
+                                    <AiOutlineCheckCircle title="Ativar Usuário" 
+                                    size={24} 
+                                    onClick={() => [setShowModalActive(true), setCurrentUser(userTable)]}
+                                    />
+                            }
                         </td>
                     </>
                 )
@@ -105,14 +135,9 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                                 id="icone-delete"
                                 onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
                             />
-                            <DesactivateUserModalComponent
-                                showModal={showModal}
-                                setShowModal={setShowModal}
-                                desactivateUser={desactivateUser}
-                                user={currentUser}
-                                loading={loading}
-                            />
+
                         </td>
+
                     </>
                 )
                 break;
@@ -147,10 +172,27 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
 
     return (
         <ContainerTable>
+            <ModalComponent
+                title={"Você tem certeza que deseja desativar esse usuário?"}
+                showModal={showModal}
+                setShowModal={setShowModal}
+                funcao={desactivateUser}
+                user={currentUser}
+                loading={loading}
+            />
+            <ModalComponent
+                title={"Você tem certeza que deseja desativar esse usuário?"}
+                showModal={showModalActive}
+                setShowModal={setShowModalActive}
+                funcao={activateUser}
+                user={currentUser}
+                loading={loading}
+            />
             <div className="table-area">
                 <Table hover>
                     <thead>
                         <tr>
+                            <th>Ativo</th>
                             <th>CPF</th>
                             <th>Nome</th>
                             <th>Email Corporativo</th>
@@ -158,6 +200,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             <th>Telefone</th>
                             <th>Data de Nascimento</th>
                             <th>Data de Admissão</th>
+
                             {renderHeaderByRole()}
                         </tr>
                     </thead>
@@ -166,6 +209,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             registros.map((r, i) => {
                                 return (
                                     <tr key={i}>
+                                        <td>{r.active === true ? <AiOutlineCheck color="green" size={24}/> : <AiOutlineClose color="red" size={24}/>}</td>
                                         <td>{r.cpf}</td>
                                         <td>{r.fullName}</td>
                                         <td>{r.corporativeEmail}</td>
@@ -186,6 +230,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     </tbody>
                 </Table>
             </div>
+
         </ContainerTable>
     );
 }
