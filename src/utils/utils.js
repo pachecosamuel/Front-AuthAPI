@@ -1,4 +1,4 @@
-export function subtractYears(date, years) {
+export const subtractYears = (date, years) => {
     date.setFullYear(date.getFullYear() - years)
     return date
 }

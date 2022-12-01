@@ -1,15 +1,12 @@
 import { React, useContext, useState } from "react";
 import Table from "react-bootstrap/Table";
 
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
 
 import { ContainerTable } from "./style";
 import { api } from "../../Services/Api/apiConnection";
 import { AuthenticationContext } from "../../Services/Context/contextToken";
-import { Modal } from "react-bootstrap";
-import ButtonComponent from "../button";
-import { ModalComponent } from "../modal-component";
+import { TableModal } from "../table-modal";
 import { toast } from "react-toastify";
 import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -74,7 +71,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     <>
                         <td className="coluna-acao">
                             <BsEye
-                            title="Visualizar Usuário"
+                                title="Visualizar Usuário"
                                 onClick={() => navigate(`user/view/${userTable.id}`)}
                             />
                         </td>
@@ -86,15 +83,15 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     <>
                         <td className="coluna-acao">
                             <BsEye
-                            title="Visualizar Usuário"
-                            size={24}
+                                title="Visualizar Usuário"
+                                size={24}
                                 onClick={() => navigate(`user/view/${userTable.id}`)}
                             />
                         </td>
                         <td className="coluna-acao">
                             <CiEdit
-                            title="Editar Usuário"
-                            size={24}
+                                title="Editar Usuário"
+                                size={24}
                                 onClick={() => navigate(`user/edit/${userTable.id}`)}
                             />
                         </td>
@@ -103,14 +100,14 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             {
                                 userTable.active === true ?
                                     <AiOutlineCloseCircle
-                                    title="Desativar Usuário"
-                                    size={24}
+                                        title="Desativar Usuário"
+                                        size={24}
                                         onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
                                     />
                                     :
-                                    <AiOutlineCheckCircle title="Ativar Usuário" 
-                                    size={24} 
-                                    onClick={() => [setShowModalActive(true), setCurrentUser(userTable)]}
+                                    <AiOutlineCheckCircle title="Ativar Usuário"
+                                        size={24}
+                                        onClick={() => [setShowModalActive(true), setCurrentUser(userTable)]}
                                     />
                             }
                         </td>
@@ -122,15 +119,15 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                     <>
                         <td className="coluna-acao">
                             <BsEye
-                            title="Visualizar Usuário"
-                            size={24}
+                                title="Visualizar Usuário"
+                                size={24}
                                 onClick={() => navigate(`user/view/${userTable.id}`)}
                             />
                         </td>
                         <td className="coluna-acao">
                             <CiEdit
-                            title="Editar Usuário"
-                            size={24}
+                                title="Editar Usuário"
+                                size={24}
                                 onClick={() => navigate(`user/edit/${userTable.id}`)}
                             />
                         </td>
@@ -139,14 +136,14 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                             {
                                 userTable.active === true ?
                                     <AiOutlineCloseCircle
-                                    title="Desativar Usuário"
-                                    size={24}
+                                        title="Desativar Usuário"
+                                        size={24}
                                         onClick={() => [setShowModal(true), setCurrentUser(userTable)]}
                                     />
                                     :
-                                    <AiOutlineCheckCircle title="Ativar Usuário" 
-                                    size={24} 
-                                    onClick={() => [setShowModalActive(true), setCurrentUser(userTable)]}
+                                    <AiOutlineCheckCircle title="Ativar Usuário"
+                                        size={24}
+                                        onClick={() => [setShowModalActive(true), setCurrentUser(userTable)]}
                                     />
                             }
                         </td>
@@ -184,7 +181,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
 
     return (
         <ContainerTable>
-            <ModalComponent
+            <TableModal
                 title={"Você tem certeza que deseja desativar esse usuário?"}
                 showModal={showModal}
                 setShowModal={setShowModal}
@@ -192,7 +189,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                 user={currentUser}
                 loading={loading}
             />
-            <ModalComponent
+            <TableModal
                 title={"Você tem certeza que deseja reativar esse usuário?"}
                 showModal={showModalActive}
                 setShowModal={setShowModalActive}
@@ -221,9 +218,8 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                         {registros.length > 0 ? (
                             registros.map((r, i) => {
                                 return (
-                                
                                     <tr key={i}>
-                                        <td>{r.active === true ? <AiOutlineCheck color="green" size={24}/> : <AiOutlineClose color="red" size={24}/>}</td>
+                                        <td>{r.active === true ? <AiOutlineCheck color="green" size={24} /> : <AiOutlineClose color="red" size={24} />}</td>
                                         <td>{r.cpf}</td>
                                         <td>{r.fullName}</td>
                                         <td>{r.corporativeEmail}</td>
@@ -237,7 +233,6 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                                         {renderActionsByRole(r)}
 
                                     </tr>
-                                
                                 );
                             })
                         ) : (

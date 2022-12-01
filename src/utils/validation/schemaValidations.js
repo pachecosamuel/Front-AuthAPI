@@ -16,6 +16,6 @@ export const userFormSchema = yup.object().shape({
     cidade: yup.string().required('Cidade deve ser preenchida'),
     uf: yup.string().required('Estado deve ser preenchido'),
     cep: yup.string().required('CEP deve ser preenchido'),
-    birthDate: yup.date().max(subtractYears(new Date(), 18), 'O usuário deve ter mais de 18 anos de idade').required('Data de nascimento deve ser preenchida'),
+    birthDate: yup.date().max(subtractYears(new Date(), 14), 'O usuário deve ter mais de 14 anos de idade').required('Data de nascimento deve ser preenchida'),
     admissionDate: yup.date().max(new Date(), 'A Data de admissão deve ser anterior à data atual').required('Data de admissão deve ser preenchida')
 })

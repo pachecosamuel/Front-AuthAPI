@@ -1,7 +1,7 @@
 import { Modal, Spinner } from "react-bootstrap"
 import ButtonComponent from "../button"
 
-export const ModalComponent = ({ showModal, setShowModal, funcao, user, loading, title }) => {
+export const TableModal = ({ showModal, setShowModal, funcao, user, loading, title }) => {
     return (
         <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton
