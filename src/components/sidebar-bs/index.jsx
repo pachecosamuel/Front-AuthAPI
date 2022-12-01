@@ -100,14 +100,6 @@ function SideBarMenuBs() {
                                 </div>
                             </div>
                         </div>
-                        <div className="sidebar-nav-item">
-                            <div onClick={() => navigateTo("/cadastro")}>
-                                <div className="area-icons-label">
-                                    <AiOutlineUserAdd />
-                                    <span>Cadastro</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 )
                 break;
@@ -128,7 +120,9 @@ function SideBarMenuBs() {
                             <img src={LogoT2m} alt="Logo T2M" />
                         </div>
                         <div className="area-direita">
-                            <BiUserCircle />
+                            <BiUserCircle 
+                            onClick={() => navigateTo("/profile")}
+                            />
                         </div>
                     </div>
                     <Offcanvas show={show} onHide={handleClose}>

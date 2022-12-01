@@ -113,18 +113,6 @@ function SidebarComponent() {
                 </div>
               </div>
             </div>
-            <div className="mt-2 sidebar-nav-item">
-              <div onClick={() => navigateTo("/cadastro")}>
-                <div className="area-icons-label">
-                  <AiOutlineUserAdd />
-                  {sideBarCollapse ? (
-                    ""
-                  ) : (
-                    <span className="label-sidebar">Cadastro</span>
-                  )}
-                </div>
-              </div>
-            </div>
           </div>
         )
         break;

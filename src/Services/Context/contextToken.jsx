@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
+import { api } from "../Api/apiConnection";
 import { LoginService } from "../Api/apiLogin";
 
 export const AuthenticationContext = createContext({});
@@ -26,8 +27,8 @@ export const AuthenticationProvider = ({ children }) => {
         if (localStorage.getItem('token')) {
             setToken(localStorage.getItem('token'));
         }
-        if(localStorage.getItem('user')){
-        setUser(JSON.parse(localStorage.getItem('user')));
+        if (localStorage.getItem('user')) {
+            setUser(JSON.parse(localStorage.getItem('user')));
         }
 
     }, [])
@@ -50,17 +51,17 @@ export const AuthenticationProvider = ({ children }) => {
             token: respostaServiceLogin?.token
         });
         localStorage.setItem('user', JSON.stringify({
-                id: respostaServiceLogin?.Id,
-                fullName: respostaServiceLogin?.FullName,
-                personalEmail: respostaServiceLogin?.PersonalEmail,
-                corporativeEmail: respostaServiceLogin?.CorporativeEmail,
-                phone: respostaServiceLogin?.Phone,
-                cpf: respostaServiceLogin?.Cpf,
-                role: respostaServiceLogin?.Role,
-                birthDate: respostaServiceLogin?.BirthDate,
-                admissionDate: respostaServiceLogin?.AdmissionDate,
-                token: respostaServiceLogin?.token
-            }));
+            id: respostaServiceLogin?.Id,
+            fullName: respostaServiceLogin?.FullName,
+            personalEmail: respostaServiceLogin?.PersonalEmail,
+            corporativeEmail: respostaServiceLogin?.CorporativeEmail,
+            phone: respostaServiceLogin?.Phone,
+            cpf: respostaServiceLogin?.Cpf,
+            role: respostaServiceLogin?.Role,
+            birthDate: respostaServiceLogin?.BirthDate,
+            admissionDate: respostaServiceLogin?.AdmissionDate,
+            token: respostaServiceLogin?.token
+        }));
         setToken(respostaServiceLogin?.token)
         localStorage.setItem('token', respostaServiceLogin?.token);
 
@@ -82,6 +83,7 @@ export const AuthenticationProvider = ({ children }) => {
             var tokenDecoded = jwtDecode(tokenLocal);
             var expDate = new Date(tokenDecoded.exp * 1000);
             if (Date.now() < expDate) {
+                api.defaults.headers["Authorization"] = `Bearer ${tokenLocal}`;
                 setAuth(true);
             } else {
                 setAuth(false);
