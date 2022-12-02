@@ -72,6 +72,7 @@ export function Root() {
                         {renderTableRoutes(true)}
                         <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/notfound" element={<NotFound />} />
                     </Routes>
                 )
                 break;
@@ -81,6 +82,7 @@ export function Root() {
                         {renderTableRoutes(true)}
                         <Route path="/cadastro" element={<Cadastro />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/notfound" element={<NotFound />} />
                     </Routes>
                 )
                 break;
@@ -89,6 +91,7 @@ export function Root() {
                     <Routes>
                         {renderTableRoutes(false)}
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/notfound" element={<NotFound />} />
                     </Routes>
                 )
                 break;
