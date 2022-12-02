@@ -115,6 +115,7 @@ function SidebarComponent() {
               />
             ) : (
               <BsArrowBarLeft
+                title="Reduzir"
                 onClick={() => setSideBarCollapse(!sideBarCollapse)}
               />
             )}
