@@ -12,6 +12,7 @@ import { BsEye } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheck, AiOutlineCheckCircle, AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 import { parseRoleToString } from "../../utils/utils";
+import VMasker from "vanilla-masker";
 
 function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage, setIsSearching, setButtonAll }) {
 
@@ -220,12 +221,12 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
                                 return (
                                     <tr key={i}>
                                         <td>{r.active === true ? <AiOutlineCheck color="green" size={24} /> : <AiOutlineClose color="red" size={24} />}</td>
-                                        <td>{r.cpf}</td>
+                                        <td>{VMasker.toPattern(r.cpf, "999.999.999-99")}</td>
                                         <td>{r.fullName}</td>
                                         <td>{r.corporativeEmail}</td>
                                         <td>{r.personalEmail}</td>
                                         <td>{parseRoleToString(r.role)}</td>
-                                        <td>{r.phone}</td>
+                                        <td>{r.phone === 'null' ? 'Não Possui' : VMasker.toPattern(r.phone, "(99) 99999-9999")}</td>
                                         <td>{r.birthDate}</td>
                                         <td>{r.admissionDate}</td>
 

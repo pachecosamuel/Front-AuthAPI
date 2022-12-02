@@ -1,16 +1,16 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col"
 import { Spinner } from "react-bootstrap";
 
-import "./formCadastro.css";
+import "./formEdit.css";
 
 import { ContainerForm } from "./style";
 import BotaoComponent from "../button";
 
-import { subtractYears } from "../../utils/utils";
+import { parseDateToPattern, subtractYears } from "../../utils/utils";
 import { userFormSchema } from "../../utils/validation/schemaValidations";
 
 import { api, viaCep } from "../../Services/Api/apiConnection";
@@ -19,12 +19,12 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import VMasker from "vanilla-masker";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
+moment.locale('pt-br');
 
-function FormularioCadastroComponent() {
-
-    window.onbeforeunload = function () {
-        localStorage.setItem('registerUserformData', JSON.stringify({ ...values, cpf: '' }))
-    }
+function FormularioEditComponent(user) {
+    
+    const navigate = useNavigate();
 
     const {
         values,
@@ -40,47 +40,38 @@ function FormularioCadastroComponent() {
         handleReset
     } = useFormik({
         initialValues: {
-            fullName: "",
-            corporativeEmail: "",
-            personalEmail: "",
-            phone: "",
-            cpf: "",
-            role: 0,
-            logradouro: "",
-            bairro: "",
-            numero: "",
-            complemento: "",
-            cidade: "",
-            uf: "",
-            cep: "",
-            birthDate: "",
-            admissionDate: ""
+            id: user.user.id,
+            fullName: user.user.fullName,
+            corporativeEmail: user.user.corporativeEmail,
+            personalEmail: user.user.personalEmail,
+            phone: user.user.phone,
+            cpf: user.user.cpf,
+            role: user.user.role,
+            logradouro: user.user.logradouro,
+            bairro: user.user.bairro,
+            numero: user.user.numero,
+            complemento: user.user.complemento,
+            cidade: user.user.cidade,
+            uf: user.user.uf,
+            cep: user.user.cep,
+            birthDate:  parseDateToPattern(user.user.birthDate),
+            admissionDate: parseDateToPattern(user.user.admissionDate)
         },
         validationSchema: userFormSchema,
         validateOnChange: false,
         validateOnBlur: true,
         onSubmit: (values) => {
-            console.log('DENTRO DO ONSUBMIT')
-            console.log(values)
             handleForm(values)
-        },
-        onReset: () => {
-            localStorage.getItem('registerUserformData') &&
-                localStorage.removeItem('registerUserformData')
         }
     })
 
     useEffect(() => {
-        localStorage.getItem('registerUserformData') &&
-            setValues(JSON.parse(localStorage.getItem('registerUserformData')))
-    }, [])
-
-    useEffect(() => {
-        values.cep.length === 9 && handleViaCep()
+        if(values.cep != user.user.cep){
+          values.cep.length === 9 && handleViaCep()  
+        }
     }, [values.cep])
 
     const handleForm = async (values) => {
-        console.log('REGISTRANDO USUARIO')
         setSubmitting(true)
 
         const cleanDataForSubmit = {
@@ -94,14 +85,12 @@ function FormularioCadastroComponent() {
 
         try {
             console.log(cleanDataForSubmit)
-            await api.post("/User", cleanDataForSubmit)
-            toast.success('Usuário registrado com sucesso!')
-            console.log('REGISTROU COM SUCESSO')
+            await api.put("/User", cleanDataForSubmit)
+            toast.success('Usuário atualizado com sucesso!')
             setSubmitting(false)
             resetForm()
+            navigate(`/user/view/${user.user.id}`)
         } catch (error) {
-            console.log('DEU ERRO')
-            console.log(error)
             setSubmitting(false)
             toast.error('Erro ao registrar usuário: ' + error.response.data.errors[0].message)
         }
@@ -450,4 +439,4 @@ function FormularioCadastroComponent() {
     );
 }
 
-export default FormularioCadastroComponent;
+export default FormularioEditComponent;
