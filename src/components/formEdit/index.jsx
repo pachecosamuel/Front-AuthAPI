@@ -413,9 +413,6 @@ function FormularioEditComponent(user) {
 
                 <Row>
                     <Col className="d-flex justify-content-end gap-2 buttons-container">
-                        <BotaoComponent acao={handleReset} tamanho="10rem" bgColor="#585859" textColor="#FFF">
-                            Limpar
-                        </BotaoComponent>
 
                         <BotaoComponent disabled={isSubmitting} type='submit' tamanho="10rem" bgColor="#03A688" textColor="#FFF">
                             {isSubmitting ? (
@@ -428,7 +425,7 @@ function FormularioEditComponent(user) {
                                 />
                             ) : (
                                 <span>
-                                    Registrar
+                                    Salvar Alterações
                                 </span>
                             )}
                         </BotaoComponent>

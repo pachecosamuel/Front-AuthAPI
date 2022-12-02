@@ -16,6 +16,7 @@ import ContentPageContainer from "../../components/content-page-container";
 import HeaderPageComponent from "../../components/header-page";
 import { LoadingComponent } from "../../components/loading";
 import { PageContainer } from "../../components/page-container/style";
+import VMasker from "vanilla-masker";
 
 export const ViewUser = () => {
     const [user, setUser] = useState({
@@ -96,7 +97,7 @@ export const ViewUser = () => {
                                                     <Form.Label>Telefone:</Form.Label>
 
                                                     <Form.Control
-                                                        value={user.phone}
+                                                        value={user.phone === 'null' ? 'Não Possui' : VMasker.toPattern(user.phone, "(99) 99999-9999")}
                                                         disabled
                                                     />
                                                 </Form.Group>
@@ -105,7 +106,7 @@ export const ViewUser = () => {
                                                     <Form.Label>CPF:</Form.Label>
 
                                                     <Form.Control
-                                                        value={user.cpf}
+                                                        value={VMasker.toPattern(user.cpf, "999.999.999-99")}
                                                         disabled
                                                     />
                                                 </Form.Group>
