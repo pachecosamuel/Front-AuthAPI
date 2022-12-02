@@ -3,6 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { CiEdit } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import ContentPageContainer from "../../components/content-page-container";
+import FormularioEditComponent from "../../components/formEdit";
 import HeaderPageComponent from "../../components/header-page";
 import { LoadingComponent } from "../../components/loading";
 import { PageContainer } from "../../components/page-container/style";
@@ -55,8 +56,7 @@ export const EditUser = () => {
                         <ContainerTablePageStyle>
                             <Row>
                                 <Col>
-                                    
-                                        {user.fullName}
+                                        <FormularioEditComponent user={user} />
                                     
                                 </Col>
                             </Row>
