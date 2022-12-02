@@ -1,0 +1,16 @@
+.error {
+    border: 1px solid #FF6565 !important;
+}
+
+.error-message {
+    color: #FF6565;
+    font-size: 1rem;
+    padding-left: 0.2rem;
+}
+
+@media (max-width: 430px) {
+    .buttons-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,7 +1,6 @@
 import { api } from "./apiConnection";
 
-
-const FindById = async (id, token) => {
+const FindById = async (id) => {
 
     try {
         const user = await api.get(`User/${id}`,
@@ -17,7 +16,7 @@ const FindById = async (id, token) => {
         return false;
 
     } catch (error) {
-        alert(error.response.headers.error);
+        console.log();(error.response.headers.error);
     }
 
 }

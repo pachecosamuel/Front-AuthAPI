@@ -9,32 +9,41 @@ import { BiUserCircle } from "react-icons/bi";
 import InformationCard from "../../components/profileCard/informationCard/index";
 import React, { useContext, useEffect, useState } from 'react';
 import { FindById } from "../../Services/Api/apiFindById";
-import { Await } from "react-router-dom";
+import PasswordCard from "../../components/profileCard/resetPasswordCard";
+import { LoadingComponent } from "../../components/loading"
 export function Profile() {
-
+    const [loading, setLoading] = useState(true);
     const { user } = useContext(AuthenticationContext);
     const [newUser, setNewUser] = useState({});
     useEffect(() => {
         Find(user.id, user.token);
+
     }, []);
 
     const Find = async (id, token) => {
         const result = await FindById(id, token);
         setNewUser(result.data.data);
+        setLoading(false)
     };
     return (
         <PageContainer>
             <HeaderPageComponent title='Perfil' icon={<BiUserCircle />} />
 
-            <ContentPageContainer>
-                <Row>
-                    <Col>
-                        <InformationCard user={newUser} />
-                        <hr />
-                        <AddressCard user={newUser} />
-                    </Col>
-                </Row>
-            </ContentPageContainer>
+            {!loading ?
+                <ContentPageContainer>
+                    <Row>
+                        <Col>
+                            <InformationCard user={newUser} />
+                            <hr />
+                            <AddressCard user={newUser} />
+                            <hr />
+                            <PasswordCard user={newUser} />
+                        </Col>
+                    </Row>
+                </ContentPageContainer>
+                :
+                <LoadingComponent />
+            }
         </PageContainer>
     );
 }

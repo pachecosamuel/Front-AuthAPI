@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
+import { api } from "../Api/apiConnection";
 import { LoginService } from "../Api/apiLogin";
 
 export const AuthenticationContext = createContext({});
@@ -25,45 +26,42 @@ export const AuthenticationProvider = ({ children }) => {
     useEffect(() => {
         if (localStorage.getItem('token')) {
             setToken(localStorage.getItem('token'));
-            handleSetUser(localStorage.getItem('token'));
+        }
+        if (localStorage.getItem('user')) {
+            setUser(JSON.parse(localStorage.getItem('user')));
         }
 
     }, [])
-
-    const handleSetUser = (tokenLocal) => {
-        var tokenDecoded = jwtDecode(tokenLocal);
-        setUser({
-            ...user,
-            id: tokenDecoded?.Id,
-            fullName: tokenDecoded?.FullName,
-            personalEmail: tokenDecoded?.PersonalEmail,
-            corporativeEmail: tokenDecoded?.CorporativeEmail,
-            phone: tokenDecoded?.Phone,
-            cpf: tokenDecoded?.Cpf,
-            role: tokenDecoded?.Role,
-            birthDate: tokenDecoded?.BirthDate,
-            admissionDate: tokenDecoded?.AdmissionDate,
-        });
-    }
 
 
     const login = async (email, password) => {
 
         const respostaServiceLogin = await LoginService(email, password);
         if (!respostaServiceLogin) return false;
-
         setUser({
             id: respostaServiceLogin?.Id,
-            fullName: respostaServiceLogin?.fullName,
-            personalEmail: respostaServiceLogin?.personalEmail,
+            fullName: respostaServiceLogin?.FullName,
+            personalEmail: respostaServiceLogin?.PersonalEmail,
             corporativeEmail: respostaServiceLogin?.CorporativeEmail,
-            phone: respostaServiceLogin?.phone,
-            cpf: respostaServiceLogin?.cpf,
-            role: respostaServiceLogin?.role,
-            birthDate: respostaServiceLogin?.birthDate,
-            admissionDate: respostaServiceLogin?.admissionDate,
+            phone: respostaServiceLogin?.Phone,
+            cpf: respostaServiceLogin?.Cpf,
+            role: respostaServiceLogin?.Role,
+            birthDate: respostaServiceLogin?.BirthDate,
+            admissionDate: respostaServiceLogin?.AdmissionDate,
             token: respostaServiceLogin?.token
         });
+        localStorage.setItem('user', JSON.stringify({
+            id: respostaServiceLogin?.Id,
+            fullName: respostaServiceLogin?.FullName,
+            personalEmail: respostaServiceLogin?.PersonalEmail,
+            corporativeEmail: respostaServiceLogin?.CorporativeEmail,
+            phone: respostaServiceLogin?.Phone,
+            cpf: respostaServiceLogin?.Cpf,
+            role: respostaServiceLogin?.Role,
+            birthDate: respostaServiceLogin?.BirthDate,
+            admissionDate: respostaServiceLogin?.AdmissionDate,
+            token: respostaServiceLogin?.token
+        }));
         setToken(respostaServiceLogin?.token)
         localStorage.setItem('token', respostaServiceLogin?.token);
 
@@ -85,6 +83,7 @@ export const AuthenticationProvider = ({ children }) => {
             var tokenDecoded = jwtDecode(tokenLocal);
             var expDate = new Date(tokenDecoded.exp * 1000);
             if (Date.now() < expDate) {
+                api.defaults.headers["Authorization"] = `Bearer ${tokenLocal}`;
                 setAuth(true);
             } else {
                 setAuth(false);

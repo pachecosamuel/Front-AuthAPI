@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContainerNavBsStyle = styled.div`
-  @import url("../../css-config/colors.css");
+  //@import url("../../css-config/colors.css");
 
   font-size: 1.2rem;
   display: flex;
@@ -77,7 +77,7 @@ export const LogoArea = styled.div`
 `;
 
 export const ContainerSideBar = styled.div`
-  @import url("../../css-config/colors.css");
+  //@import url("../../css-config/colors.css");
 
   display: none;
   background-color: var(--branco) !important;
@@ -128,7 +128,7 @@ export const ContainerSideBar = styled.div`
 `;
 
 export const CloseIconArea = styled.div`
-  @import url("../../css-config/colors.css");
+  //@import url("../../css-config/colors.css");
 
   svg {
     font-size: 28px !important;

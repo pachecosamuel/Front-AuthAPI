@@ -1,0 +1,1 @@
+export const noNumbersRegex = /^([^0-9]*)$/

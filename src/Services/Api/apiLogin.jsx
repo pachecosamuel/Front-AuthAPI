@@ -13,6 +13,7 @@ const LoginService = async (email, password) => {
         if (resposta.status === 200) {
             tokenDecodificado = jwt_decode(resposta.data.token);
             tokenDecodificado['token'] = resposta.data.token;
+            api.defaults.headers["Authorization"] = `Bearer ${resposta.data.token}`;
             return tokenDecodificado;
         } else {
             return false;
@@ -20,6 +21,7 @@ const LoginService = async (email, password) => {
     }
     catch (error) {
         toast.error('Erro ao realizar o login - ' + JSON.stringify(error.message));
+        delete api.defaults.headers["Authorization"];
     }
 
 }
