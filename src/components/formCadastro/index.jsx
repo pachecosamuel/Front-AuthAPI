@@ -7,14 +7,18 @@ import { Spinner } from "react-bootstrap";
 
 import "./formCadastro.css";
 
-import { api, viaCep } from "../../Services/Api/apiConnection";
-
 import { ContainerForm } from "./style";
 import BotaoComponent from "../button";
 
+import { subtractYears } from "../../utils/utils";
+import { userFormSchema } from "../../utils/validation/schemaValidations";
+
+import { api, viaCep } from "../../Services/Api/apiConnection";
+
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { userFormSchema } from "../../utils/validation/schemaValidations";
+import VMasker from "vanilla-masker";
+import moment from "moment";
 
 function FormularioCadastroComponent() {
 
@@ -32,7 +36,8 @@ function FormularioCadastroComponent() {
         handleChange,
         handleSubmit,
         resetForm,
-        setValues
+        setValues,
+        handleReset
     } = useFormik({
         initialValues: {
             fullName: "",
@@ -40,7 +45,7 @@ function FormularioCadastroComponent() {
             personalEmail: "",
             phone: "",
             cpf: "",
-            role: "",
+            role: 0,
             logradouro: "",
             bairro: "",
             numero: "",
@@ -57,65 +62,63 @@ function FormularioCadastroComponent() {
         onSubmit: (values) => {
             console.log('DENTRO DO ONSUBMIT')
             console.log(values)
-            setSubmitting(true)
             handleForm(values)
-            resetForm()
-            setSubmitting(false)
+        },
+        onReset: () => {
+            localStorage.getItem('registerUserformData') &&
+                localStorage.removeItem('registerUserformData')
         }
     })
 
     useEffect(() => {
-        if (localStorage.getItem('registerUserformData')) {
+        localStorage.getItem('registerUserformData') &&
             setValues(JSON.parse(localStorage.getItem('registerUserformData')))
-        }
     }, [])
 
     useEffect(() => {
-        if (values.cep.length === 8) {
-            handleViaCep()
-        }
+        values.cep.length === 9 && handleViaCep()
     }, [values.cep])
 
     const handleForm = async (values) => {
         console.log('REGISTRANDO USUARIO')
-        console.log(values)
+        setSubmitting(true)
 
-        console.log('ANTES DE CONVERTER DATA')
-        const userDateConverted = values
-
-        userDateConverted.birthDate = values.birthDate.split('-').reverse().join("/")
-        userDateConverted.admissionDate = values.admissionDate.split('-').reverse().join("/")
-
-        console.log('DEPOIS DE CONVERTER DATA')
-        console.log(userDateConverted)
+        const cleanDataForSubmit = {
+            ...values,
+            phone: VMasker.toNumber(values.phone),
+            cpf: VMasker.toNumber(values.cpf),
+            cep: VMasker.toNumber(values.cep),
+            birthDate: moment(values.birthDate).format('DD/MM/YYYY'),
+            admissionDate: moment(values.admissionDate).format('DD/MM/YYYY')
+        }
 
         try {
-            await api.post("/User", values)
+            console.log(cleanDataForSubmit)
+            await api.post("/User", cleanDataForSubmit)
             toast.success('Usuário registrado com sucesso!')
             console.log('REGISTROU COM SUCESSO')
+            setSubmitting(false)
+            resetForm()
         } catch (error) {
             console.log('DEU ERRO')
             console.log(error)
-            // toast.error('Erro ao registrar usuário: ' + JSON.stringify(error.response.data.errors[0] ? error.response.data.errors[0].message : 'Erro no formato das datas'))
-            toast.error('Erro ao registrar usuário: ')
+            setSubmitting(false)
+            toast.error('Erro ao registrar usuário: ' + error.response.data.errors[0].message)
         }
     }
 
     const handleViaCep = async () => {
-        const res = await viaCep.get(`${values.cep}/json/`);
-        setValues({
-            ...values,
-            logradouro: res.data.logradouro,
-            bairro: res.data.bairro,
-            cidade: res.data.localidade,
-            uf: res.data.uf
-        })
-    }
-
-    function clearForm() {
-        resetForm()
-        if (localStorage.getItem('registerUserformData')) {
-            localStorage.removeItem('registerUserformData')
+        const res = await viaCep.get(`${VMasker.toNumber(values.cep)}/json/`);
+        if (res.data.erro) {
+            toast.error('Nenhum endereço encontrado para o CEP inserido')
+        } else {
+            setValues({
+                ...values,
+                logradouro: res.data.logradouro,
+                bairro: res.data.bairro,
+                cidade: res.data.localidade,
+                uf: res.data.uf
+            })
         }
     }
 
@@ -131,7 +134,7 @@ function FormularioCadastroComponent() {
                         <Form.Control
                             value={values.fullName}
                             type="text"
-                            placeholder="Digite o nome..."
+                            placeholder="Ex: João Silva"
                             onBlur={handleBlur}
                             onChange={handleChange}
                             name='fullName'
@@ -148,7 +151,7 @@ function FormularioCadastroComponent() {
                         <Form.Control
                             value={values.personalEmail}
                             type="email"
-                            placeholder="Melhor e-mail do usuário"
+                            placeholder="Ex: usuario@mail.com"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='personalEmail'
@@ -161,16 +164,16 @@ function FormularioCadastroComponent() {
                 </Row>
 
                 <Row className="mb-3">
-                    <Form.Group as={Col} controlId="formGridPhone">
+                    <Form.Group as={Col}>
                         <Form.Label>Telefone:</Form.Label>
 
                         <Form.Control
-                            value={values.phone}
+                            value={VMasker.toPattern(values.phone, "(99) 99999-9999")}
                             type="text"
-                            placeholder="(xx) xxxxx-xxxx"
+                            placeholder="Ex: (00) 00000-0000"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            name='phone'
+                            name="phone"
                             className={touched.phone && errors.phone ? "error" : null}
                         />
                         {touched.phone && errors.phone ? (
@@ -182,9 +185,9 @@ function FormularioCadastroComponent() {
                         <Form.Label>CPF:</Form.Label>
 
                         <Form.Control
-                            value={values.cpf}
+                            value={VMasker.toPattern(values.cpf, "999.999.999-99")}
                             type="text"
-                            placeholder="Digite um CPF válido"
+                            placeholder="Ex: 000.000.000-00"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='cpf'
@@ -197,12 +200,14 @@ function FormularioCadastroComponent() {
 
                     <Form.Group as={Col} controlId="formGridBirthDate">
                         <Form.Label>Data de nascimento:</Form.Label>
+
                         <Form.Control
                             value={values.birthDate}
                             type="date"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='birthDate'
+                            max={moment(subtractYears(new Date(), 14)).format('YYYY-MM-DD')}
                             className={touched.birthDate && errors.birthDate ? "error" : null}
                         />
                         {touched.birthDate && errors.birthDate ? (
@@ -220,7 +225,7 @@ function FormularioCadastroComponent() {
                         <Form.Control
                             value={values.corporativeEmail}
                             type="email"
-                            placeholder="E-mail criado para o usuário"
+                            placeholder="Ex: usuario@t2m.com"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='corporativeEmail'
@@ -240,6 +245,7 @@ function FormularioCadastroComponent() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='admissionDate'
+                            max={moment(new Date()).format('YYYY-MM-DD')}
                             className={touched.admissionDate && errors.admissionDate ? "error" : null}
                         />
                         {touched.admissionDate && errors.admissionDate ? (
@@ -257,7 +263,6 @@ function FormularioCadastroComponent() {
                             name='role'
                             className={touched.role && errors.role ? "error" : null}
                         >
-                            <option></option>
                             <option value='0'>Colaborador</option>
                             <option value='1'>Gestor</option>
                         </Form.Select>
@@ -274,11 +279,12 @@ function FormularioCadastroComponent() {
                         <Form.Label>CEP:</Form.Label>
 
                         <Form.Control
-                            value={values.cep}
-                            placeholder="xxxxx-xxx"
+                            value={VMasker.toPattern(values.cep, "99999-999")}
+                            placeholder="Ex: 00000-000"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='cep'
+                            autoComplete="off"
                             className={touched.cep && errors.cep ? "error" : null}
                         />
                         {touched.cep && errors.cep ? (
@@ -291,7 +297,7 @@ function FormularioCadastroComponent() {
 
                         <Form.Control
                             value={values.numero}
-                            placeholder="123, 123A, ..."
+                            placeholder="Ex: 100, 100A, ..."
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='numero'
@@ -307,7 +313,7 @@ function FormularioCadastroComponent() {
 
                         <Form.Control
                             value={values.complemento}
-                            placeholder="Apartamento, Bloco, ..."
+                            placeholder="Ex: Apt 101, Bloco A, ..."
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='complemento'
@@ -325,7 +331,7 @@ function FormularioCadastroComponent() {
 
                         <Form.Control
                             value={values.logradouro}
-                            placeholder=""
+                            placeholder="Ex: Rua Afrânio Melo Franco"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='logradouro'
@@ -341,6 +347,7 @@ function FormularioCadastroComponent() {
 
                         <Form.Control
                             value={values.bairro}
+                            placeholder="Ex: Quitandinha"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='bairro'
@@ -358,6 +365,7 @@ function FormularioCadastroComponent() {
 
                         <Form.Control
                             value={values.cidade}
+                            placeholder="Ex: Petrópolis"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='cidade'
@@ -415,7 +423,7 @@ function FormularioCadastroComponent() {
 
                 <Row>
                     <Col className="d-flex justify-content-end gap-2">
-                        <BotaoComponent acao={clearForm} tamanho="10rem" bgColor="#585859" textColor="#FFF">
+                        <BotaoComponent acao={handleReset} tamanho="10rem" bgColor="#585859" textColor="#FFF">
                             Limpar
                         </BotaoComponent>
 
