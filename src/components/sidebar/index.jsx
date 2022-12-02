@@ -110,6 +110,7 @@ function SidebarComponent() {
           <div className="collapse-sidebar-action">
             {sideBarCollapse ? (
               <BsArrowBarRight
+                title="Expandir"
                 onClick={() => setSideBarCollapse(!sideBarCollapse)}
               />
             ) : (
@@ -147,7 +148,7 @@ function SidebarComponent() {
             <div className="sidebar-nav-item">
               <div onClick={() => [logOut(), navigateTo("/")]}>
                 <div className="area-icons-label">
-                  <ImExit size={28} />
+                  <ImExit title="Sair" size={28} />
                   {sideBarCollapse ? (
                     ""
                   ) : (

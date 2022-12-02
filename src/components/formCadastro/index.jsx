@@ -264,7 +264,8 @@ function FormularioCadastroComponent() {
                             className={touched.role && errors.role ? "error" : null}
                         >
                             <option value='0'>Colaborador</option>
-                            <option value='1'>Gestor</option>
+                            <option value='1'>Departamento Administrativo</option>
+                            <option value='3'>Gestor</option>
                         </Form.Select>
                         {touched.role && errors.role ? (
                             <div className="error-message">{errors.role}</div>
@@ -422,7 +423,7 @@ function FormularioCadastroComponent() {
                 </Row>
 
                 <Row>
-                    <Col className="d-flex justify-content-end gap-2">
+                    <Col className="d-flex justify-content-end gap-2 buttons-container">
                         <BotaoComponent acao={handleReset} tamanho="10rem" bgColor="#585859" textColor="#FFF">
                             Limpar
                         </BotaoComponent>
