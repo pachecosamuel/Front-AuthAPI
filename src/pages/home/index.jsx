@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { AiOutlineTable } from "react-icons/ai";
+import { HiOutlineClipboardList } from "react-icons/hi";
 import { FiFilter, FiUser } from "react-icons/fi";
 
 import { PageContainer } from "../../components/page-container/style";
@@ -17,6 +17,7 @@ import { ContainerTablePageStyle } from "./style"
 import { api } from "../../Services/Api/apiConnection";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import ButtonComponent from "../../components/button";
+import { parseRoleToString } from "../../utils/utils";
 
 export const Home = () => {
 
@@ -30,7 +31,7 @@ export const Home = () => {
     const [isSearching, setIsSearching] = useState(false);
     const [tableIsModify, setTableIsModify] = useState(false);
 
-    const [buttonAll, setButtonAll] = useState(undefined);
+    const [buttonAll, setButtonAll] = useState('todos');
     const [buttonUsers, setButtonUsers] = useState([]);
 
     useEffect(() => {
@@ -38,8 +39,14 @@ export const Home = () => {
         const handleGetUsers = async () => {
             setLoading(true)
             const res = await api.get('/User');
-            setUsers(res.data.data)
-            setButtonUsers(res.data.data)
+            let listaOrdenada = res.data.data;
+            listaOrdenada.sort((x, y)=>{
+                let a = x.fullName.toUpperCase()
+                let b = y.fullName.toUpperCase()
+                return a==b ? 0 : a > b ? 1 : -1;
+            })
+            setUsers(listaOrdenada)
+            setButtonUsers(listaOrdenada)
             setLoading(false)
         }
         if (!isSearching) {
@@ -79,7 +86,7 @@ export const Home = () => {
                 r.corporativeEmail.toLowerCase().includes(value.toLowerCase()) ||
                 r.personalEmail.toLowerCase().includes(value.toLowerCase()) ||
                 r.phone.toLowerCase().includes(value.toLowerCase()) ||
-                // r.roles.toLowerCase().includes(value.toLowerCase()) ||
+                parseRoleToString(r.role).toLowerCase().includes(value.toLowerCase()) ||
                 r.birthDate.toLowerCase().includes(value.toLowerCase()) ||
                 r.admissionDate.toLowerCase().includes(value.toLowerCase())
         );
@@ -113,7 +120,7 @@ export const Home = () => {
 
     return (
         <PageContainer>
-            <HeaderPageComponent title='Controle de Acesso' icon={<AiOutlineTable />} />
+            <HeaderPageComponent title='Controle de Acesso' icon={<HiOutlineClipboardList />} />
 
             <ContentPageContainer>
                 <ContainerTablePageStyle>
@@ -133,7 +140,7 @@ export const Home = () => {
                                     onChange={(e) => filterButton(e.target.value)}
                                 >
 
-                                    <option value='undefined'>Todos os Usuários</option>
+                                    <option value='todos'>Todos os Usuários</option>
                                     <option value='true'>Usuários Ativos</option>
                                     <option value='false'>Usuários Inativos</option>
                                 </Form.Select>
@@ -175,6 +182,8 @@ export const Home = () => {
                                         setUpdateTable={setTableIsModify}
                                         updateTable={tableIsModify}
                                         setCurrentPage={setCurrentPage}
+                                        setButtonAll={setButtonAll}
+                                        setIsSearching={setIsSearching}
                                     />
                             }
 
