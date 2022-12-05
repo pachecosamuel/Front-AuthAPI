@@ -35,10 +35,7 @@ Tecnologias usadas no projeto.
    - npm run dev
 
 ## Níveis de acesso
-   * Adm do Sistema
-     - Cadastrar usuário
-     - Listar usuários
-     - 
+![imgtable](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/table1%20(2).png)
 
 
 ## Como usar
