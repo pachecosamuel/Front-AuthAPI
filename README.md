@@ -41,5 +41,12 @@ Tecnologias usadas no projeto.
 ![img1](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/loginreadme.png)
 
 ### 2 - Após logar, você terá diversos níveis de acesso, para cada nível de acesso, terá um padrão de rotas, por exemplo, entrando como Colaborador, essa será sua pagina home, onde poderá olhar suas informações e alterar somente a senha.
-![img1](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homecolaborador.png)
+![img2](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homecolaborador.png)
+
+### 3 - Já nos demais acessos, essa será sua pagina home, onde você poderá, visualizar, editar e desativar um usuário, de acordo com o seu nível de acesso.
+![img3](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homegestores.png)
+
+### 4 - Navegando pelo aplicativo, você também pode encontrar a tela onde te possibilita a criação de um novo usuário.
+![img4](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/registrarusuarioreadme.png)
+
 
