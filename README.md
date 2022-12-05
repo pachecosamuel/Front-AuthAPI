@@ -36,3 +36,10 @@ Tecnologias usadas no projeto.
 
 ## Como usar
 
+### 1 - Você terá acessa a nossa aplicação de Controle de acesso, através do pagina de login
+
+![img1](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/loginreadme.png)
+
+### 2 - Após logar, você terá diversos níveis de acesso, para cada nível de acesso, terá um padrão de rotas, por exemplo, entrando como Colaborador, essa será sua pagina home, onde poderá olhar suas informações e alterar somente a senha.
+![img1](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homecolaborador.png)
+
