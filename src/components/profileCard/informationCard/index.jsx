@@ -3,36 +3,9 @@ import './style.css';
 import { ContainerCardSimplesStyle } from './style';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
-
+import { parseRoleToString } from '../../../utils/utils';
 
 function InformationCard({ user }) {
-
-    const parseRoleToString = (int) => {
-
-        switch (int) {
-
-            case 0:
-
-                return 'Colaborador'
-
-            case 1:
-
-                return 'Departamento Administrativo'
-
-            case 2:
-
-                return 'Administrador do Sistema'
-
-            case 3:
-
-                return 'Gestor'
-
-        }
-
-    }
-
-
-
     return (
 
         <ContainerCardSimplesStyle>

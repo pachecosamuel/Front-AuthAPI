@@ -12,7 +12,7 @@ function SearchComponent({ filterBySearch }) {
                 className="mb-3"
                 onChange={(event) => filterBySearch(event.target.value)}
             >
-                <InputGroup.Text><AiOutlineSearch /></InputGroup.Text>
+                <InputGroup.Text><AiOutlineSearch title="Busca" /></InputGroup.Text>
                 <Form.Control placeholder="Busca..." />
             </InputGroup>
         </ContainerSearch>

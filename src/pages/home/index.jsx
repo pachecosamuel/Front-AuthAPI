@@ -132,7 +132,7 @@ export const Home = () => {
                         <Col>
                             <Form.Group>
                             <InputGroup>
-                            <InputGroup.Text><FiFilter/></InputGroup.Text>
+                            <InputGroup.Text><FiFilter title="Filtro"/></InputGroup.Text>
                                 
 
                                 <Form.Select

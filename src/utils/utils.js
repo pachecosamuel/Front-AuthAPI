@@ -15,3 +15,7 @@ export const parseRoleToString = (int) => {
             return 'Gestor'
     }
 }
+
+export const parseDateToPattern = (date) => {
+    return date.split('/').reverse().join('-');
+}
