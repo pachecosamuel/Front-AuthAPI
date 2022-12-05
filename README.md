@@ -15,7 +15,7 @@ Tecnologias usadas no projeto.
 
 ## Getting started
 
-* Dependency
+* Dependências
   - axios version 1.2.0
   - bootstrap version 5.2.2
   - formik version 2.2.9
@@ -33,4 +33,6 @@ Tecnologias usadas no projeto.
 * Após clonar ou baixar zipado o repositório.
    - npm install
    - npm run dev
- 
+
+## Como usar
+
