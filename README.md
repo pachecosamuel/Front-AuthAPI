@@ -1,3 +1,4 @@
+![Logo of the project](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/perfil%20t2m.png)
 ## T2m - test to Market
 Sistema de controle de acesso de usuários T2M
 
@@ -14,7 +15,7 @@ Tecnologias usadas no projeto.
 
 ## Getting started
 
-* Dependency
+* Dependências
   - axios version 1.2.0
   - bootstrap version 5.2.2
   - formik version 2.2.9
@@ -28,4 +29,10 @@ Tecnologias usadas no projeto.
   - styled-components version 5.3.6
   - vanilla-masker version 1.2.0
   - yup version 0.32.11
- 
+  
+* Após clonar ou baixar zipado o repositório.
+   - npm install
+   - npm run dev
+
+## Como usar
+
