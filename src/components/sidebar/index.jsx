@@ -32,7 +32,7 @@ function SidebarComponent() {
   const renderAccessControl = () => {
     return (
       <div className="mt-2 sidebar-nav-item">
-        <div onClick={() => navigateTo("/")}>
+        <div onClick={() => navigateTo("/")} >
           <div className="area-icons-label">
             <HiOutlineClipboardList title="Controle de Acesso" />
             {sideBarCollapse ? (

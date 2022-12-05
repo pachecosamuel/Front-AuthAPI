@@ -11,5 +11,8 @@ export const ButtonStyle = styled.div`
         &:hover{
             filter: brightness(0.8);
         }
+        &:focus{
+            filter: brightness(0.8);
+        }
     }
 `;
