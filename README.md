@@ -35,7 +35,7 @@ Tecnologias usadas no projeto.
    - npm run dev
 
 ## Níveis de acesso
-![imgtable](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/table1%20(2).png)
+![imgtable](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/table3.png)
 
 
 ## Como usar
