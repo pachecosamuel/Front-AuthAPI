@@ -1,3 +1,4 @@
+![Logo of the project](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/perfil%20t2m.png)
 ## T2m - test to Market
 Sistema de controle de acesso de usuários T2M
 
