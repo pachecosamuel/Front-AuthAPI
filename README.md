@@ -29,4 +29,8 @@ Tecnologias usadas no projeto.
   - styled-components version 5.3.6
   - vanilla-masker version 1.2.0
   - yup version 0.32.11
+  
+* Após clonar ou baixar zipado o repositório.
+   - npm install
+   - npm run dev
  
