@@ -21,12 +21,14 @@ import jwtDecode from "jwt-decode";
 import SidebarComponent from "../components/sidebar";
 import SideBarMenuBs from "../components/sidebar-bs";
 import { LoadingComponent } from "../components/loading";
+import { ModalComponent } from "../components/modal-component";
 
 export function Root() {
 
     const [windowSize, setWindowSize] = useState(getWindowSize());
-    const { token, auth, isAuthenticated, user } = useContext(AuthenticationContext);
+    const { token, auth, isAuthenticated, user, logOut } = useContext(AuthenticationContext);
     const [loading, setLoading] = useState(true);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         function handleWindowResize() {
@@ -98,24 +100,48 @@ export function Root() {
         }
     }
 
+    function handleLogOut () {
+        logOut()
+        setShowModal(false)
+    }
+
     if (loading) return <LoadingComponent />
 
     return (
         <BrowserRouter>
             {auth ? (
                 <>
+                {showModal ?
+                <ModalComponent 
+                        showModal={showModal}
+                        setShowModal={setShowModal}
+                        funcao={handleLogOut}
+                        header={'Deseja mesmo sair?'}
+                        title={'Atenção'}
+                        cancelText={'Não'}
+                        acceptText={'Sim'}
+                        />
+                        :
+                        <></>
+            }
+                
                     <Container fluid>
+                        
                         {windowSize < 801 ? (
                             <Row>
                                 <Col className="px-0 col">
-                                    <SideBarMenuBs />
+                                    <SideBarMenuBs
+                                    setShowModal={setShowModal}
+                                    />
                                 </Col>
                             </Row>
                         ) : null}
                         <Row>
                             {windowSize > 800 ? (
                                 <Col className={windowSize > 800 ? "px-0 col-1" : "px-0 col-0"}>
-                                    <SidebarComponent />
+                                    <SidebarComponent 
+                                    setShowModal={setShowModal} 
+                                    />
                                 </Col>
                             ) : null}
                             <Col className={windowSize > 800 ? "col-11" : "col-12"}>

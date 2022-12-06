@@ -38,7 +38,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             setShowModal(false)
         } catch (error) {
             console.log(error);
-            toast.error('Erro ao desativar o usuário - ' + JSON.stringify(error.message));
+            toast.error('Erro ao desativar o usuário - ' + error.response.data.message);
             setLoading(false)
             setShowModal(false)
         }
@@ -59,7 +59,7 @@ function TableComponent({ registros, setUpdateTable, updateTable, setCurrentPage
             setShowModal(false)
         } catch (error) {
             console.log(error);
-            toast.error('Erro ao ativar o usuário - ' + JSON.stringify(error.message));
+            toast.error('Erro ao ativar o usuário - ' + error.response.data.message);
             setLoading(false)
             setShowModal(false)
         }
