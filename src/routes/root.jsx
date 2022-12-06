@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthenticationContext } from "../Services/Context/contextToken";
 
 import { Login } from "../pages/login/login";
-import { Home } from "../pages/Home";
+import { Home } from "../pages/home";
 import { Recuperar } from "../pages/recuperar_senha/recuperar_senha";
-import { Cadastro } from "../pages/Cadastro";
+import { Cadastro } from "../pages/cadastro";
 import { Profile } from "../pages/profile";
 import { NotFound } from "../pages/notFound";
 import { EditUser } from "../pages/editUser";
