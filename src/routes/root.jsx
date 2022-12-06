@@ -31,24 +31,33 @@ export function Root() {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        function handleWindowResize() {
-            setWindowSize(getWindowSize());
-        }
-
         window.addEventListener("resize", handleWindowResize);
-        isAuthenticated();
-        setLoading(false)
+        handleAuth()
     }, [token, user]);
+
+    function handleWindowResize() {
+        setWindowSize(getWindowSize());
+    }
 
     function getWindowSize() {
         return window.screen.width;
+    }
+
+    function handleLogOut() {
+        logOut()
+        setShowModal(false)
+    }
+
+    async function handleAuth() {
+        await isAuthenticated();
+        setLoading(false)
     }
 
     const renderTableRoutes = (canEdit) => {
         return (
             <>
                 <Route path="/" element={<Home />} />
-                <Route path="/user/view/:userId" element={<ViewUser />} /> 
+                <Route path="/user/view/:userId" element={<ViewUser />} />
                 {canEdit ? <Route path="/user/edit/:userId" element={<EditUser />} /> : <></>}
             </>
         )
@@ -100,38 +109,33 @@ export function Root() {
         }
     }
 
-    function handleLogOut () {
-        logOut()
-        setShowModal(false)
-    }
-
     if (loading) return <LoadingComponent />
 
     return (
         <BrowserRouter>
             {auth ? (
                 <>
-                {showModal ?
-                <ModalComponent 
-                        showModal={showModal}
-                        setShowModal={setShowModal}
-                        funcao={handleLogOut}
-                        header={'Deseja mesmo sair?'}
-                        title={'Atenção'}
-                        cancelText={'Não'}
-                        acceptText={'Sim'}
+                    {showModal ?
+                        <ModalComponent
+                            showModal={showModal}
+                            setShowModal={setShowModal}
+                            funcao={handleLogOut}
+                            header={'Deseja mesmo sair?'}
+                            title={'Atenção'}
+                            cancelText={'Não'}
+                            acceptText={'Sim'}
                         />
                         :
                         <></>
-            }
-                
+                    }
+
                     <Container fluid>
-                        
+
                         {windowSize < 801 ? (
                             <Row>
                                 <Col className="px-0 col">
                                     <SideBarMenuBs
-                                    setShowModal={setShowModal}
+                                        setShowModal={setShowModal}
                                     />
                                 </Col>
                             </Row>
@@ -139,8 +143,8 @@ export function Root() {
                         <Row>
                             {windowSize > 800 ? (
                                 <Col className={windowSize > 800 ? "px-0 col-1" : "px-0 col-0"}>
-                                    <SidebarComponent 
-                                    setShowModal={setShowModal} 
+                                    <SidebarComponent
+                                        setShowModal={setShowModal}
                                     />
                                 </Col>
                             ) : null}

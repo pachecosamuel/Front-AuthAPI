@@ -11,6 +11,11 @@ export const ContainerPagination = styled.div`
   border-radius: 5px;
   padding: 0.5rem;
 
+    @media (max-width: 550px) {
+        gap: 0.5rem;
+        flex-direction: column;
+    }
+
   select {
     outline: none !important;
     box-shadow: none !important;
@@ -45,6 +50,10 @@ export const ContainerPagination = styled.div`
         color: var(--verde-primario);        
         cursor: pointer;
       }
+    }
+
+    @media (max-width: 550px) {
+        justify-content: center;
     }
   }
 `;

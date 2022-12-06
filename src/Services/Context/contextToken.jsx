@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode";
 import React, { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "../Api/apiConnection";
 import { LoginService } from "../Api/apiLogin";
 
@@ -77,16 +78,24 @@ export const AuthenticationProvider = ({ children }) => {
         localStorage.clear();
     }
 
-    const isAuthenticated = () => {
+    const isAuthenticated = async () => {
         var tokenLocal = localStorage.getItem('token');
         if (tokenLocal) {
             var tokenDecoded = jwtDecode(tokenLocal);
-            var expDate = new Date(tokenDecoded.exp * 1000);
-            if (Date.now() < expDate) {
+
+            try {
                 api.defaults.headers["Authorization"] = `Bearer ${tokenLocal}`;
+                // TODO Alterar para requisição de validação do token
+                await api.get(`User/${tokenDecoded.Id}`);
                 setAuth(true);
-            } else {
-                setAuth(false);
+            } catch (error) {
+                logOut()
+                if (error.message === 'Network Error') {
+                    toast.error('Erro ao realizar o login - Erro de conexão, o servidor pode estar fora do ar.');
+                } else {
+                    toast.error("Erro de autenticação.")
+                }
+                console.log(error)
             }
         }
     }
