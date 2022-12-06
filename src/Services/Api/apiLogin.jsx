@@ -20,7 +20,8 @@ const LoginService = async (email, password) => {
         }
     }
     catch (error) {
-        toast.error('Erro ao realizar o login - ' + JSON.stringify(error.message));
+        console.log(error);
+        toast.error('Erro ao realizar o login - ' + error.response.data.message);
         delete api.defaults.headers["Authorization"];
     }
 
