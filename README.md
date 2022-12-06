@@ -1,4 +1,4 @@
-![Logo of the project](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/perfil%20t2m.png)
+<a href="https://imgur.com/js5qNNo"><img src="https://i.imgur.com/js5qNNo.png" title="T2M LOGO" /></a>
 ## T2M - Test to Market
 Sistema de controle de acesso de usuários T2M
 
@@ -35,22 +35,22 @@ Tecnologias usadas no projeto.
    - npm run dev
 
 ## Níveis de acesso
-![imgtable](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/table3.png)
+<a href="https://i.imgur.com/IqYP8ul.png"><img src="https://i.imgur.com/IqYP8ul.png" title="TABLE" /></a>
 
 
 ## Como usar
 
 ### 1 - Você terá acesso à nossa aplicação, através da pagina de login.
 
-![img1](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/loginreadme.png)
+<a href="https://i.imgur.com/kOmVOWQ.png"><img src="https://i.imgur.com/kOmVOWQ.png" title="img1" /></a>
 
 ### 2 - Após logar, você terá diversos níveis de acesso, para cada um deles, terá um padrão de rotas, por exemplo, entrando como Colaborador, essa será sua página home, onde poderá olhar suas informações e alterar somente a senha.
-![img2](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homecolaborador.png)
+<a href="https://i.imgur.com/V1AYFAd.png"><img src="https://i.imgur.com/V1AYFAd.png" title="img2" /></a>
 
 ### 3 - Já nos demais acessos, essa será sua página home, onde você poderá, visualizar, editar e desativar um usuário, de acordo com o seu nível de acesso.
-![img3](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homegestores.png)
+<a href="https://i.imgur.com/xN8Fixv.png"><img src="https://i.imgur.com/xN8Fixv.png" title="img3" /></a>
 
 ### 4 - Navegando pelo aplicativo, você também pode encontrar a tela onde te possibilita a criação de um novo usuário.
-![img4](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/registrarusuarioreadme.png)
+<a href="https://i.imgur.com/HDyuM9H.png"><img src="https://i.imgur.com/HDyuM9H.png" title="img4" /></a>
 
 
