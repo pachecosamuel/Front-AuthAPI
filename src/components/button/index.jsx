@@ -12,6 +12,7 @@ function ButtonComponent({ tamanho, bgColor, textColor, acao, children, type, di
                 onClick={acao}
                 type={type}
                 disabled={disabled}
+                tabIndex={0}
             >
                 {children}
             </Button>

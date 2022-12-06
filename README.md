@@ -1,5 +1,5 @@
 ![Logo of the project](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/perfil%20t2m.png)
-## T2m - test to Market
+## T2M - Test to Market
 Sistema de controle de acesso de usuários T2M
 
 ## Tecnologias
@@ -34,16 +34,20 @@ Tecnologias usadas no projeto.
    - npm install
    - npm run dev
 
+## Níveis de acesso
+![imgtable](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/table3.png)
+
+
 ## Como usar
 
-### 1 - Você terá acessa a nossa aplicação de Controle de acesso, através do pagina de login
+### 1 - Você terá acesso à nossa aplicação, através da pagina de login.
 
 ![img1](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/loginreadme.png)
 
-### 2 - Após logar, você terá diversos níveis de acesso, para cada nível de acesso, terá um padrão de rotas, por exemplo, entrando como Colaborador, essa será sua pagina home, onde poderá olhar suas informações e alterar somente a senha.
+### 2 - Após logar, você terá diversos níveis de acesso, para cada um deles, terá um padrão de rotas, por exemplo, entrando como Colaborador, essa será sua página home, onde poderá olhar suas informações e alterar somente a senha.
 ![img2](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homecolaborador.png)
 
-### 3 - Já nos demais acessos, essa será sua pagina home, onde você poderá, visualizar, editar e desativar um usuário, de acordo com o seu nível de acesso.
+### 3 - Já nos demais acessos, essa será sua página home, onde você poderá, visualizar, editar e desativar um usuário, de acordo com o seu nível de acesso.
 ![img3](https://github.com/pachecosamuel/Front-AuthAPI/blob/main/src/assets/readme/homegestores.png)
 
 ### 4 - Navegando pelo aplicativo, você também pode encontrar a tela onde te possibilita a criação de um novo usuário.

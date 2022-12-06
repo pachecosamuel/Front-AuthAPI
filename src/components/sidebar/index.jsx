@@ -16,9 +16,9 @@ import { BsArrowBarRight, BsArrowBarLeft } from "react-icons/bs";
 import { ImExit } from "react-icons/im";
 import { BiUserCircle } from "react-icons/bi";
 
-function SidebarComponent() {
+function SidebarComponent({setShowModal}) {
 
-  const { logOut, user } = useContext(AuthenticationContext);
+  const { user } = useContext(AuthenticationContext);
 
   const [sideBarCollapse, setSideBarCollapse] = useState(true);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function SidebarComponent() {
   const renderAccessControl = () => {
     return (
       <div className="mt-2 sidebar-nav-item">
-        <div onClick={() => navigateTo("/")}>
+        <div onClick={() => navigateTo("/")} >
           <div className="area-icons-label">
             <HiOutlineClipboardList title="Controle de Acesso" />
             {sideBarCollapse ? (
@@ -147,9 +147,9 @@ function SidebarComponent() {
           </div>
           <div className="sidebar-nav">
             <div className="sidebar-nav-item">
-              <div onClick={() => [logOut(), navigateTo("/")]}>
+              <div >
                 <div className="area-icons-label">
-                  <ImExit title="Sair" size={28} />
+                  <ImExit onClick={() => setShowModal(true)} title="Sair" size={28} />
                   {sideBarCollapse ? (
                     ""
                   ) : (

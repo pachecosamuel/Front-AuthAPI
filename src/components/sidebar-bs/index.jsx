@@ -24,7 +24,7 @@ import {
 import { HiOutlineClipboardList } from "react-icons/hi";
 
 
-function SideBarMenuBs() {
+function SideBarMenuBs({setShowModal}) {
     const [show, setShow] = useState(false);
 
     const { logOut, user } = useContext(AuthenticationContext)
@@ -152,7 +152,7 @@ function SideBarMenuBs() {
                                 </div>
                                 <div className="sidebar-bs-nav">
                                     <div className="sidebar-nav-item mt-3">
-                                        <div onClick={logOut}>
+                                        <div onClick={() => setShowModal(true)}>
                                             <div className="area-icons-label">
                                                 <ImExit />
                                                 <span>Sair</span>
