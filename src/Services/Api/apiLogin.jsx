@@ -20,8 +20,11 @@ const LoginService = async (email, password) => {
         }
     }
     catch (error) {
-        console.log(error);
-        toast.error('Erro ao realizar o login - ' + error.response.data.message);
+        if (error.message === 'Network Error') {
+            toast.error('Erro ao realizar o login - Erro de conexão, o servidor pode estar fora do ar.');
+        } else {
+            toast.error('Erro ao realizar o login - ' + error.response.data.message);
+        }
         delete api.defaults.headers["Authorization"];
     }
 
