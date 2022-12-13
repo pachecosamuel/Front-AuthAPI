@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 import { subtractYears } from "../utils";
-import { noNumbersRegex } from "./regexValidations";
+import { fullNameRegex } from "./regexValidations";
 
 export const userFormSchema = yup.object().shape({
     fullName: yup.string()
         .required('Nome completo deve ser preenchido')
-        .matches(noNumbersRegex, 'Nome completo não permite números')
+        .matches(fullNameRegex, 'Nome completo não permite números ou caracteres especiais')
         .test('space-between-names', 
             'É necessário inserir pelo menos um sobrenome', 
             (x) =>  x !== undefined && x.includes(' '))
