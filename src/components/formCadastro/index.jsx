@@ -10,7 +10,7 @@ import "./formCadastro.css";
 import { ContainerForm } from "./style";
 import BotaoComponent from "../button";
 
-import { subtractYears } from "../../utils/utils";
+import { stateList, subtractYears } from "../../utils/utils";
 import { userFormSchema } from "../../utils/validation/schemaValidations";
 
 import { api, viaCep } from "../../Services/Api/apiConnection";
@@ -134,7 +134,7 @@ function FormularioCadastroComponent() {
                         <Form.Control
                             value={values.fullName}
                             type="text"
-                            placeholder="Ex: João Silva"
+                            placeholder="Ex: Usuário Exemplo"
                             onBlur={handleBlur}
                             onChange={handleChange}
                             name='fullName'
@@ -151,7 +151,7 @@ function FormularioCadastroComponent() {
                         <Form.Control
                             value={values.personalEmail}
                             type="email"
-                            placeholder="Ex: usuario@mail.com"
+                            placeholder="Ex: usuario.exemplo@mail.com"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='personalEmail'
@@ -225,7 +225,7 @@ function FormularioCadastroComponent() {
                         <Form.Control
                             value={values.corporativeEmail}
                             type="email"
-                            placeholder="Ex: usuario@t2m.com"
+                            placeholder="Ex: usuario.exemplo@t2mlab.com"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             name='corporativeEmail'
@@ -387,34 +387,15 @@ function FormularioCadastroComponent() {
                             name='uf'
                             className={touched.uf && errors.uf ? "error" : null}
                         >
-                            <option></option>
-                            <option>AC</option>
-                            <option>AL</option>
-                            <option>AP</option>
-                            <option>AM</option>
-                            <option>BA</option>
-                            <option>CE</option>
-                            <option>DF</option>
-                            <option>ES</option>
-                            <option>GO</option>
-                            <option>MA</option>
-                            <option>MT</option>
-                            <option>MS</option>
-                            <option>MG</option>
-                            <option>PA</option>
-                            <option>PB</option>
-                            <option>PR</option>
-                            <option>PE</option>
-                            <option>PI</option>
-                            <option>RJ</option>
-                            <option>RN</option>
-                            <option>RS</option>
-                            <option>RO</option>
-                            <option>RR</option>
-                            <option>SC</option>
-                            <option>SP</option>
-                            <option>SE</option>
-                            <option>TO</option>
+                            {
+                                stateList.map((uf) => {
+                                    return (
+                                        <option key={uf}>
+                                            {uf}
+                                        </option>
+                                    )
+                                })
+                            }
                         </Form.Select>
                         {touched.uf && errors.uf ? (
                             <div className="error-message">{errors.uf}</div>

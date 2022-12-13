@@ -6,6 +6,12 @@ export const userFormSchema = yup.object().shape({
     fullName: yup.string()
         .required('Nome completo deve ser preenchido')
         .matches(noNumbersRegex, 'Nome completo não permite números')
+        .test('space-between-names', 
+            'É necessário inserir pelo menos um sobrenome', 
+            (x) =>  x !== undefined && x.includes(' '))
+        .test('no-ending-space', 
+            'Não deve haver espaços no começo ou fim do nome', 
+            (x) =>  x !== undefined && (x.charAt(x.length - 1) !== ' ' && x.charAt(0) !== ' '))
         .max(80, 'O Nome completo deve possuir no máximo 80 caracteres'),
     corporativeEmail: yup.string()
         .email('Confira o padrão do e-mail inserido')
