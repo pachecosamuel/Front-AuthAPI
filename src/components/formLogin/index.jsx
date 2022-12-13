@@ -1,16 +1,21 @@
 import React from "react";
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from 'react-bootstrap/Button';
+import { Spinner } from "react-bootstrap";
+
 import { HiOutlineLockClosed } from "react-icons/hi";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+
 import { ContainerFormLoginStyle } from "./style";
-import { useNavigate, } from "react-router-dom";
+
 import { AuthenticationContext } from "../../Services/Context/contextToken";
-import { Spinner } from "react-bootstrap";
+
 import BotaoComponent from "../button";
 
 const FormLogin = () => {
@@ -43,51 +48,63 @@ const FormLogin = () => {
     return (
         <ContainerFormLoginStyle>
             <Form noValidate validated={validated}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3">
+                    <Form.Label htmlFor='email'>Digite seu e-mail (não é necessário incluir o domínio):</Form.Label>
+
                     <InputGroup
                         className="mb-3"
                         onChange={(e) => setEmail(e.target.value)}
                         hasValidation
                     >
-                        <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                        <InputGroup.Text>@</InputGroup.Text>
+
                         <Form.Control
-                            placeholder="Digite seu e-mail"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
+                            placeholder="Ex: usuario.exemplo"
+                            aria-label="email"
                             required
+                            id='email'
                         />
-                        <InputGroup.Text id="basic-addon2">@t2mlab.com</InputGroup.Text>
+
+                        <InputGroup.Text>@t2mlab.com</InputGroup.Text>
+
                         <Form.Control.Feedback type="invalid">
-                            O email deve ser preenchido
+                            O e-mail deve ser preenchido
                         </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
+
+                <Form.Group className="mb-3">
+                    <Form.Label htmlFor='senha'>Digite sua senha:</Form.Label>
+
                     <InputGroup
                         className="mb-3"
                         onChange={(e) => setPassword(e.target.value)}
                         hasValidation
                     >
-                        <InputGroup.Text id="basic-addon1">
+                        <InputGroup.Text>
                             <HiOutlineLockClosed />
                         </InputGroup.Text>
+
                         <Form.Control
                             type={passwordIsVisible ? "text" : "password"}
-                            placeholder="Digite sua senha"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
+                            placeholder="xxxxxx"
+                            aria-label="senha"
                             required
+                            id='senha'
                         />
-                        <InputGroup.Text id="basic-addon2">
+
+                        <InputGroup.Text>
                             <Button style={{ all: 'unset', cursor: 'pointer' }} onClick={handlePasswordIsVisible}>
                                 {passwordIsVisible ? <BsEye /> : <BsEyeSlash />}
                             </Button>
                         </InputGroup.Text>
+
                         <Form.Control.Feedback type="invalid">
                             A senha deve ser preenchida
                         </Form.Control.Feedback>
                     </InputGroup>
                 </Form.Group>
+
                 <Row>
                     <Col className="d-flex justify-content-center mt-3">
                         <BotaoComponent
@@ -111,6 +128,7 @@ const FormLogin = () => {
                         </BotaoComponent>
                     </Col>
                 </Row>
+
                 <p className="mt-3">
                     Esqueci minha senha. <a href="#">Recuperar senha</a>
                 </p>
