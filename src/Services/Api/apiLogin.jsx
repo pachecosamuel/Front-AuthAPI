@@ -12,22 +12,26 @@ const LoginService = async (email, password) => {
             email,
             password
         });
-        
-        if (resposta.data.isSuccess) {
+
+        if (!!resposta.data.token) {
 
             tokenDecodificado = jwt_decode(resposta.data.token);
             tokenDecodificado['token'] = resposta.data.token;
             api.defaults.headers["Authorization"] = `Bearer ${resposta.data.token}`;
-            
+
             return tokenDecodificado;
 
-        } else if (!!resposta.data.message) {
-            toast.error('Erro ao realizar o login - ' + resposta.data.message);
         } else {
-            toast.error('Erro ao realizar o login');
-        }
 
-        delete api.defaults.headers["Authorization"];
+            if (!resposta.data.isSuccess) {
+                toast.error('Erro ao realizar o login - ' + resposta.data.message);
+                delete api.defaults.headers["Authorization"];
+            } else {
+                toast.error('Erro ao realizar o login');
+                delete api.defaults.headers["Authorization"];
+            }
+
+        }
 
     } catch (error) {
 
@@ -36,6 +40,7 @@ const LoginService = async (email, password) => {
         } else {
             toast.error('Erro ao realizar o login');
         }
+        
     }
 }
 
