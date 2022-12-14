@@ -10,7 +10,7 @@ import "./formCadastro.css";
 import { ContainerForm } from "./style";
 import BotaoComponent from "../button";
 
-import { stateList, subtractYears } from "../../utils/utils";
+import { dataTrimmer, stateList, subtractYears } from "../../utils/utils";
 import { userFormSchema } from "../../utils/validation/schemaValidations";
 
 import { api, viaCep } from "../../Services/Api/apiConnection";
@@ -83,7 +83,7 @@ function FormularioCadastroComponent() {
         console.log('REGISTRANDO USUARIO')
         setSubmitting(true)
 
-        const cleanDataForSubmit = {
+        const cleanValues = {
             ...values,
             phone: VMasker.toNumber(values.phone),
             cpf: VMasker.toNumber(values.cpf),
@@ -93,8 +93,7 @@ function FormularioCadastroComponent() {
         }
 
         try {
-            console.log(cleanDataForSubmit)
-            await api.post("/User", cleanDataForSubmit)
+            await api.post("/User", dataTrimmer(cleanValues))
             toast.success('Usuário registrado com sucesso!')
             console.log('REGISTROU COM SUCESSO')
             setSubmitting(false)
@@ -103,7 +102,12 @@ function FormularioCadastroComponent() {
             console.log('DEU ERRO')
             console.log(error)
             setSubmitting(false)
-            toast.error('Erro ao registrar usuário: ' + error.response.data.errors[0].message)
+
+            if (!!error.response.data) {
+                toast.error('Erro ao registrar usuário: ' + error.response.data.errors[0].message)
+            } else (
+                toast.error('Erro ao registrar usuário')
+            )
         }
     }
 

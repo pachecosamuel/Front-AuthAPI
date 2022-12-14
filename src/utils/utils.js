@@ -50,3 +50,27 @@ export const stateList = [
     'SE',
     'TO'
 ]
+
+export const dataTrimmer = (data) => {
+    for (var key in data) {
+        data[key] = typeof data[key] == 'string' ? data[key].trim() : data[key]
+    }
+
+    return data
+}
+
+export const dataToUpperCase = (data) => {
+    for (var key in data) {
+        data[key] = typeof data[key] == 'string' ? data[key].toUpperCase() : data[key]
+    }
+
+    return data
+}
+
+export const dataToPascalCase = (data) => {
+    for (var key in data) {
+        data[key] = typeof data[key] == 'string' ? data[key].split(' ').map(x => x.charAt(0) + x.slice(1).toLowerCase()).join(' ') : data[key]
+    }
+
+    return data
+}

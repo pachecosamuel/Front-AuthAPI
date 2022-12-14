@@ -22,9 +22,11 @@ export const userFormSchema = yup.object().shape({
         .required('E-mail pessoal deve ser preenchido')
         .max(100, 'O E-mail pessoal deve possuir no máximo 100 caracteres'),
     phone: yup.string()
-        .required('Telefone deve ser preenchido'),
+        .required('Telefone deve ser preenchido')
+        .min(15, 'O Telefone deve possuir 11 dígitos'),
     cpf: yup.string()
-        .required('CPF deve ser preenchido'),
+        .required('CPF deve ser preenchido')
+        .min(14, 'O CPF deve possuir 11 dígitos'),
     role: yup.number().integer()
         .required('Nível de acesso deve ser preenchido'),
     logradouro: yup.string()
@@ -35,7 +37,7 @@ export const userFormSchema = yup.object().shape({
         .max(80, 'O Bairro deve possuir no máximo 80 caracteres'),
     numero: yup.string()
         .required('Número deve ser preenchido')
-        .max(80, 'O Número deve possuir no máximo 15 caracteres'),
+        .max(15, 'O Número deve possuir no máximo 15 caracteres'),
     complemento: yup.string()
         .max(80, 'O Complemento deve possuir no máximo 80 caracteres'),
     cidade: yup.string()
@@ -46,7 +48,8 @@ export const userFormSchema = yup.object().shape({
         .min(2, 'O Estado deve possuir 2 caracteres')
         .max(2, 'O Estado deve possuir 2 caracteres'),
     cep: yup.string()
-        .required('CEP deve ser preenchido'),
+        .required('CEP deve ser preenchido')
+        .min(9, 'O CEP deve possuir 8 dígitos'),
     birthDate: yup.date()
         .required('Data de nascimento deve ser preenchida')
         .max(subtractYears(new Date(), 14), 'O usuário deve ter mais de 14 anos de idade'),
